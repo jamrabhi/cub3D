@@ -16,6 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# define BUFFER_SIZE 1000000
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
