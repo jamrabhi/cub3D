@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 18:17:25 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/29 02:33:55 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/17 18:02:06 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# define BUFFER_SIZE 1000000
 
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);

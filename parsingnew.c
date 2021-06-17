@@ -6,12 +6,11 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:33:00 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/17 21:38:23 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:34:49 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <fcntl.h>
 
 void	print_error(char *error)
 {
@@ -23,13 +22,17 @@ void	get_NO(const char *line, t_map *map)
 {
 	char	**path;
 
-	//if (line)
+//	path = NULL;
 	path = ft_split(line, ' ');
-	if (line && path[0] && (ft_strncmp(path[0], "NO", 2) == 0))
+	printf("line = %s\n", line);
+	if (line && (ft_strncmp(path[0], "NO", 2) == 0))
 	{
-		if (path[2] || map->NO_path)
-			print_error("Fichier .cub incorrect");
+
+	printf("NO : %s\n", map->NO_path);
+	//	path = ft_split(line, ' ');
 		map->NO_path = path[1];
+		if (path[2])
+			print_error("Fichier .cub incorrect");
 	}
 }
 
@@ -37,13 +40,13 @@ void	get_SO(const char *line, t_map *map)
 {
 	char	**path;
 
-	//if (line)
-	path = ft_split(line, ' ');
-	if (line && path[0] && (ft_strncmp(path[0], "SO", 2) == 0))
+	path = NULL;
+	if (line[0] == 'S' && line[1] == 'O')
 	{
-		if (path[2] || map->SO_path)
-			print_error("Fichier .cub incorrect");
+		path = ft_split(line, ' ');
 		map->SO_path = path[1];
+		if (path[2])
+			print_error("Fichier .cub incorrect");
 	}
 }
 
@@ -51,13 +54,13 @@ void	get_WE(const char *line, t_map *map)
 {
 	char	**path;
 
-	//if (line)
-	path = ft_split(line, ' ');
-	if (line && path[0] && (ft_strncmp(path[0], "WE", 2) == 0))
+	path = NULL;
+	if (line[0] == 'W' && line[1] == 'E')
 	{
-		if (path[2] || map->WE_path)
-			print_error("Fichier .cub incorrect");
+		path = ft_split(line, ' ');
 		map->WE_path = path[1];
+		if (path[2])
+			print_error("Fichier .cub incorrect");
 	}
 }
 
@@ -65,43 +68,58 @@ void	get_EA(const char *line, t_map *map)
 {
 	char	**path;
 
-	//if (line)
-	path = ft_split(line, ' ');
-	if (line &&  path[0] && (ft_strncmp(path[0], "EA", 2) == 0))//line pr espace
+	path = NULL;
+	if (line[0] == 'E' && line[1] == 'A')
 	{
-		if (path[2] || map->EA_path)
-			print_error("Fichier .cub incorrect");
+		path = ft_split(line, ' ');
 		map->EA_path = path[1];
+		if (path[2])
+			print_error("Fichier .cub incorrect");
 	}
 }
-
-void	get_F_RGB(const char *line)
+/*
+void	get_F(const char *line, t_map *map)
 {
-	char	**numbers;
+	
+*/
+void display(char **tab)
+{
+	int	i;
 
-	numbers = ft_split(line, ' ');
-	if (line && numbers[0] && (ft_strncmp(numbers[0], "F", 1) == 0))
+	i = 0;
+	while (tab[i])
 	{
-		numbers = ft_split(numbers[1], ',');
-		printf("%s\n",numbers[0]);
-		if (numbers[2] && !numbers[3] && ft_isdigit(numbers[0] && ft)!!!!!!!!!!!!!!!!
-			
+		printf("[%s]\n", tab[i]);
+		i += 1;
 	}
-
 }
-
-void	parse_line(char *file_cub, t_map *map)
+int	get_line(char *av, t_map *map)
 {
-	char *line;
-	int fd;
+	char	buff[BUFFER_SIZE + 1];
+	char	*tmp;
+	//char	*leak;
+	int		ret;
+	int		fd;
+	char	**tab;
 
-	fd = open(file_cub, O_RDONLY);
-	while (get_next_line(fd, &line))
+	(void)map;
+	fd = open(av, O_RDONLY);
+	if (fd < 0)
 	{
-		get_NO(line, map);
-		get_SO(line, map);
-		get_WE(line, map);
-		get_EA(line, map);
-		get_F_RGB(line);
+		printf("Error\n");
+		return (-1);
 	}
+	tmp = ft_strdup("");
+	while (1)
+	{
+		ret = read(fd, buff, BUFFER_SIZE);
+		buff[ret] = 0;
+		// leak = tmp;
+		tmp = ft_strjoin(tmp, buff);
+		if (ret == 0)
+			break ;
+	}
+	tab = ft_split(tmp, '\n');
+	display(tab);
+	return (0);
 }
