@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:33:00 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/14 19:52:20 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/17 17:34:49 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,14 @@ void display(char **tab)
 		i += 1;
 	}
 }
-int	parse_line(char *av, t_map *map)
+int	get_line(char *av, t_map *map)
 {
 	char	buff[BUFFER_SIZE + 1];
 	char	*tmp;
-	// char	*leak;
+	//char	*leak;
 	int		ret;
 	int		fd;
 	char	**tab;
-	
 
 	(void)map;
 	fd = open(av, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:39:25 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/14 19:22:18 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:20:27 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ typedef struct	s_map
 }				t_map;
 
 
-int	parse_line(char *file_cub, t_map *map);
+int	get_line(char *file_cub, t_map *map);
 
 #endif
