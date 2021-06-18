@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_isdigit_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/06 17:39:25 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/18 21:08:25 by jamrabhi         ###   ########.fr       */
+/*   Created: 2021/06/18 20:49:11 by jamrabhi          #+#    #+#             */
+/*   Updated: 2021/06/18 21:04:08 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "libft.h"
 
-# include "./get_next_line/get_next_line.h"
-# include "./libft/libft.h"
-# include <stdio.h>
-# include <fcntl.h>
-
-typedef struct	s_map
+int		ft_isdigit_str(char *str)
 {
-	char *NO_path;
-	char *SO_path;
-	char *WE_path;
-	char *EA_path;
-	int F[3];
-	int C[3];
-}				t_map;
+	int i;
 
-int	get_line(char *file_cub, t_map *map);
-void	parse_line(char *file_cub, t_map *map);
-
-#endif
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}

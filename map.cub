@@ -3,7 +3,7 @@ WE ./path_to_WE
 EA ./path_to_EA
 SO ./path_to_SO   
 
-F 220,100,0,5
+F 15,100
 C 225,30,0
 
 11111111111111111
