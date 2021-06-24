@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:33:00 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/24 00:38:45 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/24 20:01:19 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	get_NO(const char *line, t_map *map)
 			print_error("Fichier .cub incorrect");
 		map->NO_path = path[1];
 	}
+	printf("line = |%s|\n", line);
 }
 
 void	get_SO(const char *line, t_map *map)
@@ -55,6 +56,7 @@ void	get_SO(const char *line, t_map *map)
 			print_error("Fichier .cub incorrect");
 		map->SO_path = path[1];
 	}
+	printf("line = |%s|\n", line);
 }
 
 void	get_WE(const char *line, t_map *map)
@@ -124,7 +126,7 @@ void	get_F_RGB(const char *line, t_map *map)
 		RGB[2] = ft_atoi(numbers[2]);
 		if (!((RGB[0] >= 0 && RGB[0] <= 255) && (RGB[1] >= 0 && RGB[1] <= 255)
 				&& (RGB[2] >= 0 && RGB[2] <= 255)))
-			print_error("Fich ier .cub incorrect");
+			print_error("Fichier .cub incorrect");
 		map->F[0] = RGB[0];
 		map->F[1] = RGB[1];
 		map->F[2] = RGB[2];
@@ -157,12 +159,33 @@ void	get_C_RGB(const char *line, t_map *map)
 	}
 }
 
+/*
+void	get_map(const char *line)
+{
+
+}
+*/
+
+void	check_cub(char *file_name)
+{
+	const char *dot;
+
+	dot = ft_strrchr(file_name, '.');
+	if (ft_strncmp(dot, ".cub", 5) != 0)
+		print_error("Fichier .cub incorrect");
+}
+
+
+
 void	parse_line(char *file_cub, t_map *map)
 {
 	char	*line;
 	int		fd;
 
 	fd = open(file_cub, O_RDONLY);
+	if (fd == -1)
+		print_error("Fichier .cub incorrect");
+	check_cub(file_cub);
 	while (get_next_line(fd, &line))
 	{
 		get_NO(line, map);
@@ -171,5 +194,6 @@ void	parse_line(char *file_cub, t_map *map)
 		get_EA(line, map);
 		get_F_RGB(line, map);
 		get_C_RGB(line, map);
+		//get_map(line);
 	}
 }
