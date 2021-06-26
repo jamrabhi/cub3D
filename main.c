@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 16:41:10 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/24 19:14:41 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/26 17:43:52 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	main(int argc, char **argv)
 	ft_bzero(&map, sizeof(map));
 	if (argc > 1)
 		parse_line(argv[1], &map);
+
+	
+	/*
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");
 	printf("NO : %s\n", map.NO_path);
@@ -30,5 +33,8 @@ int	main(int argc, char **argv)
 	printf("FLOOR : R = %d, G= %d, B = %d\n", map.F[0], map.F[1], map.F[2]);
 	printf("CEILING : R = %d, G= %d, B = %d\n", map.C[0], map.C[1], map.C[2]);
 	printf("-------------------------\n_________________________\n");
+*/
+
+
 
 }

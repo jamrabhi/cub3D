@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 17:33:00 by jamrabhi          #+#    #+#             */
-/*   Updated: 2021/06/24 20:01:19 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/26 18:03:59 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,36 @@ void	show_array(char **array)
 	}
 }
 
+char	*join_array(char **array)
+{
+	int i;
+	char *str;
+	char *buff;
+
+	i = 1;
+	buff = array[1];
+	while (array[i + 1])
+	{
+		str = ft_strjoin(buff, array[i + 1]);
+		buff = str;
+		i++;
+	}
+	return str;
+}
+
 void	get_F_RGB(const char *line, t_map *map)
 {
 	char	**numbers;
 	int		RGB[3];
 	int		size;
+	char *RGB_s;
 
 	numbers = ft_split(line, ' ');
 	if (line && numbers[0] && (ft_strncmp(numbers[0], "F", 1) == 0))
 	{
+		show_array(numbers);
+		RGB_s = join_array(numbers);
+		printf("RGB = ||||%s||||\n", RGB_s);
 		numbers = ft_split(numbers[1], ',');
 		size = check_number_elements(numbers);
 		if (!(size == 3 && ft_isdigit_str(numbers[0]) && ft_isdigit_str(
