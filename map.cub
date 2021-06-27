@@ -3,7 +3,7 @@ EA ./path_to_EA
 SO     ./path_to_SO
 NO ./path_to_NO
 
-F     255,   254, 25
+F 255,254,254
        C 225,30,0
 
 11111111111111111
