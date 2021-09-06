@@ -28,13 +28,13 @@ typedef struct	s_map
 	int C[3];
 }				t_map;
 
-int	get_line(char *file_cub, t_map *map);
+int		get_line(char *file_cub, t_map *map);
 void	parse_line(char *file_cub, t_map *map);
-void	print_error(char *error);
-void	get_NO(const char *line, t_map *map);
-void	get_SO(const char *line, t_map *map);
-void	get_WE(const char *line, t_map *map);
-void	get_EA(const char *line, t_map *map);
+int		print_error(char *error);
+int		get_NO(const char *line, t_map *map);
+int		get_SO(const char *line, t_map *map);
+int		get_WE(const char *line, t_map *map);
+int		get_EA(const char *line, t_map *map);
 void	get_F_RGB(const char *line, t_map *map);
 void	get_C_RGB(const char *line, t_map *map);
 
