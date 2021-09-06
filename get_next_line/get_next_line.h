@@ -16,7 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-# define OPEN_MAX 256
+# ifndef OPEN_MAX
+#  define OPEN_MAX 10240
+# endif
 
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin(char const *s1, char const *s2);
