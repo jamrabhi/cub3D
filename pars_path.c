@@ -12,61 +12,61 @@
 
 #include "cub3d.h"
 
-int	get_NO(const char *line, t_map *map)
+int	get_no(const char *line, t_map *map)
 {
 	char	**path;
 
 	path = ft_split(line, ' ');
 	if (line && path[0] && (ft_strncmp(path[0], "NO", 2) == 0))
 	{
-		if (path[2] || map->NO_path)
-			print_error("Fichier .cub incorrect");
-		map->NO_path = path[1];
+		if (path[2] || map->no_path)
+			print_error("Misconfiguration in the .cub scene (NO texture)");
+		map->no_path = path[1];
 		return (1);
 	}
 	return (0);
 }
 
-int	get_SO(const char *line, t_map *map)
+int	get_so(const char *line, t_map *map)
 {
 	char	**path;
 
 	path = ft_split(line, ' ');
 	if (line && path[0] && (ft_strncmp(path[0], "SO", 2) == 0))
 	{
-		if (path[2] || map->SO_path)
-			print_error("Fichier .cub incorrect");
-		map->SO_path = path[1];
+		if (path[2] || map->so_path)
+			print_error("Misconfiguration in the .cub scene (SO texture)");
+		map->so_path = path[1];
 		return (1);
 	}
 	return (0);
 }
 
-int	get_WE(const char *line, t_map *map)
+int	get_we(const char *line, t_map *map)
 {
 	char	**path;
 
 	path = ft_split(line, ' ');
 	if (line && path[0] && (ft_strncmp(path[0], "WE", 2) == 0))
 	{
-		if (path[2] || map->WE_path)
-			print_error("Fichier .cub incorrect");
-		map->WE_path = path[1];
+		if (path[2] || map->we_path)
+			print_error("Misconfiguration in the .cub scene (WE texture)");
+		map->we_path = path[1];
 		return (1);
 	}
 	return (0);
 }
 
-int	get_EA(const char *line, t_map *map)
+int	get_ea(const char *line, t_map *map)
 {
 	char	**path;
 
 	path = ft_split(line, ' ');
 	if (line && path[0] && (ft_strncmp(path[0], "EA", 2) == 0)) //line pr espace
 	{
-		if (path[2] || map->EA_path)
-			print_error("Fichier .cub incorrect");
-		map->EA_path = path[1];
+		if (path[2] || map->ea_path)
+			print_error("Misconfiguration in the .cub scene (EA texture)");
+		map->ea_path = path[1];
 		return (1);
 	}
 	return (0);

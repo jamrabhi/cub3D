@@ -18,24 +18,24 @@
 # include <stdio.h>
 # include <fcntl.h>
 
-typedef struct	s_map
+typedef struct s_map
 {
-	char *NO_path;
-	char *SO_path;
-	char *WE_path;
-	char *EA_path;
-	int F[3];
-	int C[3];
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	int		f[3];
+	int		c[3];
 }				t_map;
 
 int		get_line(char *file_cub, t_map *map);
 void	parse_line(char *file_cub, t_map *map);
 int		print_error(char *error);
-int		get_NO(const char *line, t_map *map);
-int		get_SO(const char *line, t_map *map);
-int		get_WE(const char *line, t_map *map);
-int		get_EA(const char *line, t_map *map);
-int	get_F_RGB(const char *line, t_map *map);
-int	get_C_RGB(const char *line, t_map *map);
+int		get_no(const char *line, t_map *map);
+int		get_so(const char *line, t_map *map);
+int		get_we(const char *line, t_map *map);
+int		get_ea(const char *line, t_map *map);
+int		get_f_rgb(const char *line, t_map *map);
+int		get_c_rgb(const char *line, t_map *map);
 
 #endif
