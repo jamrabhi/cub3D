@@ -35,7 +35,7 @@ int		get_NO(const char *line, t_map *map);
 int		get_SO(const char *line, t_map *map);
 int		get_WE(const char *line, t_map *map);
 int		get_EA(const char *line, t_map *map);
-void	get_F_RGB(const char *line, t_map *map);
-void	get_C_RGB(const char *line, t_map *map);
+int	get_F_RGB(const char *line, t_map *map);
+int	get_C_RGB(const char *line, t_map *map);
 
 #endif

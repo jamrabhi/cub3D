@@ -53,7 +53,7 @@ int	check_commas(char *str)
 	return (rt);
 }
 
-void	get_F_RGB(const char *line, t_map *map)
+int	get_F_RGB(const char *line, t_map *map)
 {
 	char	**numbers;
 	int		RGB[3];
@@ -79,10 +79,12 @@ void	get_F_RGB(const char *line, t_map *map)
 		map->F[0] = RGB[0];
 		map->F[1] = RGB[1];
 		map->F[2] = RGB[2];
+		return (1);
 	}
+	return 0;
 }
 
-void	get_C_RGB(const char *line, t_map *map)
+int	get_C_RGB(const char *line, t_map *map)
 {
 	char	**numbers;
 	int		RGB[3];
@@ -98,15 +100,17 @@ void	get_C_RGB(const char *line, t_map *map)
 		if (!(size == 3 && check_commas(RGB_s) == 2 && ft_isdigit_str
 				(numbers[0]) && ft_isdigit_str(numbers[1]) && ft_isdigit_str
 				(numbers[2]) && map->C[0] == -1))
-			print_error("Fich ier .cub incorrect");
+			print_error("Fichier .cub incorrect");
 		RGB[0] = ft_atoi(numbers[0]);
 		RGB[1] = ft_atoi(numbers[1]);
 		RGB[2] = ft_atoi(numbers[2]);
 		if (!((RGB[0] >= 0 && RGB[0] <= 255) && (RGB[1] >= 0 && RGB[1] <= 255)
 				&& (RGB[2] >= 0 && RGB[2] <= 255)))
-			print_error("Fich ier .cub incorrect");
+			print_error("Fichier .cub incorrect");
 		map->C[0] = RGB[0];
 		map->C[1] = RGB[1];
 		map->C[2] = RGB[2];
+		return (1);
 	}
+	return 0;
 }

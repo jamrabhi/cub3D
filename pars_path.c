@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	get_NO(const char *line, t_map *map)
+int	get_NO(const char *line, t_map *map)
 {
 	char	**path;
 
@@ -22,10 +22,12 @@ void	get_NO(const char *line, t_map *map)
 		if (path[2] || map->NO_path)
 			print_error("Fichier .cub incorrect");
 		map->NO_path = path[1];
+		return (1);
 	}
+	return (0);
 }
 
-void	get_SO(const char *line, t_map *map)
+int	get_SO(const char *line, t_map *map)
 {
 	char	**path;
 
@@ -35,10 +37,12 @@ void	get_SO(const char *line, t_map *map)
 		if (path[2] || map->SO_path)
 			print_error("Fichier .cub incorrect");
 		map->SO_path = path[1];
+		return (1);
 	}
+	return (0);
 }
 
-void	get_WE(const char *line, t_map *map)
+int	get_WE(const char *line, t_map *map)
 {
 	char	**path;
 
@@ -48,10 +52,12 @@ void	get_WE(const char *line, t_map *map)
 		if (path[2] || map->WE_path)
 			print_error("Fichier .cub incorrect");
 		map->WE_path = path[1];
+		return (1);
 	}
+	return (0);
 }
 
-void	get_EA(const char *line, t_map *map)
+int	get_EA(const char *line, t_map *map)
 {
 	char	**path;
 
@@ -61,5 +67,7 @@ void	get_EA(const char *line, t_map *map)
 		if (path[2] || map->EA_path)
 			print_error("Fichier .cub incorrect");
 		map->EA_path = path[1];
+		return (1);
 	}
+	return (0);
 }

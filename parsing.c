@@ -12,10 +12,10 @@
 
 #include "cub3d.h"
 
-void	print_error(char *error)
+int	print_error(char *error)
 {
 	printf("Erreur : %s", error);
-	exit (1);
+	exit (EXIT_FAILURE);
 }
 
 void	show_array(char **array)
@@ -39,6 +39,28 @@ void	check_cub(char *file_name)
 		print_error("Fichier .cub incorrect");
 }
 
+int	check_elements(t_map *map)
+{
+	if (map->NO_path && map->SO_path && map->EA_path && map->WE_path
+		&& map->F[0] > -1 && map->C[0] > -1)
+		return (1);
+	return (0);
+}
+
+int check_empty_line(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] == 32 || (str[i] >= 9 && str[i] <= 13)))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	parse_line(char *file_cub, t_map *map)
 {
 	char	*line;
@@ -50,13 +72,15 @@ void	parse_line(char *file_cub, t_map *map)
 	check_cub(file_cub);
 	map->F[0] = -1;
 	map->C[0] = -1;
-	while (get_next_line(fd, &line))
+	while (check_elements(map) == 0 && get_next_line(fd, &line))
 	{
-		get_NO(line, map);
-		get_SO(line, map);
-		get_WE(line, map);
-		get_EA(line, map);
-		get_F_RGB(line, map);
-		get_C_RGB(line, map);
+		if ((!(get_NO(line, map) || get_SO(line, map) || get_WE(line, map) ||
+			get_EA(line, map) || get_F_RGB(line, map) || get_C_RGB(line, map)))
+			&& !check_empty_line(line))
+			print_error("Fichier .cub incorresdsdsdct");
 	}
+	if (!check_elements(map))
+		print_error("Fichier .cub incorrect");
+	while (get_next_line(fd, &line))
+		printf("line = '%s'\n", line);
 }
