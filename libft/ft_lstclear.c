@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 01:55:02 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/29 02:21:33 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/05 19:39:48 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list *list;
-	t_list *tmp;
+	t_list	*list;
+	t_list	*tmp;
 
 	list = *lst;
 	if (lst)

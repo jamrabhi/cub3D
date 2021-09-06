@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 20:57:41 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/25 00:52:18 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/05 19:39:10 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 static size_t	ft_intlen(int n)
 {
-	size_t len;
+	size_t	len;
 
 	len = 1;
 	if (n < 0)
 		len++;
-	while (n /= 10)
+	while (n >= 10 || n <= -10)
+	{
+		n /= 10;
 		len++;
+	}
 	return (len);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char			*rt;
 	unsigned int	nb_cpy;
@@ -32,7 +35,8 @@ char			*ft_itoa(int n)
 
 	nb_cpy = n;
 	len = ft_intlen(n);
-	if (!(rt = (char*)malloc(sizeof(*rt) * (len + 1))))
+	rt = (char *)malloc(sizeof(*rt) * (len + 1));
+	if (!rt)
 		return (NULL);
 	rt[len--] = '\0';
 	if (n < 0)

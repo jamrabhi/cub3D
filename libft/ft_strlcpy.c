@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:23:40 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/17 22:50:11 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/05 19:56:42 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t i;
+	size_t	i;
 
 	if (!(dst && src))
 		return (0);

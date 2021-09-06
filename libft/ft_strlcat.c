@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:55:36 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/17 18:12:31 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/05 19:55:30 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t i;
-	size_t j;
-	size_t dstlen;
+	size_t	i;
+	size_t	j;
+	size_t	dstlen;
 
 	i = 0;
 	j = 0;

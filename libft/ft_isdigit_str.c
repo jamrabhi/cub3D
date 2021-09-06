@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-int		ft_isdigit_str(char *str)
+int	ft_isdigit_str(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

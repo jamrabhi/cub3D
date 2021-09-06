@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 20:30:30 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/18 00:28:40 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/05 17:40:04 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*rt;
 
 	i = 0;
-	if (!(rt = malloc(count * size)))
+	rt = malloc(count * size);
+	if (!rt)
 		return (NULL);
 	while (i < (count * size))
 	{
-		((char*)rt)[i] = 0;
+		((char *)rt)[i] = 0;
 		i++;
 	}
 	return (rt);

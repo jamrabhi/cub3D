@@ -6,7 +6,7 @@
 /*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/25 19:57:43 by jamrabhi          #+#    #+#             */
-/*   Updated: 2019/10/27 22:17:21 by jamrabhi         ###   ########.fr       */
+/*   Updated: 2021/06/05 19:45:21 by jamrabhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
-	if (!(tmp = malloc(sizeof(content))))
+	tmp = malloc(sizeof(content));
+	if (!tmp)
 		return (NULL);
 	tmp->content = content;
 	tmp->next = NULL;
