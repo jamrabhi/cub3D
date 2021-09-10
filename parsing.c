@@ -18,7 +18,7 @@ int	print_error(char *error)
 	exit (EXIT_FAILURE);
 }
 
-/*
+
 void	show_array(char **array)
 {
 	int	i;
@@ -30,7 +30,7 @@ void	show_array(char **array)
 		i++;
 	}
 }
-*/
+
 
 void	check_cub(char *file_name)
 {
@@ -67,6 +67,7 @@ void	parse_line(char *file_cub, t_map *map)
 {
 	char	*line;
 	int		fd;
+	char	*str;
 
 	fd = open(file_cub, O_RDONLY);
 	if (fd == -1)
@@ -83,4 +84,11 @@ void	parse_line(char *file_cub, t_map *map)
 	}
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
+	str = ft_strdup("");
+	while (get_next_line(fd, &line))
+	{
+		line = ft_strjoin(line, "\n");
+		str = ft_strjoin(str, line);
+	}
+	parse_map(str, map);
 }
