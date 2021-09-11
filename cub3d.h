@@ -37,6 +37,6 @@ int		get_we(const char *line, t_map *map);
 int		get_ea(const char *line, t_map *map);
 int		get_f_rgb(const char *line, t_map *map);
 int		get_c_rgb(const char *line, t_map *map);
-void    parse_map(char *str, t_map *map);
+void	parse_map(char *str, t_map *map);
 
 #endif

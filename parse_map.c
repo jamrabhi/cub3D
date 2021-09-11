@@ -12,25 +12,25 @@
 
 #include "cub3d.h"
 
-int check_valid_char(char *str)
+int	check_valid_char(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (!(str[i] == '0' || str[i] == '1' || str[i] == 'N' || str[i] == 'S' || str
-                [i] == 'E' || str[i] == 'W' || str[i] == '\n'))
-                return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] == '0' || str[i] == '1' || str[i] == 'N' || str[i] == 'S'
+				|| str[i] == 'E' || str[i] == 'W' || str[i] == '\n'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-void    parse_map(char *str, t_map *map)
+void	parse_map(char *str, t_map *map)
 {
-    if (map)
-        ft_isprint('0');
-    if (check_valid_char(str) == 0)
-        print_error("Invalid map");
+	if (map)
+		ft_isprint('0');
+	if (check_valid_char(str) == 0)
+		print_error("Invalid map");
 }
