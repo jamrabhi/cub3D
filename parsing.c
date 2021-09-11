@@ -18,7 +18,6 @@ int	print_error(char *error)
 	exit (EXIT_FAILURE);
 }
 
-
 void	show_array(char **array)
 {
 	int	i;
@@ -30,7 +29,6 @@ void	show_array(char **array)
 		i++;
 	}
 }
-
 
 void	check_cub(char *file_name)
 {
