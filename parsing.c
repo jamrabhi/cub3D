@@ -17,7 +17,7 @@ int	print_error(char *error)
 	printf("Error : %s\n", error);
 	exit (EXIT_FAILURE);
 }
-
+/*
 void	show_array(char **array)
 {
 	int	i;
@@ -29,7 +29,7 @@ void	show_array(char **array)
 		i++;
 	}
 }
-
+*/
 void	check_cub(char *file_name)
 {
 	const char	*dot;
