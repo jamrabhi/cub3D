@@ -65,7 +65,22 @@ int	check_max_length(char *str)
 	return (max_length);
 }
 
+void	check_first_last_line(char **map)
+{
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
+
+}
+
+void	fill_map(char *map)
+{
+	int i;
+
+	i = 0;
+}
 
 void	parse_map(char *str, t_map *map)
 {
@@ -82,8 +97,11 @@ void	parse_map(char *str, t_map *map)
 	if (check_valid_char(str) == 0)
 		print_error("Invalid map");
 	printf("max = %d", check_max_length(str));
+
+	/*
 	while (map_array[i])
 	{
-		if (map_array[i][j] == '0' && map_array)
+		if (map_array[i][j] == '0' && map_array[i][j+1] != ) 
 	}
+	*/
 }
