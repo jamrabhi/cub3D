@@ -26,6 +26,7 @@ typedef struct s_map
 	char	*ea_path;
 	int		f[3];
 	int		c[3];
+	char	spawn_dir;
 }				t_map;
 
 int		get_line(char *file_cub, t_map *map);
@@ -38,5 +39,9 @@ int		get_ea(const char *line, t_map *map);
 int		get_f_rgb(const char *line, t_map *map);
 int		get_c_rgb(const char *line, t_map *map);
 void	parse_map(char *str, t_map *map);
+int		check_valid_map(char *str, t_map *map);
+int		check_first_line(char **map);
+int		check_last_line(char **map);
+int		check_borders(char **map);
 
 #endif
