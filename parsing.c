@@ -29,6 +29,16 @@ void	show_array(char **array)
 		i++;
 	}
 }
+
+
+static void	free_it(char *str)
+{
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
+}
 */
 void	check_cub(char *file_name)
 {
@@ -65,7 +75,7 @@ void	parse_line(char *file_cub, t_map *map)
 {
 	char	*line;
 	int		fd;
-	char	*str;
+//	char	*str;
 
 	fd = open(file_cub, O_RDONLY);
 	if (fd == -1)
@@ -79,7 +89,11 @@ void	parse_line(char *file_cub, t_map *map)
 					|| get_ea(line, map) || get_f_rgb(line, map) || get_c_rgb(
 						line, map))) && !check_empty_line(line))
 			print_error("Incorrect element in the .cub scene");
+		if (line)
+			free(line);
 	}
+	free(line);
+	/*
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
 	str = ft_strdup("");
@@ -89,4 +103,5 @@ void	parse_line(char *file_cub, t_map *map)
 		str = ft_strjoin(str, line);
 	}
 	parse_map(str, map);
+	*/
 }

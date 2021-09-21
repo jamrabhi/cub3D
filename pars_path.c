@@ -12,6 +12,20 @@
 
 #include "cub3d.h"
 
+static void free_it(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	if (str)
+		free(str);
+}
+
 int	get_no(const char *line, t_map *map)
 {
 	char	**path;
@@ -22,8 +36,10 @@ int	get_no(const char *line, t_map *map)
 		if (path[2] || map->no_path)
 			print_error("Misconfiguration in the .cub scene (NO texture)");
 		map->no_path = path[1];
+		free_it(path);
 		return (1);
 	}
+	free_it(path);
 	return (0);
 }
 
@@ -37,8 +53,10 @@ int	get_so(const char *line, t_map *map)
 		if (path[2] || map->so_path)
 			print_error("Misconfiguration in the .cub scene (SO texture)");
 		map->so_path = path[1];
+		free_it(path);
 		return (1);
 	}
+	free_it(path);
 	return (0);
 }
 
@@ -52,8 +70,10 @@ int	get_we(const char *line, t_map *map)
 		if (path[2] || map->we_path)
 			print_error("Misconfiguration in the .cub scene (WE texture)");
 		map->we_path = path[1];
+		free_it(path);
 		return (1);
 	}
+	free_it(path);
 	return (0);
 }
 
@@ -67,7 +87,9 @@ int	get_ea(const char *line, t_map *map)
 		if (path[2] || map->ea_path)
 			print_error("Misconfiguration in the .cub scene (EA texture)");
 		map->ea_path = path[1];
+		free_it(path);
 		return (1);
 	}
+	free_it(path);
 	return (0);
 }

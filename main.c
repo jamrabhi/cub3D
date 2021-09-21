@@ -30,4 +30,5 @@ int	main(int argc, char **argv)
 	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", map.c[0], map.c[1], map.c[2]);
 	printf("SPAWNING ORIENTATION : '%c'\n", map.spawn_dir);
 	printf("-------------------------\n_________________________\n");
+	system("leaks a.out");
 }
