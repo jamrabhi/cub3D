@@ -15,6 +15,7 @@
 int	print_error(char *error)
 {
 	printf("Error : %s\n", error);
+	//system("leaks a.out");
 	exit (EXIT_FAILURE);
 }
 /*
@@ -30,8 +31,7 @@ void	show_array(char **array)
 	}
 }
 
-
-static void	free_it(char *str)
+static void	free_array(char *str)
 {
 	if (str)
 	{
@@ -92,7 +92,6 @@ void	parse_line(char *file_cub, t_map *map)
 		if (line)
 			free(line);
 	}
-	free(line);
 	/*
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
@@ -101,7 +100,11 @@ void	parse_line(char *file_cub, t_map *map)
 	{
 		line = ft_strjoin(line, "\n");
 		str = ft_strjoin(str, line);
+		if (line)
+			free(line);
 	}
 	parse_map(str, map);
-	*/
+	free(str);
+	free(line);
+*/
 }

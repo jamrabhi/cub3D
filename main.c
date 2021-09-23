@@ -13,13 +13,18 @@
 #include "cub3d.h"
 #include <fcntl.h>
 
+
+
 int	main(int argc, char **argv)
 {
+	
+
 	t_map	map;
 
 	ft_bzero(&map, sizeof(map));
 	if (argc > 1)
 		parse_line(argv[1], &map);
+	
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");
 	printf("NO : '%s'\n", map.no_path);
@@ -30,5 +35,8 @@ int	main(int argc, char **argv)
 	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", map.c[0], map.c[1], map.c[2]);
 	printf("SPAWNING ORIENTATION : '%c'\n", map.spawn_dir);
 	printf("-------------------------\n_________________________\n");
+	
+	
 	system("leaks a.out");
+
 }

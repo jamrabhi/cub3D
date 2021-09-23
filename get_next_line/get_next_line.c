@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-static void	free_it(char **str)
+static void	free_array(char **str)
 {
 	if (str)
 	{
@@ -42,7 +42,7 @@ static int	separate_lines(char **line, char **str, int fd)
 	*line = ft_substr(str[fd], 0, i);
 	if (!line)
 	{
-		free_it(&str[fd]);
+		free_array(&str[fd]);
 		return (-1);
 	}
 	if (str[fd][i])
@@ -50,11 +50,11 @@ static int	separate_lines(char **line, char **str, int fd)
 		rest = ft_substr(str[fd], i + 1, ft_strlen(str[fd]) - (i + 1));
 		if (!rest)
 			free_exit(&str[fd]);
-		free_it(&str[fd]);
+		free_array(&str[fd]);
 		str[fd] = rest;
 		return (1);
 	}
-	free_it(&str[fd]);
+	free_array(&str[fd]);
 	return (0);
 }
 
@@ -81,7 +81,7 @@ int	get_next_line(int fd, char **line)
 		tmp = ft_strjoin(str[fd], buf);
 		if (!tmp)
 			free_exit(&str[fd]);
-		free_it(&str[fd]);
+		free_array(&str[fd]);
 		str[fd] = tmp;
 	}
 	return (separate_lines(line, str, fd));

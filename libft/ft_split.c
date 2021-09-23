@@ -12,7 +12,7 @@
 
 #include "libft.h"
 /*
-static char	**free_it(char **str)
+static char	**free_array(char **str)
 {
 	int i;
 

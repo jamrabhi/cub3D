@@ -53,6 +53,20 @@ int	check_max_length(char *str)
 }
 */
 
+static void free_array(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	if (str)
+		free(str);
+}
+
 int	empty_space(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -98,10 +112,9 @@ void	parse_map(char *str, t_map *map)
 	j = 0;
 	map_array = ft_split(str, '\n');
 	//show_array(map_array);
-	if (map)
-		ft_isprint('0');
 	if (!(check_valid_map(str, map) && check_first_line(map_array)
 			&& check_last_line(map_array) && check_borders(map_array)
 			&& check_map(map_array)))
 		print_error("Invalid map");
+	free_array(map_array);
 }
