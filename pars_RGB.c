@@ -32,6 +32,7 @@ static void free_array(char **str)
 	while (str[i])
 	{
 		free(str[i]);
+		str[i] = NULL;
 		i++;
 	}
 	if (str)
@@ -52,18 +53,22 @@ char	*join_array(char **array)
 {
 	int		i;
 	char	*str;
-	char	*tmp;
+	//char	*tmp;
+
 
 	i = 1;
-	if (array[1])
-		tmp = array[1];
+	str = array[1];
 	while (array[i + 1])
 	{
-		tmp = ft_strjoin(tmp, array[i + 1]);
-		str = tmp;
-		free(tmp);
+		ft_strlcat(str, array[i + 1], ((ft_strlen(str) + ft_strlen(array[i + 1]) + 1) * sizeof(char)));
 		i++;
+		//str = ft_strdup(tmp);
+		//free(tmp);
+		//printf("tmp = %s\n", tmp);
+		//printf("str = %s\n", str);
 	}
+	//printf("tmp after = %s\n", tmp);
+	//printf("str after = %s\n", str);
 	return (str);
 }
 
@@ -94,7 +99,7 @@ int	get_f_rgb(const char *line, t_map *map)
 		numbers = ft_split(line, ' ');
 
 		if (line && (check_array(numbers) > 2)
-				&& (ft_strncmp(numbers[0], "F", 1) == 0))
+				&& (ft_strncmp(numbers[0], "F", 2) == 0))
 		{
 			rgb_s = ft_strdup(join_array(numbers));
 			free_array(numbers);
@@ -129,7 +134,7 @@ int	get_c_rgb(const char *line, t_map *map)
 	{
 		numbers = ft_split(line, ' ');
 		if (line && (check_array(numbers) > 2) &&
-			(ft_strncmp(numbers[0], "C", 1) == 0))
+			(ft_strncmp(numbers[0], "C", 2) == 0))
 		{
 			rgb_s = ft_strdup(join_array(numbers));
 			free_array(numbers);
