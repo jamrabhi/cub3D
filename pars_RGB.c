@@ -53,17 +53,17 @@ char	*join_array(char **array)
 {
 	int		i;
 	char	*str;
-	//char	*tmp;
+	char	*tmp;
 
 
 	i = 1;
 	str = array[1];
 	while (array[i + 1])
 	{
-		ft_strlcat(str, array[i + 1], ((ft_strlen(str) + ft_strlen(array[i + 1]) + 1) * sizeof(char)));
+		tmp = ft_strjoin(str, array[i + 1]);
+		str = ft_strdup(tmp);
 		i++;
-		//str = ft_strdup(tmp);
-		//free(tmp);
+		free(tmp);
 		//printf("tmp = %s\n", tmp);
 		//printf("str = %s\n", str);
 	}
@@ -71,6 +71,7 @@ char	*join_array(char **array)
 	//printf("str after = %s\n", str);
 	return (str);
 }
+
 
 int	check_commas(char *str)
 {
@@ -101,7 +102,7 @@ int	get_f_rgb(const char *line, t_map *map)
 		if (line && (check_array(numbers) > 2)
 				&& (ft_strncmp(numbers[0], "F", 2) == 0))
 		{
-			rgb_s = ft_strdup(join_array(numbers));
+			rgb_s = join_array(numbers);
 			free_array(numbers);
 			numbers = ft_split(rgb_s, ',');
 			size = check_array(numbers);
@@ -136,7 +137,7 @@ int	get_c_rgb(const char *line, t_map *map)
 		if (line && (check_array(numbers) > 2) &&
 			(ft_strncmp(numbers[0], "C", 2) == 0))
 		{
-			rgb_s = ft_strdup(join_array(numbers));
+			rgb_s = join_array(numbers);
 			free_array(numbers);
 			numbers = ft_split(rgb_s, ',');
 			size = check_array(numbers);
