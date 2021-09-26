@@ -61,6 +61,8 @@ char	*join_array(char **array)
 	while (array[i + 1])
 	{
 		tmp = ft_strjoin(str, array[i + 1]);
+		if (i > 1)
+			free(str);
 		str = ft_strdup(tmp);
 		i++;
 		free(tmp);
