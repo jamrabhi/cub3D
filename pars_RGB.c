@@ -43,7 +43,7 @@ int	check_array(char **array)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (array[i])
 		i++;
 	return (i);
@@ -92,6 +92,20 @@ int	check_commas(char *str)
 	return (rt);
 }
 
+int	check_commas_v2(const char *line)
+{
+	char **str;
+
+	str = ft_split(line, ' ');
+	if (!(ft_strncmp(str[3], ",", 2) && ft_strncmp(str[5], ",", 2)))
+	{
+		free_array(str);
+		return (1);
+	}
+	free_array(str);
+	return (0);
+}
+
 int	get_f_rgb(const char *line, t_map *map)
 {
 	char	**numbers;
@@ -100,21 +114,22 @@ int	get_f_rgb(const char *line, t_map *map)
 
 	if (map->f[0] == -1)
 	{
-		numbers = ft_split(line, ' ');
-		if (line && (check_array(numbers) > 2)
-				&& (ft_strncmp(numbers[0], "F", 2) == 0))
+		numbers = ft_split(line, ',');
+		if (line && check_array(numbers) == 3 && 
+			(ft_strncmp(numbers[0], "F ", 2) == 0))
 		{
 			rgb_s = join_array(numbers);
 			free_array(numbers);
-			numbers = ft_split(rgb_s, ',');
+			numbers = ft_split(rgb_s, ' ');
 			size = check_array(numbers);
-			if (!(size == 3 && check_commas(rgb_s) == 2 && ft_isdigit_str
-					(numbers[0]) && ft_isdigit_str(numbers[1]) && ft_isdigit_str
-					(numbers[2]) && map->f[0] == -1))
+		show_array(numbers);
+			if (!(size == 4 /*&& check_commas_v2(line) == 1*/ && ft_isdigit_str
+					(numbers[1]) && ft_isdigit_str(numbers[2]) && ft_isdigit_str
+					(numbers[3]) && map->f[0] == -1))
 				print_error("Misconfiguration in the .cub scene (Floor color)");
-			map->f[0] = ft_atoi(numbers[0]);
-			map->f[1] = ft_atoi(numbers[1]);
-			map->f[2] = ft_atoi(numbers[2]);
+			map->f[0] = ft_atoi(numbers[1]);
+			map->f[1] = ft_atoi(numbers[2]);
+			map->f[2] = ft_atoi(numbers[3]);
 			if (!((map->f[0] >= 0 && map->f[0] <= 255) && (map->f[1] >= 0 && map
 						->f[1] <= 255) && (map->f[2] >= 0 && map->f[2] <= 255)))
 				print_error("Misconfiguration in the .cub scene (Floor color)");
@@ -122,6 +137,7 @@ int	get_f_rgb(const char *line, t_map *map)
 			free(rgb_s);
 			return (1);
 		}
+		show_array(numbers);
 		free_array(numbers);
 	}
 	return (0);
@@ -136,8 +152,8 @@ int	get_c_rgb(const char *line, t_map *map)
 	if (map->c[0] == -1)
 	{
 		numbers = ft_split(line, ' ');
-		if (line && (check_array(numbers) > 2)
-				&& (ft_strncmp(numbers[0], "C", 2) == 0))
+		if (line && check_array(numbers) > 2 && 
+			(ft_strncmp(numbers[0], "C", 2) == 0))
 		{
 			rgb_s = join_array(numbers);
 			free_array(numbers);
@@ -157,6 +173,7 @@ int	get_c_rgb(const char *line, t_map *map)
 			free_array(numbers);
 			return (1);
 		}
+		show_array(numbers);
 		free_array(numbers);
 	}
 	return (0);
