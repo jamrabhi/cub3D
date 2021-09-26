@@ -75,26 +75,29 @@ int	check_empty_line(char *str)
 void	parse_line(char *file_cub, t_map *map)
 {
 	char	*line;
+	int		ret;
 	int		fd;
 //	char	*str;
 
+	ret = 1;
 	fd = open(file_cub, O_RDONLY);
 	if (fd == -1)
 		print_error("File doesn't exist");
 	check_cub(file_cub);
 	map->f[0] = -1;
 	map->c[0] = -1;
-	while (check_elements(map) == 0 && get_next_line(fd, &line))
+	while (check_elements(map) == 0 && ret)
 	{
+		ret = get_next_line(fd, &line);
 		if ((!(get_no(line, map) || get_so(line, map) || get_we(line, map)
 					|| get_ea(line, map) || get_f_rgb(line, map) || get_c_rgb(
 						line, map))) && !check_empty_line(line))
 			print_error("Incorrect element in the .cub scene");
 		free(line);
 	}
+	/*
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
-	/*
 	str = ft_strdup("");
 	while (get_next_line(fd, &line))
 	{
