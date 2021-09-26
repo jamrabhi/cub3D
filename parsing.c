@@ -15,6 +15,7 @@
 int	print_error(char *error)
 {
 	printf("Error : %s\n", error);
+
 	//system("leaks a.out");
 	exit (EXIT_FAILURE);
 }
@@ -89,8 +90,7 @@ void	parse_line(char *file_cub, t_map *map)
 					|| get_ea(line, map) || get_f_rgb(line, map) || get_c_rgb(
 						line, map))) && !check_empty_line(line))
 			print_error("Incorrect element in the .cub scene");
-		if (line)
-			free(line);
+		free(line);
 	}
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
