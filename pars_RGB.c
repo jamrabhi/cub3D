@@ -32,9 +32,9 @@ static void free_array(char **str)
 	while (str[i])
 	{
 		free(str[i]);
-		str[i] = NULL;
 		i++;
 	}
+	*str = NULL;
 	if (str)
 		free(str);
 }
@@ -67,6 +67,7 @@ char	*join_array(char **array)
 		//printf("tmp = %s\n", tmp);
 		//printf("str = %s\n", str);
 	}
+	tmp = NULL;
 	//printf("tmp after = %s\n", tmp);
 	//printf("str after = %s\n", str);
 	return (str);
@@ -98,7 +99,6 @@ int	get_f_rgb(const char *line, t_map *map)
 	if (map->f[0] == -1)
 	{
 		numbers = ft_split(line, ' ');
-
 		if (line && (check_array(numbers) > 2)
 				&& (ft_strncmp(numbers[0], "F", 2) == 0))
 		{
@@ -134,6 +134,41 @@ int	get_c_rgb(const char *line, t_map *map)
 	if (map->c[0] == -1)
 	{
 		numbers = ft_split(line, ' ');
+		if (line && (check_array(numbers) > 2)
+				&& (ft_strncmp(numbers[0], "C", 2) == 0))
+		{
+			rgb_s = join_array(numbers);
+			free_array(numbers);
+			numbers = ft_split(rgb_s, ',');
+			size = check_array(numbers);
+			if (!(size == 3 && check_commas(rgb_s) == 2 && ft_isdigit_str
+					(numbers[0]) && ft_isdigit_str(numbers[1]) && ft_isdigit_str
+					(numbers[2]) && map->c[0] == -1))
+				print_error("Misconfiguration in the .cub scene (Floor color)");
+			map->c[0] = ft_atoi(numbers[0]);
+			map->c[1] = ft_atoi(numbers[1]);
+			map->c[2] = ft_atoi(numbers[2]);
+			if (!((map->c[0] >= 0 && map->c[0] <= 255) && (map->c[1] >= 0 && map
+						->c[1] <= 255) && (map->c[2] >= 0 && map->c[2] <= 255)))
+				print_error("Misconfiguration in the .cub scene (Floor color)");
+			free(rgb_s);
+			free_array(numbers);
+			return (1);
+		}
+		free_array(numbers);
+	}
+	return (0);
+}
+/*
+int	get_c_rgb(const char *line, t_map *map)
+{
+	char	**numbers;
+	int		size;
+	char	*rgb_s;
+
+	if (map->c[0] == -1)
+	{
+		numbers = ft_split(line, ' ');
 		if (line && (check_array(numbers) > 2) &&
 			(ft_strncmp(numbers[0], "C", 2) == 0))
 		{
@@ -159,3 +194,4 @@ int	get_c_rgb(const char *line, t_map *map)
 	}
 	return (0);
 }
+*/

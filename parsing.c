@@ -92,9 +92,9 @@ void	parse_line(char *file_cub, t_map *map)
 		if (line)
 			free(line);
 	}
-	/*
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
+	/*
 	str = ft_strdup("");
 	while (get_next_line(fd, &line))
 	{
@@ -107,4 +107,6 @@ void	parse_line(char *file_cub, t_map *map)
 	free(str);
 	free(line);
 */
+	close(fd);
+	fd = -1;
 }
