@@ -19,6 +19,23 @@ int	print_error(char *error)
 	//system("leaks a.out");
 	exit (EXIT_FAILURE);
 }
+
+int	print_error_n_free_array(char *error, char **array)
+{
+	int i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	*array = NULL;
+	if (array)
+		free(array);
+	printf("Error : %s\n", error);
+	exit (EXIT_FAILURE);
+}
 /*
 void	show_array(char **array)
 {
@@ -63,6 +80,8 @@ int	check_empty_line(char *str)
 	int	i;
 
 	i = 0;
+//	if (str[i] == 0)
+//		return (1);
 	while (str[i])
 	{
 		if (!(str[i] == 32 || (str[i] >= 9 && str[i] <= 13)))
@@ -89,11 +108,12 @@ void	parse_line(char *file_cub, t_map *map)
 	while (check_elements(map) == 0 && ret)
 	{
 		ret = get_next_line(fd, &line);
-		if ((!(get_no(line, map) || get_so(line, map) || get_we(line, map)
-					|| get_ea(line, map) || get_f_rgb(line, map) || get_c_rgb(
-						line, map))) && !check_empty_line(line))
+			if ((!(get_no(line, map) || get_so(line, map) || get_we(line, map)
+			|| get_ea(line, map) || get_f_c_rgb(line, map, 'F')
+			|| get_f_c_rgb(line, map, 'C')))
+			&& !check_empty_line(line))
 			print_error("Incorrect element in the .cub scene");
-		free(line);
+			free(line);
 	}
 	/*
 	if (!check_elements(map))
@@ -111,5 +131,4 @@ void	parse_line(char *file_cub, t_map *map)
 	free(line);
 */
 	close(fd);
-	fd = -1;
 }

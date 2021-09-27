@@ -32,12 +32,12 @@ typedef struct s_map
 int		get_line(char *file_cub, t_map *map);
 void	parse_line(char *file_cub, t_map *map);
 int		print_error(char *error);
+int		print_error_n_free_array(char *error, char **array);
 int		get_no(const char *line, t_map *map);
 int		get_so(const char *line, t_map *map);
 int		get_we(const char *line, t_map *map);
 int		get_ea(const char *line, t_map *map);
-int		get_f_rgb(const char *line, t_map *map);
-int		get_c_rgb(const char *line, t_map *map);
+int		get_f_c_rgb(char *line, t_map *map, char c);
 void	parse_map(char *str, t_map *map);
 int		check_valid_map(char *str, t_map *map);
 int		check_first_line(char **map);

@@ -39,178 +39,171 @@ static void free_array(char **str)
 		free(str);
 }
 
-int	check_array(char **array)
+char				**ft_clear_splitted(char **tab)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	return (NULL);
+}
+
+static unsigned int	ft_get_nb_strs(char const *s, const char *delimiters)
+{
+	unsigned int	i;
+	unsigned int	nb_strs;
+
+	if (!s[0])
+		return (0);
+	i = 0;
+	nb_strs = 0;
+	while (s[i] && ft_strchr(delimiters, s[i]))
+		i++;
+	while (s[i])
+	{
+		if (ft_strchr(delimiters, s[i]))
+		{
+			nb_strs++;
+			while (s[i] && ft_strchr(delimiters, s[i]))
+				i++;
+			continue ;
+		}
+		i++;
+	}
+	if (!ft_strchr(delimiters, s[i - 1]))
+		nb_strs++;
+	return (nb_strs);
+}
+
+static void			ft_get_next_str(char **next_str, unsigned int *next_str_len,
+					const char *delimiters)
+{
+	unsigned int i;
+
+	*next_str += *next_str_len;
+	*next_str_len = 0;
+	i = 0;
+	while (**next_str && ft_strchr(delimiters, **next_str))
+		(*next_str)++;
+	while ((*next_str)[i])
+	{
+		if (ft_strchr(delimiters, (*next_str)[i]))
+			return ;
+		(*next_str_len)++;
+		i++;
+	}
+}
+
+char				**ft_split__(char const *s, const char *delimiters)
+{
+	char			**tab;
+	char			*next_str;
+	unsigned int	next_str_len;
+	unsigned int	nb_strs;
+	unsigned int	i;
+
+	nb_strs = ft_get_nb_strs(s, delimiters);
+	if (!(tab = malloc(sizeof(char *) * (nb_strs + 1))))
+		return (NULL);
+	i = 0;
+	next_str = (char *)s;
+	next_str_len = 0;
+	while (i < nb_strs)
+	{
+		ft_get_next_str(&next_str, &next_str_len, delimiters);
+		if (!(tab[i] = malloc(sizeof(char) * (next_str_len + 1))))
+			return (ft_clear_splitted(tab));
+		ft_strlcpy(tab[i], next_str, next_str_len + 1);
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
+
+int	check_format_first(char *line, char c)
 {
 	int	i;
 
-	i = 1;
-	while (array[i])
+	i = 0;
+	while (line[i] == ' ')
 		i++;
+	if (line[i] != c && line[i + 1] != ' ')
+		return (-1);
+	i += 2;
+	while (line[i] == ' ')
+			i++;
+	if (line[i] && !ft_isdigit(line[i]))
+		return (-1);
 	return (i);
 }
 
-char	*join_array(char **array)
+int	check_format(char *line, char c)
 {
-	int		i;
-	char	*str;
-	char	*tmp;
+	int i;
+	int	nb_and_commas;
 
+	i = check_format_first(line, c);
+	nb_and_commas = 0;
+	if (i == -1)
+		return (-1);
+	while (line[i])
+	{
+		if (line[i] && ft_isdigit(line[i]))
+			nb_and_commas++;
+		while (line[i] && ft_isdigit(line[i]))
+			i++;
+		while (line[i] == ' ')
+			i++;
+		if (line[i] && line[i] == ',')
+		{
+			i++;
+			nb_and_commas++;
+				while(line[i] == ' ')
+					i++;
+			if (!line[i] || (line[i] && !ft_isdigit(line[i])))
+				return (-1);
+		}
+		// else if (nb_and_commas != 5)
+		// 	return (-1);
+	}
+	if (nb_and_commas != 5)
+		return (-1);
+	return (0);
+}
+
+int	get_f_c_rgb(char *line, t_map *map, char c)
+{
+	char **tmp;
+	int	i;
+	int	stock;
 
 	i = 1;
-	str = array[1];
-	while (array[i + 1])
+	tmp = ft_split__(line, " ,");
+	if (tmp[0] && ((c == 'F' && ft_strcmp(tmp[0], "F") == 0 && map->f[0] == -1)
+			|| (c == 'C' && ft_strcmp(tmp[0], "C") == 0 && map->c[0] == -1)))
 	{
-		tmp = ft_strjoin(str, array[i + 1]);
-		if (i > 1)
-			free(str);
-		str = ft_strdup(tmp);
-		i++;
-		free(tmp);
-		//printf("tmp = %s\n", tmp);
-		//printf("str = %s\n", str);
-	}
-	tmp = NULL;
-	//printf("tmp after = %s\n", tmp);
-	//printf("str after = %s\n", str);
-	return (str);
-}
-
-
-int	check_commas(char *str)
-{
-	int	i;
-	int	rt;
-
-	i = 0;
-	rt = 0;
-	while (str[i])
-	{
-		if (str[i] == ',')
-			rt++;
-		i++;
-	}
-	return (rt);
-}
-
-int	check_commas_v2(const char *line)
-{
-	char **str;
-
-	str = ft_split(line, ' ');
-	if (!(ft_strncmp(str[3], ",", 2) && ft_strncmp(str[5], ",", 2)))
-	{
-		free_array(str);
+		if (check_format(line, c) == -1)
+			print_error_n_free_array("Incorrect RGB settings", tmp);
+		while (tmp[i])
+		{
+			stock = ft_atoi(tmp[i]);
+			if (stock < 0 || stock > 255)
+				print_error_n_free_array("Incorrect RGB settings", tmp);
+				
+			if (c == 'F')
+				map->f[i- 1] = stock;
+			if (c == 'C')
+				map->c[i- 1] = stock;
+			i++;
+		}
+		free_array(tmp);
 		return (1);
 	}
-	free_array(str);
+	free_array(tmp);
 	return (0);
 }
-
-int	get_f_rgb(const char *line, t_map *map)
-{
-	char	**numbers;
-	int		size;
-	char	*rgb_s;
-
-	if (map->f[0] == -1)
-	{
-		numbers = ft_split(line, ',');
-		if (line && check_array(numbers) == 3 && 
-			(ft_strncmp(numbers[0], "F ", 2) == 0))
-		{
-			rgb_s = join_array(numbers);
-			free_array(numbers);
-			numbers = ft_split(rgb_s, ' ');
-			size = check_array(numbers);
-		show_array(numbers);
-			if (!(size == 4 /*&& check_commas_v2(line) == 1*/ && ft_isdigit_str
-					(numbers[1]) && ft_isdigit_str(numbers[2]) && ft_isdigit_str
-					(numbers[3]) && map->f[0] == -1))
-				print_error("Misconfiguration in the .cub scene (Floor color)");
-			map->f[0] = ft_atoi(numbers[1]);
-			map->f[1] = ft_atoi(numbers[2]);
-			map->f[2] = ft_atoi(numbers[3]);
-			if (!((map->f[0] >= 0 && map->f[0] <= 255) && (map->f[1] >= 0 && map
-						->f[1] <= 255) && (map->f[2] >= 0 && map->f[2] <= 255)))
-				print_error("Misconfiguration in the .cub scene (Floor color)");
-			free_array(numbers);
-			free(rgb_s);
-			return (1);
-		}
-		show_array(numbers);
-		free_array(numbers);
-	}
-	return (0);
-}
-
-int	get_c_rgb(const char *line, t_map *map)
-{
-	char	**numbers;
-	int		size;
-	char	*rgb_s;
-
-	if (map->c[0] == -1)
-	{
-		numbers = ft_split(line, ' ');
-		if (line && check_array(numbers) > 2 && 
-			(ft_strncmp(numbers[0], "C", 2) == 0))
-		{
-			rgb_s = join_array(numbers);
-			free_array(numbers);
-			numbers = ft_split(rgb_s, ',');
-			size = check_array(numbers);
-			if (!(size == 3 && check_commas(rgb_s) == 2 && ft_isdigit_str
-					(numbers[0]) && ft_isdigit_str(numbers[1]) && ft_isdigit_str
-					(numbers[2]) && map->c[0] == -1))
-				print_error("Misconfiguration in the .cub scene (Floor color)");
-			map->c[0] = ft_atoi(numbers[0]);
-			map->c[1] = ft_atoi(numbers[1]);
-			map->c[2] = ft_atoi(numbers[2]);
-			if (!((map->c[0] >= 0 && map->c[0] <= 255) && (map->c[1] >= 0 && map
-						->c[1] <= 255) && (map->c[2] >= 0 && map->c[2] <= 255)))
-				print_error("Misconfiguration in the .cub scene (Floor color)");
-			free(rgb_s);
-			free_array(numbers);
-			return (1);
-		}
-		show_array(numbers);
-		free_array(numbers);
-	}
-	return (0);
-}
-/*
-int	get_c_rgb(const char *line, t_map *map)
-{
-	char	**numbers;
-	int		size;
-	char	*rgb_s;
-
-	if (map->c[0] == -1)
-	{
-		numbers = ft_split(line, ' ');
-		if (line && (check_array(numbers) > 2) &&
-			(ft_strncmp(numbers[0], "C", 2) == 0))
-		{
-			rgb_s = join_array(numbers);
-			free_array(numbers);
-			numbers = ft_split(rgb_s, ',');
-			size = check_array(numbers);
-			if (!(size == 3 && check_commas(rgb_s) == 2 && ft_isdigit_str
-					(numbers[0]) && ft_isdigit_str(numbers[1]) && ft_isdigit_str
-					(numbers[2]) && map->c[0] == -1))
-				print_error("Misconfiguration in the .cub scene (Ceiling color)");
-			map->c[0] = ft_atoi(numbers[0]);
-			map->c[1] = ft_atoi(numbers[1]);
-			map->c[2] = ft_atoi(numbers[2]);
-			if (!((map->c[0] >= 0 && map->c[0] <= 255) && (map->c[1] >= 0 && map
-						->c[1] <= 255) && (map->c[2] >= 0 && map->c[2] <= 255)))
-				print_error("Misconfiguration in the .cub scene (Ceiling color)");
-			free_array(numbers);
-			free(rgb_s);
-			return (1);
-		}
-		free_array(numbers);
-	}
-	return (0);
-}
-*/
