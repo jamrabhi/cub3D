@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+
 /*
 static char	**free_array(char **str)
 {
@@ -26,6 +27,7 @@ static char	**free_array(char **str)
 	return (NULL);
 }
 */
+
 static size_t	ft_count_words(const char *s, char c)
 {
 	size_t	i;
@@ -72,6 +74,5 @@ char	**ft_split(char const *s, char c)
 			i++;
 	}
 	rt[index] = NULL;
-
 	return (rt);
 }

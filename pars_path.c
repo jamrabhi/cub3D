@@ -12,22 +12,6 @@
 
 #include "cub3d.h"
 
-
-static void free_array(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		str[i] = NULL;
-		i++;
-	}
-	if (str)
-		free(str);
-}
-
 int	get_no(const char *line, t_map *map)
 {
 	char	**path;
@@ -54,7 +38,7 @@ int	get_so(const char *line, t_map *map)
 {
 	char	**path;
 
-	if(!map->so_path)
+	if (!map->so_path)
 	{
 		path = ft_split(line, ' ');
 		if (line && path[0] && (ft_strncmp(path[0], "SO", 2) == 0))
@@ -76,7 +60,7 @@ int	get_we(const char *line, t_map *map)
 {
 	char	**path;
 
-	if(!map->we_path)
+	if (!map->we_path)
 	{
 		path = ft_split(line, ' ');
 		if (line && path[0] && (ft_strncmp(path[0], "WE", 2) == 0))
@@ -95,10 +79,10 @@ int	get_ea(const char *line, t_map *map)
 {
 	char	**path;
 
-	if(!map->ea_path)
+	if (!map->ea_path)
 	{
 		path = ft_split(line, ' ');
-		if (line && path[0] && (ft_strncmp(path[0], "EA", 2) == 0)) //line pr espace
+		if (line && path[0] && (ft_strncmp(path[0], "EA", 2) == 0))
 		{
 			if (path[2] || map->ea_path)
 				print_error("Misconfiguration in the .cub scene (EA texture)");

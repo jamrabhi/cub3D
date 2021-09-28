@@ -53,20 +53,6 @@ int	check_max_length(char *str)
 }
 */
 
-static void free_array(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	if (str)
-		free(str);
-}
-
 int	empty_space(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
