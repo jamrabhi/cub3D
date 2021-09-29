@@ -12,9 +12,29 @@
 
 #include "cub3d.h"
 
+int	fd;
+
+t_map map;
+
 int	print_error(char *error)
 {
 	printf("Error : %s\n", error);
+	exit (EXIT_FAILURE);
+}
+
+int	print_error_n_free_line(char *error, char *line)
+{
+	printf("Error : %s\n", error);
+	if (line)
+		free(line);
+	while(get_next_line(fd, &line))
+		free(line);
+	free(line);
+	free(map.no_path);
+	free(map.so_path);
+	free(map.we_path);
+	free(map.ea_path);
+	close(fd);
 	exit (EXIT_FAILURE);
 }
 
@@ -33,7 +53,32 @@ void	free_array(char **str)
 		free(str);
 }
 
-int	print_error_n_free_array_n_line(char *error, char **array, char *line)
+void	free_array_n_line(char **str, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	*str = NULL;
+	if (str)
+		free(str);
+	if (line)
+		free(line);
+	while(get_next_line(fd, &line))
+		free(line);
+	free(line);
+	free(map.no_path);
+	free(map.so_path);
+	free(map.we_path);
+	free(map.ea_path);
+	close(fd);
+}
+
+int	print_error_n_free_array_n_line(char *error, char **array, char *line, int fd)
 {
 	int	i;
 
@@ -48,6 +93,15 @@ int	print_error_n_free_array_n_line(char *error, char **array, char *line)
 		free(array);
 	if (line)
 		free(line);
+	while(get_next_line(fd, &line))
+		free(line);
+	free(line);
+	free(map.no_path);
+	free(map.so_path);
+	free(map.we_path);
+	free(map.ea_path);
+	close(fd);
+
 	printf("Error : %s\n", error);
 	exit (EXIT_FAILURE);
 }
@@ -123,29 +177,32 @@ int	check_empty_line(char *str)
 	return (1);
 }
 
-void	parse_line(char *file_cub, t_map *map)
+void	parse_line(char *file_cub)
 {
 	char	*line;
 	int		ret;
-	int		fd;
+	extern int		fd;
 //	char	*str;
 
-	ret = 1;
 	fd = open(file_cub, O_RDONLY);
+	ret = 1;
 	if (fd == -1)
 		print_error("File doesn't exist");
 	check_cub(file_cub);
-	map->f[0] = -1;
-	map->c[0] = -1;
-	while (check_elements(map) == 0 && ret)
+	map.f[0] = -1;
+	map.c[0] = -1;
+	while (ret && check_elements(&map) == 0)
 	{
 		ret = get_next_line(fd, &line);
-			if ((!(get_no(line, map) || get_so(line, map) || get_we(line, map)
-			|| get_ea(line, map) || get_f_c_rgb(line, map, 'F') || get_f_c_rgb
-			(line, map, 'C'))) && !check_empty_line(line))
-			print_error("Incorrect element in the .cub scene");
-			free(line);
+		if ((!(get_no(line, &map) || get_so(line, &map) || get_we(line, &map)
+		|| get_ea(line, &map) || get_f_c_rgb(line, &map, 'F') || get_f_c_rgb
+		(line, &map, 'C'))) && !check_empty_line(line))
+			print_error_n_free_line("Incorrect element in the .cub scene", line);
+		free(line);
 	}
+	while(get_next_line(fd, &line))
+		free(line);
+	free(line);
 	/*
 	if (!check_elements(map))
 		print_error("Missing element in the .cub scene");
@@ -157,7 +214,7 @@ void	parse_line(char *file_cub, t_map *map)
 		if (line)
 			free(line);
 	}
-	parse_map(str, map);
+	parse_map(str, &map);
 	free(str);
 	free(line);
 */

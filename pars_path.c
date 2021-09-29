@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int	get_no(const char *line, t_map *map)
+int	get_no(char *line, t_map *map)
 {
 	char	**path;
 
@@ -23,18 +23,19 @@ int	get_no(const char *line, t_map *map)
 		{
 			if (path[2] || map->no_path)
 			{
-				free_array(path);
+				free_array_n_line(path, line);
 				print_error("Misconfiguration in the .cub scene (NO texture)");
 			}
 			map->no_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
 		}
+		free_array(path);
 	}
 	return (0);
 }
 
-int	get_so(const char *line, t_map *map)
+int	get_so(char *line, t_map *map)
 {
 	char	**path;
 
@@ -45,18 +46,19 @@ int	get_so(const char *line, t_map *map)
 		{
 			if (path[2] || map->so_path)
 			{
-				free_array(path);
+				free_array_n_line(path, line);
 				print_error("Misconfiguration in the .cub scene (SO texture)");
 			}
 			map->so_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
 		}
+		free_array(path);
 	}
 	return (0);
 }
 
-int	get_we(const char *line, t_map *map)
+int	get_we(char *line, t_map *map)
 {
 	char	**path;
 
@@ -66,16 +68,20 @@ int	get_we(const char *line, t_map *map)
 		if (line && path[0] && (ft_strncmp(path[0], "WE", 2) == 0))
 		{
 			if (path[2] || map->we_path)
+			{
+				free_array_n_line(path, line);
 				print_error("Misconfiguration in the .cub scene (WE texture)");
+			}
 			map->we_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
 		}
+		free_array(path);
 	}
 	return (0);
 }
 
-int	get_ea(const char *line, t_map *map)
+int	get_ea(char *line, t_map *map)
 {
 	char	**path;
 
@@ -85,11 +91,15 @@ int	get_ea(const char *line, t_map *map)
 		if (line && path[0] && (ft_strncmp(path[0], "EA", 2) == 0))
 		{
 			if (path[2] || map->ea_path)
+			{
+				free_array_n_line(path, line);
 				print_error("Misconfiguration in the .cub scene (EA texture)");
+			}
 			map->ea_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
 		}
+		free_array(path);
 	}
 	return (0);
 }

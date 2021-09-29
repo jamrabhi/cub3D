@@ -13,17 +13,17 @@
 #include "cub3d.h"
 #include <fcntl.h>
 
-
+t_map map;
 
 int	main(int argc, char **argv)
 {
 	
 
-	t_map	map;
+
 
 	ft_bzero(&map, sizeof(map));
 	if (argc > 1)
-		parse_line(argv[1], &map);
+		parse_line(argv[1]);
 	
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");

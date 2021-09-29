@@ -12,19 +12,6 @@
 
 #include "cub3d.h"
 
-/*
-void	show_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		printf("Line[%d] = |%s|\n", i, array[i]);
-		i++;
-	}
-}
-*/
 
 /*
 int	check_max_length(char *str)
@@ -88,7 +75,7 @@ int	check_map(char **map)
 	return (1);
 }
 
-void	parse_map(char *str, t_map *map)
+void	parse_map(char *str, t_map *map, char *line, int fd)
 {
 	int		i;
 	int		j;
@@ -97,10 +84,10 @@ void	parse_map(char *str, t_map *map)
 	i = 0;
 	j = 0;
 	map_array = ft_split(str, '\n');
-	//show_array(map_array);
+	show_array(map_array);
 	if (!(check_valid_map(str, map) && check_first_line(map_array)
 			&& check_last_line(map_array) && check_borders(map_array)
 			&& check_map(map_array)))
-		print_error("Invalid map");
+		print_error_n_free_array_n_line("Invalid map", map_array, line, fd);
 	free_array(map_array);
 }

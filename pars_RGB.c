@@ -91,12 +91,12 @@ int	get_f_c_rgb(char *line, t_map *map, char c)
 			|| (c == 'C' && ft_strcmp(tmp[0], "C") == 0 && map->c[0] == -1)))
 	{
 		if (check_format(line, c) == -1)
-			print_error_n_free_array_n_line("Incorrect RGB", tmp, line);
+			print_error_n_free_array_n_line("Incorrect RGB", tmp, line, fd);
 		while (tmp[i])
 		{
 			stock = ft_atoi(tmp[i]);
 			if (stock < 0 || stock > 255)
-				print_error_n_free_array_n_line("Incorrect RGB", tmp, line);
+				print_error_n_free_array_n_line("Incorrect RGB", tmp, line, fd);
 			if (c == 'F')
 				map->f[i - 1] = stock;
 			if (c == 'C')

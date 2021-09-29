@@ -1,11 +1,14 @@
+
 NO ./path_to_NO
-SO     ./path_to_SO
-WE      ./path_to_WE  
+
+
+SO        ./path_to_SO
+WE      ./path_to_WE 
 EA ./path_to_EA
 
   F 145    ,02 ,     3
 
-C   4 ,255     , 254
+C   4 ,25     , 254
 
 111
 1N1

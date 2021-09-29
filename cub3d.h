@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 
+extern int fd;
+
 typedef struct s_map
 {
 	char	*no_path;
@@ -29,21 +31,25 @@ typedef struct s_map
 	char	spawn_dir;
 }				t_map;
 
+extern t_map map;
+
 int		get_line(char *file_cub, t_map *map);
-void	parse_line(char *file_cub, t_map *map);
+void	parse_line(char *file_cub);
 int		print_error(char *error);
-int		print_error_n_free_array_n_line(char *error, char **array, char *line);
-int		get_no(const char *line, t_map *map);
-int		get_so(const char *line, t_map *map);
-int		get_we(const char *line, t_map *map);
-int		get_ea(const char *line, t_map *map);
+int		print_error_n_free_array_n_line(char *error, char **array, char *line, int fd);
+int		get_no(char *line, t_map *map);
+int		get_so(char *line, t_map *map);
+int		get_we(char *line, t_map *map);
+int		get_ea(char *line, t_map *map);
 int		get_f_c_rgb(char *line, t_map *map, char c);
-void	parse_map(char *str, t_map *map);
+void	parse_map(char *str, t_map *map, char *line, int fd);
 int		check_valid_map(char *str, t_map *map);
 int		check_first_line(char **map);
 int		check_last_line(char **map);
 int		check_borders(char **map);
 int		free_array_and_return(char **array, int return_id);
 void	free_array(char **str);
+void	free_array_n_line(char **str, char *line);
+void	show_array(char **array);
 
 #endif
