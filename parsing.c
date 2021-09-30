@@ -202,6 +202,6 @@ void	parse_line(char *file_cub)
 	if (!check_elements(&map))
 		print_error("Missing element in the .cub scene");
 	parse_map(line, fd);
-	// free(line);
+	free(line);
 	close(fd);
 }

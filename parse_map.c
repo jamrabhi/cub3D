@@ -80,19 +80,21 @@ int	check_map(char **map)
 void	parse_map(char *line, int fd)
 {
 	int		i;
-	int		j;
 	char	*str;
+	char	*tmp;
 	char	**map_array;
 
 	i = 0;
-	j = 0;
 	str = ft_strdup("");
 	while (get_next_line(fd, &line))
 	{
-		free(str);
-		line = ft_strjoin(line, "\n");
-		str = ft_strjoin(str, line);
+		tmp = ft_strjoin(line, "\n");
+		if (i > 1)
+			free(str);
+		str = ft_strjoin(str, tmp);
 		free(line);
+		free(tmp);
+		i++;
 	}
 	free(line);
 	map_array = ft_split(str, '\n');
