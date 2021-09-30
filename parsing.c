@@ -182,7 +182,6 @@ void	parse_line(char *file_cub)
 	char	*line;
 	int		ret;
 	extern int		fd;
-//	char	*str;
 
 	fd = open(file_cub, O_RDONLY);
 	ret = 1;
@@ -200,23 +199,9 @@ void	parse_line(char *file_cub)
 			print_error_n_free_line("Incorrect element in the .cub scene", line);
 		free(line);
 	}
-	while(get_next_line(fd, &line))
-		free(line);
-	free(line);
-	/*
-	if (!check_elements(map))
+	if (!check_elements(&map))
 		print_error("Missing element in the .cub scene");
-	str = ft_strdup("");
-	while (get_next_line(fd, &line))
-	{
-		line = ft_strjoin(line, "\n");
-		str = ft_strjoin(str, line);
-		if (line)
-			free(line);
-	}
-	parse_map(str, &map);
-	free(str);
-	free(line);
-*/
+	parse_map(line, fd);
+	// free(line);
 	close(fd);
 }

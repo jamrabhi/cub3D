@@ -42,7 +42,7 @@ int		get_so(char *line, t_map *map);
 int		get_we(char *line, t_map *map);
 int		get_ea(char *line, t_map *map);
 int		get_f_c_rgb(char *line, t_map *map, char c);
-void	parse_map(char *str, t_map *map, char *line, int fd);
+void	parse_map(char *line, int fd);
 int		check_valid_map(char *str, t_map *map);
 int		check_first_line(char **map);
 int		check_last_line(char **map);
