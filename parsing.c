@@ -19,6 +19,10 @@ t_map map;
 int	print_error(char *error)
 {
 	printf("Error : %s\n", error);
+	free(map.no_path);
+	free(map.so_path);
+	free(map.we_path);
+	free(map.ea_path);
 	exit (EXIT_FAILURE);
 }
 
@@ -92,10 +96,12 @@ int	print_error_n_free_array_n_line(char *error, char **array, char *line, int f
 	if (array)
 		free(array);
 	if (line)
+	{
 		free(line);
-	while(get_next_line(fd, &line))
+		while(get_next_line(fd, &line))
+			free(line);
 		free(line);
-	free(line);
+	}
 	free(map.no_path);
 	free(map.so_path);
 	free(map.we_path);

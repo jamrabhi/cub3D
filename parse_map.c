@@ -77,35 +77,40 @@ int	check_map(char **map)
 	return (1);
 }
 
-void	parse_map(char *line, int fd)
+char	*get_array(char *line, int fd)
 {
-	int		i;
 	char	*str;
 	char	*tmp;
-	char	**map_array;
+	char	*tmp2;
 
-	i = 0;
 	str = ft_strdup("");
 	while (get_next_line(fd, &line))
 	{
 		tmp = ft_strjoin(line, "\n");
+		tmp2 = ft_strjoin(str, tmp);
 		free(str);
-		str = NULL;
-		str = ft_strjoin(str, tmp);
+		str = ft_strdup(tmp2);
 		free(line);
 		free(tmp);
-		tmp = NULL;
-		i++;
+		free(tmp2);
 	}
 	free(line);
-	if (str)
-	{
-		map_array = ft_split(str, '\n');
-		if (!(check_valid_map(str, &map) && check_first_line(map_array)
-				&& check_last_line(map_array) && check_borders(map_array)
-				&& check_map(map_array)))
-			print_error_n_free_array_n_line("Invalid map", map_array, line, fd);
-		free(str);
-		free_array(map_array);
-	}
+	return (str);
+}
+
+void	parse_map(char *line, int fd)
+{
+	char	*map_str;
+	char	**map_array;
+
+	map_str = get_array(line, fd);
+	if (!map_str)
+		print_error("invalid map");
+	map_array = ft_split(map_str, '\n');
+	if (!(check_valid_map(map_str, &map) && check_first_line(map_array)
+			&& check_last_line(map_array) && check_borders(map_array)
+			&& check_map(map_array)))
+		print_error_n_free_array_n_line("Invalid map", map_array, line, fd);
+	free(map_str);
+	free_array(map_array);
 }
