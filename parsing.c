@@ -83,7 +83,7 @@ int	print_error_n_free_array_n_line(char *error, char **array, char *line, int f
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array && array[i])
 	{
 		free(array[i]);
 		i++;
@@ -202,6 +202,5 @@ void	parse_line(char *file_cub)
 	if (!check_elements(&map))
 		print_error("Missing element in the .cub scene");
 	parse_map(line, fd);
-	free(line);
 	close(fd);
 }

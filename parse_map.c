@@ -89,19 +89,23 @@ void	parse_map(char *line, int fd)
 	while (get_next_line(fd, &line))
 	{
 		tmp = ft_strjoin(line, "\n");
-		if (i > 1)
-			free(str);
+		free(str);
+		str = NULL;
 		str = ft_strjoin(str, tmp);
 		free(line);
 		free(tmp);
+		tmp = NULL;
 		i++;
 	}
 	free(line);
-	map_array = ft_split(str, '\n');
-	if (!(check_valid_map(str, &map) && check_first_line(map_array)
-			&& check_last_line(map_array) && check_borders(map_array)
-			&& check_map(map_array)))
-		print_error_n_free_array_n_line("Invalid map", map_array, line, fd);
-	free(str);
-	free_array(map_array);
+	if (str)
+	{
+		map_array = ft_split(str, '\n');
+		if (!(check_valid_map(str, &map) && check_first_line(map_array)
+				&& check_last_line(map_array) && check_borders(map_array)
+				&& check_map(map_array)))
+			print_error_n_free_array_n_line("Invalid map", map_array, line, fd);
+		free(str);
+		free_array(map_array);
+	}
 }

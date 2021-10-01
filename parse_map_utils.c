@@ -20,7 +20,7 @@ int	check_valid_map(char *str, t_map *map)
 	i = 0;
 	wall_count = 0;
 	map->spawn_dir = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (!(str[i] == '0' || str[i] == '1' || str[i] == '\n' || str[i] == ' ')
 			&& ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i]
