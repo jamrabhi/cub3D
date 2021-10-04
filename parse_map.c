@@ -95,6 +95,7 @@ char	*get_array(char *line, int fd)
 		free(tmp2);
 	}
 	free(line);
+	close(fd);
 	return (str);
 }
 
@@ -110,7 +111,10 @@ void	parse_map(char *line, int fd)
 	if (!(check_valid_map(map_str, &map) && check_first_line(map_array)
 			&& check_last_line(map_array) && check_borders(map_array)
 			&& check_map(map_array)))
-		print_error_n_free_array_n_line("Invalid map", map_array, line, fd);
+	{
+		free(map_str);
+		print_error_n_free_array("Invalid map", map_array);
+	}
 	free(map_str);
 	free_array(map_array);
 }

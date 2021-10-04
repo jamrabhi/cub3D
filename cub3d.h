@@ -51,5 +51,7 @@ int		free_array_and_return(char **array, int return_id);
 void	free_array(char **str);
 void	free_array_n_line(char **str, char *line);
 void	show_array(char **array);
+int		print_error_n_free_array(char *error, char **array);
+
 
 #endif

@@ -82,6 +82,27 @@ void	free_array_n_line(char **str, char *line)
 	close(fd);
 }
 
+int	print_error_n_free_array(char *error, char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array && array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	*array = NULL;
+	if (array)
+		free(array);
+	free(map.no_path);
+	free(map.so_path);
+	free(map.we_path);
+	free(map.ea_path);
+	printf("Error : %s\n", error);
+	exit (EXIT_FAILURE);
+}
+
 int	print_error_n_free_array_n_line(char *error, char **array, char *line, int fd)
 {
 	int	i;

@@ -19,13 +19,11 @@ int	get_no(char *line, t_map *map)
 	if (!map->no_path)
 	{
 		path = ft_split(line, ' ');
-		if (line && path[0] && (ft_strncmp(path[0], "NO", 2) == 0))
+		if (line && path[0] && (ft_strcmp(path[0], "NO") == 0))
 		{
 			if (path[2] || map->no_path)
-			{
-				free_array_n_line(path, line);
-				print_error("Misconfiguration in the .cub scene (NO texture)");
-			}
+				print_error_n_free_array_n_line("Misconfiguration in the .cub \
+scene (NO texture)", path, line, fd);
 			map->no_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -42,13 +40,11 @@ int	get_so(char *line, t_map *map)
 	if (!map->so_path)
 	{
 		path = ft_split(line, ' ');
-		if (line && path[0] && (ft_strncmp(path[0], "SO", 2) == 0))
+		if (line && path[0] && (ft_strcmp(path[0], "SO") == 0))
 		{
 			if (path[2] || map->so_path)
-			{
-				free_array_n_line(path, line);
-				print_error("Misconfiguration in the .cub scene (SO texture)");
-			}
+				print_error_n_free_array_n_line("Misconfiguration in the .cub \
+scene (SO texture)", path, line, fd);
 			map->so_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -65,13 +61,11 @@ int	get_we(char *line, t_map *map)
 	if (!map->we_path)
 	{
 		path = ft_split(line, ' ');
-		if (line && path[0] && (ft_strncmp(path[0], "WE", 2) == 0))
+		if (line && path[0] && (ft_strcmp(path[0], "WE") == 0))
 		{
 			if (path[2] || map->we_path)
-			{
-				free_array_n_line(path, line);
-				print_error("Misconfiguration in the .cub scene (WE texture)");
-			}
+				print_error_n_free_array_n_line("Misconfiguration in the .cub \
+scene (WE texture)", path, line, fd);
 			map->we_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -88,13 +82,11 @@ int	get_ea(char *line, t_map *map)
 	if (!map->ea_path)
 	{
 		path = ft_split(line, ' ');
-		if (line && path[0] && (ft_strncmp(path[0], "EA", 2) == 0))
+		if (line && path[0] && (ft_strcmp(path[0], "EA") == 0))
 		{
 			if (path[2] || map->ea_path)
-			{
-				free_array_n_line(path, line);
-				print_error("Misconfiguration in the .cub scene (EA texture)");
-			}
+				print_error_n_free_array_n_line("Misconfiguration in the .cub \
+scene (EA texture)", path, line, fd);
 			map->ea_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
