@@ -11,19 +11,19 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <fcntl.h>
 
 t_map	g_map;
 int		g_fd;
 
 int	main(int argc, char **argv)
 {
+	if (argc != 2)
+		print_error(".cub file not specified");
 	g_fd = open(argv[1], O_RDONLY);
 	if (g_fd == -1)
 		print_error("File doesn't exist");
 	ft_bzero(&g_map, sizeof(g_map));
-	if (argc > 1)
-		parse_line(argv[1]);
+	parse_line(argv[1]);
 	
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");
@@ -39,6 +39,4 @@ int	main(int argc, char **argv)
 	free(g_map.so_path);
 	free(g_map.we_path);
 	free(g_map.ea_path);
-	
-
 }

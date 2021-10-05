@@ -79,7 +79,8 @@ void	parse_map(char *line)
 			&& check_map(map_array)))
 	{
 		free(map_str);
-		print_error_n_free_array("Invalid map", map_array);
+		free_array(map_array);
+		print_error("Invalid map");
 	}
 	free(map_str);
 	free_array(map_array);

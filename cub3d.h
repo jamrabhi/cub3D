@@ -33,8 +33,7 @@ extern t_map	g_map;
 extern int		g_fd;
 
 void	parse_line(char *file_cub);
-int		print_error(char *error);
-int		print_error_n_free_array_n_line(char *error, char **array, char *line);
+
 int		get_no(char *line);
 int		get_so(char *line);
 int		get_we(char *line);
@@ -45,10 +44,11 @@ int		check_valid_map(char *str);
 int		check_first_line(char **map);
 int		check_last_line(char **map);
 int		check_borders(char **map);
-int		free_array_and_return(char **array, int return_id);
+
+int		print_error(char *error);
 void	free_array(char **str);
-void	free_array_n_line(char **str, char *line);
-void	show_array(char **array);
-int		print_error_n_free_array(char *error, char **array);
+int		free_array_and_return(char **array, int return_id);
+int		print_error_n_free_line(char *error, char *line);
+int		print_error_n_free_array_n_line(char *error, char **array, char *line);
 
 #endif
