@@ -13,32 +13,32 @@
 #include "cub3d.h"
 #include <fcntl.h>
 
-t_map map;
+t_map	g_map;
+int		g_fd;
 
 int	main(int argc, char **argv)
 {
-	
-
-
-
-	ft_bzero(&map, sizeof(map));
+	g_fd = open(argv[1], O_RDONLY);
+	if (g_fd == -1)
+		print_error("File doesn't exist");
+	ft_bzero(&g_map, sizeof(g_map));
 	if (argc > 1)
 		parse_line(argv[1]);
 	
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");
-	printf("NO : '%s'\n", map.no_path);
-	printf("SO : '%s'\n", map.so_path);
-	printf("WE : '%s'\n", map.we_path);
-	printf("EA : '%s'\n", map.ea_path);
-	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", map.f[0], map.f[1], map.f[2]);
-	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", map.c[0], map.c[1], map.c[2]);
-	printf("SPAWNING ORIENTATION : '%c'\n", map.spawn_dir);
+	printf("NO : '%s'\n", g_map.no_path);
+	printf("SO : '%s'\n", g_map.so_path);
+	printf("WE : '%s'\n", g_map.we_path);
+	printf("EA : '%s'\n", g_map.ea_path);
+	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", g_map.f[0], g_map.f[1], g_map.f[2]);
+	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", g_map.c[0], g_map.c[1], g_map.c[2]);
+	printf("SPAWNING ORIENTATION : '%c'\n", g_map.spawn_dir);
 	printf("-------------------------\n_________________________\n");
-	free(map.no_path);
-	free(map.so_path);
-	free(map.we_path);
-	free(map.ea_path);
+	free(g_map.no_path);
+	free(g_map.so_path);
+	free(g_map.we_path);
+	free(g_map.ea_path);
 	
 
 }

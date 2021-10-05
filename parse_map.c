@@ -12,36 +12,6 @@
 
 #include "cub3d.h"
 
-int		fd;
-t_map	map;
-
-/*
-int	check_max_length(char *str)
-{
-	int	i;
-	int	counter;
-	int	max_length;
-
-	i = 0;
-	counter = 0;
-	max_length = 0;
-	while (str[i])
-	{
-		i++;
-		if (str[i - 1] != '\n' && str[i - 1] != ' ')
-			counter++;
-		if (max_length < counter)
-			max_length = counter;
-		if (str[i] == '\n')
-		{
-			counter = 0;
-			i++;
-		}
-	}
-	return (max_length);
-}
-*/
-
 int	empty_space(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -64,11 +34,7 @@ int	check_map(char **map)
 					map[i][j] == 'E' || map[i][j] == 'W') && (!(empty_space(map
 					[i][j + 1]) && empty_space(map[i - 1][j]) &&
 					empty_space(map[i + 1][j]))))
-			{
-				//printf("MAP i+1 = '%s'\n", map[i+1 ]);
-				//printf("line = '%d' - pos = '%d' - j = '%c' - j+1 = '%c' - i-1 = '%c'  i+1 = '%c'\n",i, j, map[i][j], map[i][j+1], map[i-1][j], map[i+1][j]);
 				return (0);
-			}
 			j++;
 		}
 		i++;
@@ -77,14 +43,14 @@ int	check_map(char **map)
 	return (1);
 }
 
-char	*get_array(char *line, int fd)
+char	*get_array(char *line)
 {
 	char	*str;
 	char	*tmp;
 	char	*tmp2;
 
 	str = ft_strdup("");
-	while (get_next_line(fd, &line))
+	while (get_next_line(g_fd, &line))
 	{
 		tmp = ft_strjoin(line, "\n");
 		tmp2 = ft_strjoin(str, tmp);
@@ -95,20 +61,20 @@ char	*get_array(char *line, int fd)
 		free(tmp2);
 	}
 	free(line);
-	close(fd);
+	close(g_fd);
 	return (str);
 }
 
-void	parse_map(char *line, int fd)
+void	parse_map(char *line)
 {
 	char	*map_str;
 	char	**map_array;
 
-	map_str = get_array(line, fd);
+	map_str = get_array(line);
 	if (!map_str)
 		print_error("invalid map");
 	map_array = ft_split(map_str, '\n');
-	if (!(check_valid_map(map_str, &map) && check_first_line(map_array)
+	if (!(check_valid_map(map_str) && check_first_line(map_array)
 			&& check_last_line(map_array) && check_borders(map_array)
 			&& check_map(map_array)))
 	{

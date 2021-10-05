@@ -12,29 +12,29 @@
 
 #include "cub3d.h"
 
-int	check_valid_map(char *str, t_map *map)
+int	check_valid_map(char *str)
 {
 	int	i;
 	int	wall_count;
 
 	i = 0;
 	wall_count = 0;
-	map->spawn_dir = 0;
+	g_map.spawn_dir = 0;
 	while (str && str[i])
 	{
 		if (!(str[i] == '0' || str[i] == '1' || str[i] == '\n' || str[i] == ' ')
 			&& ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i]
-					== 'W') && map->spawn_dir != 0))
+					== 'W') && g_map.spawn_dir != 0))
 			return (0);
 		if (str[i] == '1')
 			wall_count++;
 		if (wall_count > 0 && str[i] == '\n' && str[i + 1] == '\n')
 			return (0);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
-			map->spawn_dir = str[i];
+			g_map.spawn_dir = str[i];
 		i++;
 	}
-	if (map->spawn_dir == 0)
+	if (g_map.spawn_dir == 0)
 		return (0);
 	return (1);
 }
@@ -106,12 +106,8 @@ int	check_borders(char **map)
 			while (map[i][last_char] > 0 && map[i][last_char] == ' ')
 				last_char--;
 		}
-		//printf("DEBUG line = '%d' first = '%c' last = '%c'\n", i, map[i][j], map[i][last_char]);
 		if (map[i][j] != '1' || map[i][last_char] != '1')
-		{
-			//printf("map[%d] = '%s'\n",i, map[i]);
 			return (0);
-		}
 		i++;
 	}
 	return (1);

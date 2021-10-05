@@ -24,7 +24,7 @@ void	show_array(char **array)
 	}
 }
 
-int	check_format_first(const char *line, char c)
+int	check_format_first(char *line, char c)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int	check_format_first(const char *line, char c)
 	return (i);
 }
 
-int	skip_digit_and_space(const char *line, int i)
+int	skip_digit_and_space(char *line, int i)
 {
 	while (line[i] && ft_isdigit(line[i]))
 		i++;
@@ -50,7 +50,7 @@ int	skip_digit_and_space(const char *line, int i)
 	return (i);
 }
 
-int	check_format(const char *ln, char c)
+int	check_format(char *ln, char c)
 {
 	int	i;
 	int	nb_and_commas;
@@ -79,7 +79,7 @@ int	check_format(const char *ln, char c)
 	return (0);
 }
 
-int	get_f_c_rgb(char *line, t_map *map, char c)
+int	get_f_c_rgb(char *line, char c)
 {
 	char	**tmp;
 	int		i;
@@ -87,20 +87,20 @@ int	get_f_c_rgb(char *line, t_map *map, char c)
 
 	i = 1;
 	tmp = ft_split_str(line, " ,");
-	if (tmp[0] && ((c == 'F' && ft_strcmp(tmp[0], "F") == 0 && map->f[0] == -1)
-			|| (c == 'C' && ft_strcmp(tmp[0], "C") == 0 && map->c[0] == -1)))
+	if (tmp[0] && ((c == 'F' && ft_strcmp(tmp[0], "F") == 0 && g_map.f[0] == -1)
+			|| (c == 'C' && ft_strcmp(tmp[0], "C") == 0 && g_map.c[0] == -1)))
 	{
 		if (check_format(line, c) == -1)
-			print_error_n_free_array_n_line("Incorrect RGB", tmp, line, fd);
+			print_error_n_free_array_n_line("Incorrect RGB", tmp, line);
 		while (tmp[i])
 		{
 			stock = ft_atoi(tmp[i]);
 			if (stock < 0 || stock > 255)
-				print_error_n_free_array_n_line("Incorrect RGB", tmp, line, fd);
+				print_error_n_free_array_n_line("Incorrect RGB", tmp, line);
 			if (c == 'F')
-				map->f[i - 1] = stock;
+				g_map.f[i - 1] = stock;
 			if (c == 'C')
-				map->c[i - 1] = stock;
+				g_map.c[i - 1] = stock;
 			i++;
 		}
 		return (free_array_and_return(tmp, 1));
