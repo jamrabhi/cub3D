@@ -33,13 +33,15 @@ LIB = lib/libft/libft.a
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-	$(MAKE) -C lib/libft
+	cd $(LIBDIR) && make
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME)
 
 clean:
+	cd $(LIBDIR) && make clean
 	rm -f $(OBJ)
 
 fclean: clean
+	cd $(LIBDIR) && make fclean
 	rm -f $(NAME)
 
 re: fclean all
