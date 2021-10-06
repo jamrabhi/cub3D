@@ -12,7 +12,7 @@
 
 NAME = cub3D
 
-CC = clang
+CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -27,21 +27,21 @@ LIBDIR = lib/libft
 
 LIB = lib/libft/libft.a
 
-.c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-
 all: $(NAME)
 
 $(NAME) : $(OBJ)
 	cd $(LIBDIR) && make
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME)
 
+.c.o:
+	${CC} ${CFLAGS} -c $< -o $@
+
 clean:
-	cd $(LIBDIR) && make clean
+	cd $(LIBDIR) && make $@
 	rm -f $(OBJ)
 
 fclean: clean
-	cd $(LIBDIR) && make fclean
+	cd $(LIBDIR) && make $@
 	rm -f $(NAME)
 
 re: fclean all
