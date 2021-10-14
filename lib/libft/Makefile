@@ -33,9 +33,9 @@ OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 all: $(NAME)
 
 $(NAME) :
-	gcc -c -Wall -Wextra -Werror $(SRCS)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@gcc -c -Wall -Wextra -Werror $(SRCS)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 bonus:
 ifeq ("$(shell ls -R $(OBJ_BONUS) 2>/dev/null)","")
@@ -45,9 +45,9 @@ ifeq ("$(shell ls -R $(OBJ_BONUS) 2>/dev/null)","")
 endif
 
 clean:
-	rm -f $(OBJ) $(OBJ_BONUS)
+	@rm -f $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
