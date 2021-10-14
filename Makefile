@@ -63,9 +63,12 @@ clean:
 	@echo "DONE \n"
 
 fclean: clean
+# Check if mlx was configured
+ifneq ("$(shell ls $(MLXDIR)Makefile.gen 2>/dev/null)","")
 	@echo "Executing the clean rule of MiniLibX ..."
 	@cd $(MLXDIR) && ./configure clean > /dev/null 2>&1
 	@echo "DONE \n"
+endif
 
 	@echo "Deleting Libft's binary ..."
 	@cd $(LIBDIR) && make $@

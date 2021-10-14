@@ -19,6 +19,8 @@ int	print_error(char *error)
 	free(g_map.so_path);
 	free(g_map.we_path);
 	free(g_map.ea_path);
+	if (g_fd != -1)
+		close(g_fd);
 	exit (EXIT_FAILURE);
 }
 
