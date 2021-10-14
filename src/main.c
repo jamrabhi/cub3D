@@ -17,6 +17,15 @@ int		g_fd;
 
 int	main(int argc, char **argv)
 {
+	void	*mlx;
+	void	*mlx_win;
+
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	mlx_loop(mlx);
+		free(mlx);
+	mlx_destroy_window(mlx,mlx_win);
+
 	if (argc != 2)
 		print_error(".cub file not specified");
 	g_fd = open(argv[1], O_DIRECTORY);
