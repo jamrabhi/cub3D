@@ -47,11 +47,24 @@ $(NAME) : $(OBJ)
 	@echo "DONE \n"
 
 	@echo "Compiling cub3D ..."
-	@$(CC) $(CFLAGS) $(OBJ) -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux -lXext -lX11 -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -g3 -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux -lXext -lX11 -o $(NAME)
 	@echo "DONE \n"
 
 .c.o:
 	@${CC} ${CFLAGS} -I $(INCDIR) -I$(LIBDIR) -I$(MLXDIR) -c $< -o $@
+
+debug: $(OBJ)
+	@echo "Compiling libft ..."
+	@cd $(LIBDIR) && make
+	@echo "DONE \n"
+
+	@echo "Configuring MiniLibX ..."
+	@cd $(MLXDIR) && ./configure > /dev/null 2>&1
+	@echo "DONE \n"
+
+	@echo "Compiling cub3D with fsanitize ..."
+	@$(CC) $(CFLAGS) $(OBJ) -g3 -fsanitize=address -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux -lXext -lX11 -o $(NAME)
+	@echo "DONE \n"
 
 clean:
 	@echo "Deleting Libft objects files ..."
@@ -79,3 +92,5 @@ endif
 	@echo "DONE \n"
 
 re: fclean all
+
+redebug: fclean debug
