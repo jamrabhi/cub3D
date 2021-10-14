@@ -14,9 +14,10 @@
 # define CUB3D_H
 
 # include "../src/get_next_line/get_next_line.h"
-# include "../lib/libft/libft.h"
+# include <libft.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <mlx.h>
 
 typedef struct s_map
 {

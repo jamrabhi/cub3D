@@ -23,6 +23,8 @@ SRC = src/main.c src/parsing/print_error.c src/get_next_line/get_next_line.c \
 
 OBJ = $(SRC:.c=.o)
 
+INCDIR = include
+
 LIBDIR = lib/libft/
 
 LIB = lib/libft/libft.a
@@ -45,11 +47,11 @@ $(NAME) : $(OBJ)
 	@echo "DONE \n"
 
 	@echo "Compiling cub3D ..."
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux -lXext -lX11 -o $(NAME)
 	@echo "DONE \n"
 
 .c.o:
-	@${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -I $(INCDIR) -I$(LIBDIR) -I$(MLXDIR) -c $< -o $@
 
 clean:
 	@echo "Deleting Libft objects files ..."
