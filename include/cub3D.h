@@ -45,7 +45,7 @@ typedef struct s_data
 	int		map_fd;
 }				t_data;
 
-void	parse_line(char *file_cub, t_data *data);
+void	parsing(char *file_cub, t_data *data);
 
 int		get_no(char *line, t_data *data);
 int		get_so(char *line, t_data *data);

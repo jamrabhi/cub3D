@@ -43,7 +43,7 @@ int	check_empty_line(char *str)
 	return (1);
 }
 
-void	parse_line(char *file_cub, t_data *data)
+void	parsing(char *file_cub, t_data *data)
 {
 	char	*line;
 	int		ret;
