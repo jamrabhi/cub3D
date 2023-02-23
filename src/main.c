@@ -39,7 +39,7 @@ int	main(int argc, char **argv)
 	data.map_fd = open(argv[1], O_RDONLY);
 	if (data.map_fd == -1)
 		exit_error("Map doesn't exist", &data);
-	parse_map(argv[1], &data);
+	parsing(argv[1], &data);
 
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");
@@ -52,13 +52,13 @@ int	main(int argc, char **argv)
 	printf("SPAWNING ORIENTATION : '%c'\n", data.map->spawn_dir);
 	printf("-------------------------\n_________________________\n");
 
-	void	*mlx;
-	void	*mlx_win;
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);
-		free(mlx);
-	mlx_destroy_window(mlx,mlx_win);
+	// void	*mlx;
+	// void	*mlx_win;
+	// mlx = mlx_init();
+	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	// mlx_loop(mlx);
+	// 	free(mlx);
+	// mlx_destroy_window(mlx,mlx_win);
 
 	free_map(&data);
 	return (0);
