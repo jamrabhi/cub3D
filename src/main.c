@@ -40,24 +40,26 @@ int	main(int argc, char **argv)
 	if (data.map_fd == -1)
 		exit_error("File doesn't exist", &data);
 	parse_line(argv[1], &data);
-	// printf("-------------------------\n_________________________\n");
-	// printf("INFO DATA STRUCT. :\n");
-	// printf("NO : '%s'\n", data.map->no_path);
-	// printf("SO : '%s'\n", data.map->so_path);
-	// printf("WE : '%s'\n", data.map->we_path);
-	// printf("EA : '%s'\n", data.map->ea_path);
-	// printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.map->f[0], data.map->f[1], data.map->f[2]);
-	// printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.map->c[0], data.map->c[1], data.map->c[2]);
-	// printf("SPAWNING ORIENTATION : '%c'\n", data.map->spawn_dir);
-	// printf("-------------------------\n_________________________\n");
+
+	printf("-------------------------\n_________________________\n");
+	printf("INFO DATA STRUCT. :\n");
+	printf("NO : '%s'\n", data.map->no_path);
+	printf("SO : '%s'\n", data.map->so_path);
+	printf("WE : '%s'\n", data.map->we_path);
+	printf("EA : '%s'\n", data.map->ea_path);
+	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.map->f[0], data.map->f[1], data.map->f[2]);
+	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.map->c[0], data.map->c[1], data.map->c[2]);
+	printf("SPAWNING ORIENTATION : '%c'\n", data.map->spawn_dir);
+	printf("-------------------------\n_________________________\n");
+
 	// void	*mlx;
 	// void	*mlx_win;
-
 	// mlx = mlx_init();
 	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	// mlx_loop(mlx);
 	// 	free(mlx);
 	// mlx_destroy_window(mlx,mlx_win);
+
 	free_map(&data);
 	return (0);
 }

@@ -32,7 +32,7 @@ LIB = lib/libft/libft.a
 
 MLXDIR = minilibx-linux/
 
-MLX = libmlx_Linux.a
+MLXFLAGS = -lmlx -lXext -lX11
 
 MAKEFLAGS += --no-print-directory
 
@@ -41,57 +41,42 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	@echo "Compiling libft ..."
 	@cd $(LIBDIR) && make
-	@echo "DONE \n"
+	@echo "DONE\n"
 
 	@echo "Configuring MiniLibX ..."
 	@cd $(MLXDIR) && ./configure > /dev/null 2>&1
-	@echo "DONE \n"
+	@echo "DONE\n"
 
 	@echo "Compiling cub3D ..."
-	@$(CC) $(CFLAGS) $(OBJ) -g3 -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux -lXext -lX11 -o $(NAME)
-	@echo "DONE \n"
+	@$(CC) $(CFLAGS) $(OBJ) -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux $(MLXFLAGS) -o $(NAME)
+	@echo "DONE"
 
 .c.o:
 	@${CC} ${CFLAGS} -I $(INCDIR) -I$(LIBDIR) -I$(MLXDIR) -c $< -o $@
 
-debug: $(OBJ)
-	@echo "Compiling libft ..."
-	@cd $(LIBDIR) && make
-	@echo "DONE \n"
-
-	@echo "Configuring MiniLibX ..."
-	@cd $(MLXDIR) && ./configure > /dev/null 2>&1
-	@echo "DONE \n"
-
-	@echo "Compiling cub3D with fsanitize ..."
-	@$(CC) $(CFLAGS) $(OBJ) -g3 -fsanitize=address -L $(LIBDIR) -lft -L$(MLXDIR) -lmlx_Linux -lXext -lX11 -o $(NAME)
-	@echo "DONE \n"
-
 clean:
 	@echo "Deleting Libft objects files ..."
 	@cd $(LIBDIR) && make $@
-	@echo "DONE \n"
+	@echo "DONE\n"
 
 	@echo "Deleting cub3D objects files ..."
 	@rm -f $(OBJ)
-	@echo "DONE \n"
+	@echo "DONE"
 
 fclean: clean
 # Check if mlx was configured
 ifneq ("$(shell ls $(MLXDIR)Makefile.gen 2>/dev/null)","")
 	@echo "Cleaning MiniLibX ..."
 	@cd $(MLXDIR) && ./configure clean > /dev/null 2>&1
-	@echo "DONE \n"
+	@echo "DONE\n"
 endif
 
 	@echo "Deleting Libft's binary ..."
 	@cd $(LIBDIR) && make $@
-	@echo "DONE \n"
+	@echo "DONE\n"
 	
 	@echo "Deleting cub3D's binary ..."
 	@rm -f $(NAME)
-	@echo "DONE \n"
+	@echo "DONE"
 
 re: fclean all
-
-redebug: fclean debug
