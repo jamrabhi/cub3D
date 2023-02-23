@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include <cub3D.h>
 
 int	empty_space(char c)
 {
@@ -43,14 +43,14 @@ int	check_map(char **map)
 	return (1);
 }
 
-char	*get_array(char *line)
+char	*get_array(char *line, t_data *data)
 {
 	char	*str;
 	char	*tmp;
 	char	*tmp2;
 
 	str = ft_strdup("");
-	while (get_next_line(g_fd, &line))
+	while (get_next_line(data->map_fd, &line))
 	{
 		tmp = ft_strjoin(line, "\n");
 		tmp2 = ft_strjoin(str, tmp);
@@ -61,26 +61,26 @@ char	*get_array(char *line)
 		free(tmp2);
 	}
 	free(line);
-	close(g_fd);
+	close(data->map_fd);
 	return (str);
 }
 
-void	parse_map(char *line)
+void	parse_map(char *line, t_data *data)
 {
 	char	*map_str;
 	char	**map_array;
 
-	map_str = get_array(line);
+	map_str = get_array(line, data);
 	if (!map_str)
-		print_error("invalid map");
+		exit_error("Invalid map", data);
 	map_array = ft_split(map_str, '\n');
-	if (!(check_valid_map(map_str) && check_first_line(map_array)
+	if (!(check_valid_map(map_str, data) && check_first_line(map_array)
 			&& check_last_line(map_array) && check_borders(map_array)
 			&& check_map(map_array)))
 	{
 		free(map_str);
 		free_array(map_array);
-		print_error("Invalid map");
+		exit_error("Invalid map", data);
 	}
 	free(map_str);
 	free_array(map_array);

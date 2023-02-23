@@ -10,44 +10,58 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include <cub3D.h>
 
-t_map	g_map;
-int		g_fd;
+void	show_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		printf("Line[%d] = |%s|\n", i, array[i]);
+		i++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*mlx_win;
+	t_data	data;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);
-		free(mlx);
-	mlx_destroy_window(mlx,mlx_win);
-
+	ft_bzero(&data, sizeof(data));
+	data.map = malloc(sizeof(t_map));
+	ft_bzero(data.map, sizeof(t_map));
 	if (argc != 2)
-		print_error(".cub file not specified");
-	g_fd = open(argv[1], O_DIRECTORY);
-	if (g_fd != -1)
-		print_error("It's a directory");
-	g_fd = open(argv[1], O_RDONLY);
-	if (g_fd == -1)
-		print_error("File doesn't exist");
-	ft_bzero(&g_map, sizeof(g_map));
-	parse_line(argv[1]);
-	printf("-------------------------\n_________________________\n");
-	printf("INFO DATA STRUCT. :\n");
-	printf("NO : '%s'\n", g_map.no_path);
-	printf("SO : '%s'\n", g_map.so_path);
-	printf("WE : '%s'\n", g_map.we_path);
-	printf("EA : '%s'\n", g_map.ea_path);
-	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", g_map.f[0], g_map.f[1], g_map.f[2]);
-	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", g_map.c[0], g_map.c[1], g_map.c[2]);
-	printf("SPAWNING ORIENTATION : '%c'\n", g_map.spawn_dir);
-	printf("-------------------------\n_________________________\n");
-	free(g_map.no_path);
-	free(g_map.so_path);
-	free(g_map.we_path);
-	free(g_map.ea_path);
+		exit_error(".cub file not specified", &data);
+	data.map_fd = open(argv[1], O_DIRECTORY);
+	if (data.map_fd != -1)
+		exit_error("It's a directory", &data);
+	data.map_fd = open(argv[1], O_RDONLY);
+	if (data.map_fd == -1)
+		exit_error("File doesn't exist", &data);
+	parse_line(argv[1], &data);
+	// printf("-------------------------\n_________________________\n");
+	// printf("INFO DATA STRUCT. :\n");
+	// printf("NO : '%s'\n", data.map->no_path);
+	// printf("SO : '%s'\n", data.map->so_path);
+	// printf("WE : '%s'\n", data.map->we_path);
+	// printf("EA : '%s'\n", data.map->ea_path);
+	// printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.map->f[0], data.map->f[1], data.map->f[2]);
+	// printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.map->c[0], data.map->c[1], data.map->c[2]);
+	// printf("SPAWNING ORIENTATION : '%c'\n", data.map->spawn_dir);
+	// printf("-------------------------\n_________________________\n");
+	// void	*mlx;
+	// void	*mlx_win;
+
+	// mlx = mlx_init();
+	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	// mlx_loop(mlx);
+	// 	free(mlx);
+	// mlx_destroy_window(mlx,mlx_win);
+	free_map(&data);
+	return (0);
 }
+
+
+
+//TODO : when line only space invalid read

@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include <cub3D.h>
 
-void	check_cub(char *file_name)
+void	check_cub(char *file_name, t_data *data)
 {
 	const char	*dot;
 
 	dot = ft_strrchr(file_name, '.');
 	if (ft_strncmp(dot, ".cub", 5) != 0)
-		print_error("Incorrect file format");
+		exit_error(INVALID_FILE, data);
 }
 
-int	check_elements(void)
+int	check_elements(t_data *data)
 {
-	if (g_map.no_path && g_map.so_path && g_map.ea_path && g_map.we_path
-		&& g_map.f[0] > -1 && g_map.c[0] > -1)
+	if (data->map->no_path && data->map->so_path && data->map->ea_path
+		&& data->map->we_path && data->map->f[0] > -1 && data->map->c[0] > -1)
 		return (1);
 	return (0);
 }
@@ -43,26 +43,27 @@ int	check_empty_line(char *str)
 	return (1);
 }
 
-void	parse_line(char *file_cub)
+void	parse_line(char *file_cub, t_data *data)
 {
 	char	*line;
 	int		ret;
 
 	ret = 1;
-	check_cub(file_cub);
-	g_map.f[0] = -1;
-	g_map.c[0] = -1;
-	while (ret && check_elements() == 0)
+	check_cub(file_cub, data);
+	data->map->f[0] = -1;
+	data->map->c[0] = -1;
+	while (ret && check_elements(data) == 0)
 	{
-		ret = get_next_line(g_fd, &line);
-		if ((!(get_no(line) || get_so(line) || get_we(line) || get_ea(line)
-					|| get_f_c_rgb(line, 'F') || get_f_c_rgb(line, 'C')))
+		ret = get_next_line(data->map_fd, &line);
+		if ((!(get_no(line, data) || get_so(line, data) || get_we(line, data)
+					|| get_ea(line, data) || get_f_c_rgb(line, 'F', data)
+					|| get_f_c_rgb(line, 'C', data)))
 			&& !check_empty_line(line))
-			print_error_n_free_line("Incorrect element in the .cub file", line);
+			exit_error_n_free_line(INVALID_ELEM, line, data);
 		free(line);
 	}
-	if (!check_elements())
-		print_error("Missing element in the .cub file");
-	parse_map(line);
-	close(g_fd);
+	if (!check_elements(data))
+		exit_error(MISSING_ELEM, data);
+	parse_map(line, data);
+	close(data->map_fd);
 }

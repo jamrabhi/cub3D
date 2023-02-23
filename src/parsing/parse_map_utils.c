@@ -10,31 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include <cub3D.h>
 
-int	check_valid_map(char *str)
+int	check_valid_map(char *str, t_data *data)
 {
 	int	i;
 	int	wall_count;
 
 	i = 0;
 	wall_count = 0;
-	g_map.spawn_dir = 0;
+	data->map->spawn_dir = 0;
 	while (str && str[i])
 	{
 		if (!(str[i] == '0' || str[i] == '1' || str[i] == '\n' || str[i] == ' ')
 			&& ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i]
-					== 'W') && g_map.spawn_dir != 0))
+					== 'W') && data->map->spawn_dir != 0))
 			return (0);
 		if (str[i] == '1')
 			wall_count++;
 		if (wall_count > 0 && str[i] == '\n' && str[i + 1] == '\n')
 			return (0);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
-			g_map.spawn_dir = str[i];
+			data->map->spawn_dir = str[i];
 		i++;
 	}
-	if (g_map.spawn_dir == 0)
+	if (data->map->spawn_dir == 0)
 		return (0);
 	return (1);
 }

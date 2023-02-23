@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
-
-void	show_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		printf("Line[%d] = |%s|\n", i, array[i]);
-		i++;
-	}
-}
+#include <cub3D.h>
 
 int	check_format_first(char *line, char c)
 {
@@ -79,29 +67,29 @@ int	check_format(char *ln, char c)
 	return (0);
 }
 
-int	get_f_c_rgb(char *line, char c)
+int	get_f_c_rgb(char *line, char c, t_data *data)
 {
 	char	**tmp;
 	int		i;
 	int		stock;
 
-	i = 1;
+	i = 0;
 	tmp = ft_split_str(line, " ,");
-	if (tmp[0] && ((c == 'F' && ft_strcmp(tmp[0], "F") == 0 && g_map.f[0] == -1)
-			|| (c == 'C' && ft_strcmp(tmp[0], "C") == 0 && g_map.c[0] == -1)))
+	if (tmp[0] && ((c == 'F' && ft_strcmp(tmp[0], "F") == 0
+				&& data->map->f[0] == -1) || (c == 'C' && ft_strcmp(tmp[0], "C")
+				== 0 && data->map->c[0] == -1)))
 	{
 		if (check_format(line, c) == -1)
-			print_error_n_free_array_n_line("Incorrect RGB", tmp, line);
-		while (tmp[i])
+			exit_error_n_free_array_n_line(INVALID_RGB, tmp, line, data);
+		while (tmp[++i])
 		{
 			stock = ft_atoi(tmp[i]);
 			if (stock < 0 || stock > 255)
-				print_error_n_free_array_n_line("Incorrect RGB", tmp, line);
+				exit_error_n_free_array_n_line(INVALID_RGB, tmp, line, data);
 			if (c == 'F')
-				g_map.f[i - 1] = stock;
+				data->map->f[i - 1] = stock;
 			if (c == 'C')
-				g_map.c[i - 1] = stock;
-			i++;
+				data->map->c[i - 1] = stock;
 		}
 		return (free_array_and_return(tmp, 1));
 	}

@@ -14,10 +14,11 @@ NAME = cub3D
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
-SRC = src/main.c src/parsing/print_error.c src/get_next_line/get_next_line.c \
-		src/get_next_line/get_next_line_utils.c src/parsing/parsing.c \
+SRC = 	src/main.c src/get_next_line/get_next_line_utils.c \
+		src/get_next_line/get_next_line.c \
+		src/parsing/parsing.c src/parsing/exit.c src/parsing/exit_utils.c \
 		src/parsing/parse_path.c src/parsing/parse_RGB.c \
 		src/parsing/parse_map.c src/parsing/parse_map_utils.c
 
@@ -78,7 +79,7 @@ clean:
 fclean: clean
 # Check if mlx was configured
 ifneq ("$(shell ls $(MLXDIR)Makefile.gen 2>/dev/null)","")
-	@echo "Executing the clean rule of MiniLibX ..."
+	@echo "Cleaning MiniLibX ..."
 	@cd $(MLXDIR) && ./configure clean > /dev/null 2>&1
 	@echo "DONE \n"
 endif
