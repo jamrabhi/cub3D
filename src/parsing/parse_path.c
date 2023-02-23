@@ -22,8 +22,7 @@ int	get_no(char *line, t_data *data)
 		if (line && path[0] && (ft_strcmp(path[0], "NO") == 0))
 		{
 			if (path[2] || data->map->no_path)
-				exit_error_n_free_array_n_line("Misconfiguration in the .cub \
-scene (NO texture)", path, line, data);
+				exit_error_n_free_array_n_line(MISCONF_NO, path, line, data);
 			data->map->no_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -43,8 +42,7 @@ int	get_so(char *line, t_data *data)
 		if (line && path[0] && (ft_strcmp(path[0], "SO") == 0))
 		{
 			if (path[2] || data->map->so_path)
-				exit_error_n_free_array_n_line("Misconfiguration in the .cub \
-scene (SO texture)", path, line, data);
+				exit_error_n_free_array_n_line(MISCONF_SO, path, line, data);
 			data->map->so_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -64,8 +62,7 @@ int	get_we(char *line, t_data *data)
 		if (line && path[0] && (ft_strcmp(path[0], "WE") == 0))
 		{
 			if (path[2] || data->map->we_path)
-				exit_error_n_free_array_n_line("Misconfiguration in the .cub \
-scene (WE texture)", path, line, data);
+				exit_error_n_free_array_n_line(MISCONF_WE, path, line, data);
 			data->map->we_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -85,8 +82,7 @@ int	get_ea(char *line, t_data *data)
 		if (line && path[0] && (ft_strcmp(path[0], "EA") == 0))
 		{
 			if (path[2] || data->map->ea_path)
-				exit_error_n_free_array_n_line("Misconfiguration in the .cub \
-scene (EA texture)", path, line, data);
+				exit_error_n_free_array_n_line(MISCONF_EA, path, line, data);
 			data->map->ea_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);

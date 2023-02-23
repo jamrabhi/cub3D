@@ -22,7 +22,11 @@
 # define INVALID_ELEM "Invalid element in the .cub file"
 # define MISSING_ELEM "Missing element in the .cub file"
 # define INVALID_FILE "Invalid file format"
-# define INVALID_RGB "Invalide RGB values"
+# define INVALID_RGB "Invalid RGB values"
+# define MISCONF_NO "Misconfiguration in the .cub file (NO texture)"
+# define MISCONF_SO "Misconfiguration in the .cub file (SO texture)"
+# define MISCONF_WE "Misconfiguration in the .cub file (WE texture)"
+# define MISCONF_EA "Misconfiguration in the .cub file (EA texture)"
 
 typedef struct s_map
 {
