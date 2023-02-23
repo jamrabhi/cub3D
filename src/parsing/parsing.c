@@ -16,8 +16,9 @@ void	check_cub(char *file_name, t_data *data)
 {
 	const char	*dot;
 
+	dot = NULL;
 	dot = ft_strrchr(file_name, '.');
-	if (ft_strncmp(dot, ".cub", 5) != 0)
+	if (!dot || ft_strncmp(dot, ".cub", 5) != 0 || !dot[-1] || dot[-1] == '/')
 		exit_error(INVALID_FILE, data);
 }
 
