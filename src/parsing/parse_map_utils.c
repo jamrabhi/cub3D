@@ -19,7 +19,7 @@ static int	is_end(char *str)
 	i = 0;
 	while (str && str[i])
 	{
-		if (str[i] != ' ' && str[i] != '\n')
+		if (str[i] != '\n')
 			return (0);
 		i++;
 	}
