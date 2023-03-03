@@ -19,7 +19,7 @@ void	show_array(char **array)
 	i = 0;
 	while (array && array[i])
 	{
-		printf("Line[%d] = |%s|\n", i, array[i]);
+		printf("Line[%2.d] = |%s|\n", i, array[i]);
 		i++;
 	}
 }
