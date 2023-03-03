@@ -48,10 +48,15 @@ char	*get_array(char *line, t_data *data)
 	char	*str;
 	char	*tmp;
 	char	*tmp2;
+	int		ret;
 
 	str = ft_strdup("");
-	while (get_next_line(data->map_fd, &line))
+	ret = 1;
+	while (ret)
 	{
+		ret = get_next_line(data->map_fd, &line);
+		if (ret < 0)
+			exit_error("Invalid map", data);
 		tmp = ft_strjoin(line, "\n");
 		tmp2 = ft_strjoin(str, tmp);
 		free(str);
@@ -60,7 +65,6 @@ char	*get_array(char *line, t_data *data)
 		free(tmp);
 		free(tmp2);
 	}
-	free(line);
 	close(data->map_fd);
 	return (str);
 }

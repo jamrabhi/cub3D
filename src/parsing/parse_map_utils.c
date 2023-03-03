@@ -12,6 +12,20 @@
 
 #include <cub3D.h>
 
+static int	is_end(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	check_valid_map(char *str, t_data *data)
 {
 	int	i;
@@ -28,7 +42,8 @@ int	check_valid_map(char *str, t_data *data)
 			return (0);
 		if (str[i] == '1')
 			wall_count++;
-		if (wall_count > 0 && str[i] == '\n' && str[i + 1] == '\n')
+		if (wall_count > 0 && (str[i] == '\n' && ((str[i + 1] && str[i + 1]
+						== '\n')) && !is_end(&str[i])))
 			return (0);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
 			data->map->spawn_dir = str[i];
