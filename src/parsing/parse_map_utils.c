@@ -118,7 +118,8 @@ int	check_borders(char **map)
 		{
 			while (map[i][j] && map[i][j] == ' ')
 				j++;
-			while (map[i][last_char] > 0 && map[i][last_char] == ' ')
+			while (last_char > 0 && map[i][last_char]
+				&& map[i][last_char] == ' ')
 				last_char--;
 		}
 		if (map[i][j] != '1' || map[i][last_char] != '1')
