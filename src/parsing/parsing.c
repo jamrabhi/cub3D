@@ -56,6 +56,8 @@ void	parsing(char *file_cub, t_data *data)
 	while (ret && check_elements(data) == 0)
 	{
 		ret = get_next_line(data->map_fd, &line);
+		if (ret < 0)
+			exit_error("Invalid map", data);
 		if ((!(get_no(line, data) || get_so(line, data) || get_we(line, data)
 					|| get_ea(line, data) || get_f_c_rgb(line, 'F', data)
 					|| get_f_c_rgb(line, 'C', data)))
