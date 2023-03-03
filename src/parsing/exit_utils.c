@@ -20,6 +20,7 @@ void	free_map(t_data *data)
 		free(data->map->so_path);
 		free(data->map->we_path);
 		free(data->map->ea_path);
+		free_array(data->map->map_arr);
 		free(data->map);
 		if (data->map_fd != -1)
 			close(data->map_fd);

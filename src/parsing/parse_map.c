@@ -86,6 +86,6 @@ void	parse_map(char *line, t_data *data)
 		free_array(map_array);
 		exit_error("Invalid map", data);
 	}
+	data->map->map_arr = map_array;
 	free(map_str);
-	free_array(map_array);
 }

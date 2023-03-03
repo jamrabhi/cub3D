@@ -17,7 +17,7 @@ void	show_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array && array[i])
 	{
 		printf("Line[%d] = |%s|\n", i, array[i]);
 		i++;
@@ -50,6 +50,8 @@ int	main(int argc, char **argv)
 	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.map->f[0], data.map->f[1], data.map->f[2]);
 	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.map->c[0], data.map->c[1], data.map->c[2]);
 	printf("SPAWNING ORIENTATION : '%c'\n", data.map->spawn_dir);
+	printf("MAP :\n");
+	show_array(data.map->map_arr);
 	printf("-------------------------\n_________________________\n");
 
 	// void	*mlx;

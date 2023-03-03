@@ -37,6 +37,7 @@ typedef struct s_map
 	int		f[3];
 	int		c[3];
 	char	spawn_dir;
+	char	**map_arr;
 }				t_map;
 
 typedef struct s_data
