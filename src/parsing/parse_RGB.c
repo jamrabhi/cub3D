@@ -76,7 +76,7 @@ int	get_f_c_rgb(char *line, char c, t_data *data)
 {
 	char	**tmp;
 	int		i;
-	int		stock;
+	long	stock;
 
 	i = 0;
 	tmp = ft_split_str(line, " ,");
@@ -88,7 +88,7 @@ int	get_f_c_rgb(char *line, char c, t_data *data)
 			exit_error_n_free_array_n_line(INVALID_RGB, tmp, line, data);
 		while (tmp[++i])
 		{
-			stock = ft_atoi(tmp[i]);
+			stock = ft_atol(tmp[i]);
 			if (stock < 0 || stock > 255)
 				exit_error_n_free_array_n_line(INVALID_RGB, tmp, line, data);
 			if (c == 'F')
