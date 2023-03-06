@@ -22,8 +22,16 @@ void	free_map(t_data *data)
 		free(data->map->ea_path);
 		free_array(data->map->map_arr);
 		free(data->map);
-		if (data->map_fd != -1)
+		if (data->map_fd > 0)
 			close(data->map_fd);
+		if (data->NO_fd > 0)
+			close(data->NO_fd);
+		if (data->SO_fd > 0)
+			close(data->SO_fd);
+		if (data->WE_fd > 0)
+			close(data->WE_fd);
+		if (data->EA_fd > 0)
+			close(data->EA_fd);
 	}
 }
 

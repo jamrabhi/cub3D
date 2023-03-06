@@ -26,6 +26,14 @@
 # define MISCONF_SO "Misconfiguration in the .cub file (SO texture)"
 # define MISCONF_WE "Misconfiguration in the .cub file (WE texture)"
 # define MISCONF_EA "Misconfiguration in the .cub file (EA texture)"
+# define NO_IS_DIR "North texture is a directory"
+# define SO_IS_DIR "South texture is a directory"
+# define WE_IS_DIR "West texture is a directory"
+# define EA_IS_DIR "East texture is a directory"
+# define NO_UNAV "North texture doesn't exist"
+# define SO_UNAV "South texture doesn't exist"
+# define WE_UNAV "West texture doesn't exist"
+# define EA_UNAV "East texture doesn't exist"
 
 typedef struct s_map
 {
@@ -43,6 +51,11 @@ typedef struct s_data
 {
 	t_map	*map;
 	int		map_fd;
+	int		NO_fd;
+	int		SO_fd;
+	int		WE_fd;
+	int		EA_fd;
+
 }				t_data;
 
 void	parsing(char *file_cub, t_data *data);

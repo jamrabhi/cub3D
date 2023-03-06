@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	ft_bzero(&data, sizeof(data));
+	ft_bzero(&data, sizeof(t_data));
 	data.map = malloc(sizeof(t_map));
 	ft_bzero(data.map, sizeof(t_map));
 	if (argc != 2)

@@ -40,6 +40,12 @@ int	get_no(char *line, t_data *data)
 			if (!path[1] || path[2] || data->map->no_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_NO, path, line, data);
+			data->NO_fd = open(path[1], O_DIRECTORY);
+			if (data->NO_fd != -1)
+				exit_error_n_free_array_n_line(NO_IS_DIR, path, line, data);
+			data->NO_fd = open(path[1], O_RDONLY);
+			if (data->NO_fd == -1)
+				exit_error_n_free_array_n_line(NO_UNAV, path, line, data);
 			data->map->no_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -61,6 +67,12 @@ int	get_so(char *line, t_data *data)
 			if (!path[1] || path[2] || data->map->so_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_SO, path, line, data);
+			data->SO_fd = open(path[1], O_DIRECTORY);
+			if (data->SO_fd != -1)
+				exit_error_n_free_array_n_line(SO_IS_DIR, path, line, data);
+			data->SO_fd = open(path[1], O_RDONLY);
+			if (data->SO_fd == -1)
+				exit_error_n_free_array_n_line(SO_UNAV, path, line, data);
 			data->map->so_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -82,6 +94,12 @@ int	get_we(char *line, t_data *data)
 			if (!path[1] || path[2] || data->map->we_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_WE, path, line, data);
+			data->WE_fd = open(path[1], O_DIRECTORY);
+			if (data->WE_fd != -1)
+				exit_error_n_free_array_n_line(WE_IS_DIR, path, line, data);
+			data->WE_fd = open(path[1], O_RDONLY);
+			if (data->WE_fd == -1)
+				exit_error_n_free_array_n_line(WE_UNAV, path, line, data);
 			data->map->we_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
@@ -103,6 +121,12 @@ int	get_ea(char *line, t_data *data)
 			if (!path[1] || path[2] || data->map->ea_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_EA, path, line, data);
+			data->EA_fd = open(path[1], O_DIRECTORY);
+			if (data->EA_fd != -1)
+				exit_error_n_free_array_n_line(EA_IS_DIR, path, line, data);
+			data->EA_fd = open(path[1], O_RDONLY);
+			if (data->EA_fd == -1)
+				exit_error_n_free_array_n_line(EA_UNAV, path, line, data);
 			data->map->ea_path = ft_strdup(path[1]);
 			free_array(path);
 			return (1);
