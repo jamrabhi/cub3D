@@ -15,25 +15,30 @@
 int	check_format_first(char *line, char c)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	while (line[i] == ' ')
+	len = ft_strlen(line);
+	while (i < len && line[i] == ' ')
 		i++;
-	if (line[i] != c && line[i + 1] != ' ')
+	if (i >= len || (line[i] != c && line[i + 1] != ' '))
 		return (-1);
 	i += 2;
-	while (line[i] == ' ')
+	while (i < len && line[i] == ' ')
 		i++;
-	if (line[i] && !ft_isdigit(line[i]))
+	if (i >= len || (line[i] && !ft_isdigit(line[i])))
 		return (-1);
 	return (i);
 }
 
 int	skip_digit_and_space(char *line, int i)
 {
-	while (line[i] && ft_isdigit(line[i]))
+	int	len;
+
+	len = ft_strlen(line);
+	while (i < len && ft_isdigit(line[i]))
 		i++;
-	while (line[i] == ' ')
+	while (i < len && line[i] == ' ')
 		i++;
 	return (i);
 }
@@ -45,7 +50,7 @@ int	check_format(char *ln, char c)
 
 	i = check_format_first(ln, c);
 	nb_and_commas = 0;
-	while (ln[i])
+	while (i != -1 && i < (int)ft_strlen(ln) && ln[i])
 	{
 		if (ln[i] && ft_isdigit(ln[i]))
 			nb_and_commas++;
