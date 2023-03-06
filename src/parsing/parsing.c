@@ -62,11 +62,11 @@ void	parsing(char *file_cub, t_data *data)
 					|| get_ea(line, data) || get_f_c_rgb(line, 'F', data)
 					|| get_f_c_rgb(line, 'C', data)))
 			&& !check_empty_line(line))
-			exit_error_n_free_line(INVALID_ELEM, line, data);
+			exit_error_n_free_line(INVALID_CUB, line, data);
 		free(line);
 	}
 	if (!check_elements(data))
-		exit_error(MISSING_ELEM, data);
+		exit_error(INVALID_CUB, data);
 	parse_map(line, data);
 	close(data->map_fd);
 }

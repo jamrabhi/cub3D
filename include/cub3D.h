@@ -19,8 +19,7 @@
 # include <fcntl.h>
 # include <mlx.h>
 
-# define INVALID_ELEM "Invalid element in the .cub file"
-# define MISSING_ELEM "Missing element in the .cub file"
+# define INVALID_CUB "Invalid or missing element in the .cub file"
 # define INVALID_FILE "Invalid file format"
 # define INVALID_RGB "Invalid RGB values"
 # define MISCONF_NO "Misconfiguration in the .cub file (NO texture)"
