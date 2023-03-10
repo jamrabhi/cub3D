@@ -1,0 +1,115 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/13 16:01:25 by dsy               #+#    #+#              #
+#    Updated: 2023/02/23 12:28:07 by dsy              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#---------------------------------VARIABLES------------------------------------#
+
+GREEN_COLOR = \033[0;32m
+YLW_COLOR = \033[0;33m
+END_COLOR = \033[0m
+
+NAME := cub3D
+
+LIB_FT := lib/libft/libft.a
+MLX := mlx/libmlx.a
+LIBS := $(LIB_FT) $(MLX)
+
+LDFLAGS := -Llib/libft
+LFLAGS := -lft -L./mlx -lmlx -framework OpenGL -framework AppKit
+
+CC := cc
+CFLAGS := -Wall -Wextra
+CPFLAGS := -g3
+PFLAGS := -Iinclude -Ilib/libft
+
+SRC = 	src/main.c src/get_next_line/get_next_line_utils.c \
+		src/get_next_line/get_next_line.c \
+		src/parsing/parsing.c src/parsing/exit.c src/parsing/exit_utils.c \
+		src/parsing/parse_path.c src/parsing/parse_RGB.c \
+		src/parsing/parse_map.c src/parsing/parse_map_utils.c
+
+OBJ = $(SRC:.c=.o)
+
+SRC_OTHER := main.c \
+			 \
+			 mlx_functions/init_game.c mlx_functions/control_functions.c \
+			 mlx_functions/mlx_utils.c \
+			 \
+			 parser/*.c \
+			 \
+			 raycasting/*.c \
+			 \
+			 utils/*.c
+
+SRC_PATH := src
+SRC_NAME := $(SRC_OTHER)
+
+OBJ_PATH := obj
+OBJ_NAME := $(SRC_NAME:.c=.o)
+
+INCDIR := include
+BUILD_PATH := build
+
+SRC := $(addprefix $(SRC_PATH)/,$(SRC_NAME))
+OBJ := $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
+OBJ := $(addprefix $(BUILD_PATH)/,$(OBJ))
+
+#---------------------------------VARIABLES------------------------------------#
+
+all: $(NAME)
+	@echo "Ready : ${GREEN_COLOR}`pwd`/${NAME}${END_COLOR}"
+
+$(NAME): $(OBJ) $(LIBS)
+	@$(CC) $(OBJ) $(LDFLAGS) $(LFLAGS) $(CFLAGS) $(CPFLAGS) -o $(NAME)
+
+$(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	@mkdir -p $(dir $@) 2>/dev/null || true
+	@$(CC) $(CFLAGS) $(CPFLAGS) $(PFLAGS) -c $< -o $@
+
+$(LIB_FT):
+	@echo "${YLW_COLOR}Compiling ${NAME}...${END_COLOR}"
+	@make -C lib/libft
+
+libft_clean:
+	@make -C lib/libft clean
+
+libft_fclean:
+	@make -C lib/libft fclean
+
+$(MLX): FORCE
+	make -C mlx/
+
+mlx_clean:
+	make -C mlx/ clean
+
+mlx_fclean:
+	make -C mlx/ clean
+
+lib_clean: libft_clean 
+
+lib_fclean: libft_fclean 
+
+re: fclean all
+
+clean: lib_clean
+	@rm -rf $(OBJ)
+	@rm -rf $(BUILD_PATH)/$(OBJ_PATH)
+	@echo "Clean : $(YLW_COLOR)/$(BUILD_PATH)${END_COLOR}"
+
+fclean : lib_fclean
+	@rm -rf $(NAME)
+	@rm -rf $(BUILD_PATH)
+	@echo "Clean : $(YLW_COLOR)/$(BUILD_PATH)${END_COLOR}"
+	@echo "Clean : $(YLW_COLOR)/$(NAME)${END_COLOR}"
+
+FORCE:
+
+.PHONY: all, clean, fclean, re
