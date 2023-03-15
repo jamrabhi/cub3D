@@ -14,7 +14,7 @@
 
 void	free_map_file(t_data *data)
 {
-	if (data->map_arr != NULL)
+	if (data)
 	{
 		free(data->no_path);
 		free(data->so_path);
