@@ -13,7 +13,7 @@
 #include "libft.h"
 
 /*
-static char	**free_split(char **str)
+static char	**free_array(char **str)
 {
 	int i;
 

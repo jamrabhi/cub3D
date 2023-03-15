@@ -29,8 +29,6 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	ft_bzero(&data, sizeof(t_data));
-	data.map_arr = malloc(sizeof(char **));
-	ft_bzero(data.map_arr, sizeof(char **));
 	if (argc != 2)
 		exit_error("Usage: ./cub3D map.cub", &data);
 	data.map_fd = open(argv[1], O_DIRECTORY);
@@ -54,18 +52,6 @@ int	main(int argc, char **argv)
 	show_array(data.map_arr);
 	printf("-------------------------\n_________________________\n");
 
-	// void	*mlx;
-	// void	*mlx_win;
-	// mlx = mlx_init();
-	// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	// mlx_loop(mlx);
-	// 	free(mlx);
-	// mlx_destroy_window(mlx,mlx_win);
-
 	free_map_file(&data);
 	return (0);
 }
-
-
-
-//TODO : when line only space invalid read

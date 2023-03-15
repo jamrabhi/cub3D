@@ -48,11 +48,17 @@ void	free_split(char **array)
 	int	i;
 
 	i = 0;
-	if (array != NULL)
-		return ;
-	while (array[i] != NULL)
-		free(array[i++]);
-	free(array);
+	if (array)
+	{
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		*array = NULL;
+		if (array)
+			free(array);
+	}
 }
 
 int	free_array_and_return(char **array, int return_id)
