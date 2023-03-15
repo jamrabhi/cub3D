@@ -33,12 +33,12 @@ int	check_valid_map(char *str, t_data *data)
 
 	i = 0;
 	wall_count = 0;
-	data->map->spawn_dir = 0;
+	data->spawn_dir = 0;
 	while (str && str[i])
 	{
 		if (!(str[i] == '0' || str[i] == '1' || str[i] == '\n' || str[i] == ' ')
 			&& ((str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i]
-					== 'W') && data->map->spawn_dir != 0))
+					== 'W') && data->spawn_dir != 0))
 			return (0);
 		if (str[i] == '1')
 			wall_count++;
@@ -46,10 +46,10 @@ int	check_valid_map(char *str, t_data *data)
 						== '\n')) && !is_end(&str[i])))
 			return (0);
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
-			data->map->spawn_dir = str[i];
+			data->spawn_dir = str[i];
 		i++;
 	}
-	if (data->map->spawn_dir == 0)
+	if (data->spawn_dir == 0)
 		return (0);
 	return (1);
 }

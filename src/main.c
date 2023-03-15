@@ -29,8 +29,8 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	ft_bzero(&data, sizeof(t_data));
-	data.map = malloc(sizeof(t_map));
-	ft_bzero(data.map, sizeof(t_map));
+	data.map_arr = malloc(sizeof(char **));
+	ft_bzero(data.map_arr, sizeof(char **));
 	if (argc != 2)
 		exit_error("Usage: ./cub3D map.cub", &data);
 	data.map_fd = open(argv[1], O_DIRECTORY);
@@ -43,15 +43,15 @@ int	main(int argc, char **argv)
 
 	printf("-------------------------\n_________________________\n");
 	printf("INFO DATA STRUCT. :\n");
-	printf("NO : '%s'\n", data.map->no_path);
-	printf("SO : '%s'\n", data.map->so_path);
-	printf("WE : '%s'\n", data.map->we_path);
-	printf("EA : '%s'\n", data.map->ea_path);
-	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.map->f[0], data.map->f[1], data.map->f[2]);
-	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.map->c[0], data.map->c[1], data.map->c[2]);
-	printf("SPAWNING ORIENTATION : '%c'\n", data.map->spawn_dir);
+	printf("NO : '%s'\n", data.no_path);
+	printf("SO : '%s'\n", data.so_path);
+	printf("WE : '%s'\n", data.we_path);
+	printf("EA : '%s'\n", data.ea_path);
+	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.floor[0], data.floor[1], data.floor[2]);
+	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.ceiling[0], data.ceiling[1], data.ceiling[2]);
+	printf("SPAWNING ORIENTATION : '%c'\n", data.spawn_dir);
 	printf("MAP :\n");
-	show_array(data.map->map_arr);
+	show_array(data.map_arr);
 	printf("-------------------------\n_________________________\n");
 
 	// void	*mlx;
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 	// 	free(mlx);
 	// mlx_destroy_window(mlx,mlx_win);
 
-	free_map(&data);
+	free_map_file(&data);
 	return (0);
 }
 

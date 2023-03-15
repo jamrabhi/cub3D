@@ -32,12 +32,12 @@ int	get_no(char *line, t_data *data)
 {
 	char	**path;
 
-	if (!data->map->no_path)
+	if (!data->no_path)
 	{
 		path = ft_split(line, ' ');
 		if (line && path[0] && (ft_strcmp(path[0], "NO") == 0))
 		{
-			if (!path[1] || path[2] || data->map->no_path
+			if (!path[1] || path[2] || data->no_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_NO, path, line, data);
 			data->NO_fd = open(path[1], O_DIRECTORY);
@@ -46,11 +46,11 @@ int	get_no(char *line, t_data *data)
 			data->NO_fd = open(path[1], O_RDONLY);
 			if (data->NO_fd == -1)
 				exit_error_n_free_array_n_line(NO_UNAV, path, line, data);
-			data->map->no_path = ft_strdup(path[1]);
-			free_array(path);
+			data->no_path = ft_strdup(path[1]);
+			free_split(path);
 			return (1);
 		}
-		free_array(path);
+		free_split(path);
 	}
 	return (0);
 }
@@ -59,12 +59,12 @@ int	get_so(char *line, t_data *data)
 {
 	char	**path;
 
-	if (!data->map->so_path)
+	if (!data->so_path)
 	{
 		path = ft_split(line, ' ');
 		if (line && path[0] && (ft_strcmp(path[0], "SO") == 0))
 		{
-			if (!path[1] || path[2] || data->map->so_path
+			if (!path[1] || path[2] || data->so_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_SO, path, line, data);
 			data->SO_fd = open(path[1], O_DIRECTORY);
@@ -73,11 +73,11 @@ int	get_so(char *line, t_data *data)
 			data->SO_fd = open(path[1], O_RDONLY);
 			if (data->SO_fd == -1)
 				exit_error_n_free_array_n_line(SO_UNAV, path, line, data);
-			data->map->so_path = ft_strdup(path[1]);
-			free_array(path);
+			data->so_path = ft_strdup(path[1]);
+			free_split(path);
 			return (1);
 		}
-		free_array(path);
+		free_split(path);
 	}
 	return (0);
 }
@@ -86,12 +86,12 @@ int	get_we(char *line, t_data *data)
 {
 	char	**path;
 
-	if (!data->map->we_path)
+	if (!data->we_path)
 	{
 		path = ft_split(line, ' ');
 		if (line && path[0] && (ft_strcmp(path[0], "WE") == 0))
 		{
-			if (!path[1] || path[2] || data->map->we_path
+			if (!path[1] || path[2] || data->we_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_WE, path, line, data);
 			data->WE_fd = open(path[1], O_DIRECTORY);
@@ -100,11 +100,11 @@ int	get_we(char *line, t_data *data)
 			data->WE_fd = open(path[1], O_RDONLY);
 			if (data->WE_fd == -1)
 				exit_error_n_free_array_n_line(WE_UNAV, path, line, data);
-			data->map->we_path = ft_strdup(path[1]);
-			free_array(path);
+			data->we_path = ft_strdup(path[1]);
+			free_split(path);
 			return (1);
 		}
-		free_array(path);
+		free_split(path);
 	}
 	return (0);
 }
@@ -113,12 +113,12 @@ int	get_ea(char *line, t_data *data)
 {
 	char	**path;
 
-	if (!data->map->ea_path)
+	if (!data->ea_path)
 	{
 		path = ft_split(line, ' ');
 		if (line && path[0] && (ft_strcmp(path[0], "EA") == 0))
 		{
-			if (!path[1] || path[2] || data->map->ea_path
+			if (!path[1] || path[2] || data->ea_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_EA, path, line, data);
 			data->EA_fd = open(path[1], O_DIRECTORY);
@@ -127,11 +127,11 @@ int	get_ea(char *line, t_data *data)
 			data->EA_fd = open(path[1], O_RDONLY);
 			if (data->EA_fd == -1)
 				exit_error_n_free_array_n_line(EA_UNAV, path, line, data);
-			data->map->ea_path = ft_strdup(path[1]);
-			free_array(path);
+			data->ea_path = ft_strdup(path[1]);
+			free_split(path);
 			return (1);
 		}
-		free_array(path);
+		free_split(path);
 	}
 	return (0);
 }

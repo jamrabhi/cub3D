@@ -12,16 +12,15 @@
 
 #include "cub3D.h"
 
-void	free_map(t_data *data)
+void	free_map_file(t_data *data)
 {
-	if (data->map)
+	if (data->map_arr != NULL)
 	{
-		free(data->map->no_path);
-		free(data->map->so_path);
-		free(data->map->we_path);
-		free(data->map->ea_path);
-		free_array(data->map->map_arr);
-		free(data->map);
+		free(data->no_path);
+		free(data->so_path);
+		free(data->we_path);
+		free(data->ea_path);
+		free_split(data->map_arr);
 		if (data->map_fd > 0)
 			close(data->map_fd);
 		if (data->NO_fd > 0)
@@ -37,33 +36,27 @@ void	free_map(t_data *data)
 
 void	free_line(char *line, t_data *data)
 {
-	if (line)
+	if (line != NULL)
 		free(line);
 	while (get_next_line(data->map_fd, &line))
 		free(line);
 	free(line);
 }
 
-void	free_array(char **array)
+void	free_split(char **array)
 {
 	int	i;
 
 	i = 0;
-	if (array)
-	{
-		while (array[i])
-		{
-			free(array[i]);
-			i++;
-		}
-		*array = NULL;
-		if (array)
-			free(array);
-	}
+	if (array != NULL)
+		return ;
+	while (array[i] != NULL)
+		free(array[i++]);
+	free(array);
 }
 
 int	free_array_and_return(char **array, int return_id)
 {
-	free_array(array);
+	free_split(array);
 	return (return_id);
 }

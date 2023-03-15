@@ -24,8 +24,8 @@ void	check_cub(char *file_name, t_data *data)
 
 int	check_elements(t_data *data)
 {
-	if (data->map->no_path && data->map->so_path && data->map->ea_path
-		&& data->map->we_path && data->map->f[0] > -1 && data->map->c[0] > -1)
+	if (data->no_path && data->so_path && data->ea_path
+		&& data->we_path && data->floor[0] > -1 && data->ceiling[0] > -1)
 		return (1);
 	return (0);
 }
@@ -51,8 +51,8 @@ void	parsing(char *file_cub, t_data *data)
 
 	ret = 1;
 	check_cub(file_cub, data);
-	data->map->f[0] = -1;
-	data->map->c[0] = -1;
+	data->floor[0] = -1;
+	data->ceiling[0] = -1;
 	while (ret && check_elements(data) == 0)
 	{
 		ret = get_next_line(data->map_fd, &line);

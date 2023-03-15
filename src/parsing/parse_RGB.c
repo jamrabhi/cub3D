@@ -81,8 +81,8 @@ int	get_f_c_rgb(char *line, char c, t_data *data)
 	i = 0;
 	tmp = ft_split_str(line, " ,");
 	if (tmp[0] && ((c == 'F' && ft_strcmp(tmp[0], "F") == 0
-				&& data->map->f[0] == -1) || (c == 'C' && ft_strcmp(tmp[0], "C")
-				== 0 && data->map->c[0] == -1)))
+				&& data->floor[0] == -1) || (c == 'C' && ft_strcmp(tmp[0], "C")
+				== 0 && data->ceiling[0] == -1)))
 	{
 		if (check_format(line, c) == -1)
 			exit_error_n_free_array_n_line(INVALID_RGB, tmp, line, data);
@@ -92,9 +92,9 @@ int	get_f_c_rgb(char *line, char c, t_data *data)
 			if (stock < 0 || stock > 255)
 				exit_error_n_free_array_n_line(INVALID_RGB, tmp, line, data);
 			if (c == 'F')
-				data->map->f[i - 1] = stock;
+				data->floor[i - 1] = stock;
 			if (c == 'C')
-				data->map->c[i - 1] = stock;
+				data->ceiling[i - 1] = stock;
 		}
 		return (free_array_and_return(tmp, 1));
 	}
