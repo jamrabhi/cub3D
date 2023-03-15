@@ -16,11 +16,17 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g3
 
-SRC = 	src/main.c src/get_next_line/get_next_line_utils.c \
-		src/get_next_line/get_next_line.c \
-		src/parsing/parsing.c src/parsing/exit.c src/parsing/exit_utils.c \
-		src/parsing/parse_path.c src/parsing/parse_RGB.c \
-		src/parsing/parse_map.c src/parsing/parse_map_utils.c
+SRC_DIR = src
+
+SRC_FILES = main.c \
+			\
+			get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
+			\
+			parsing/parsing.c parsing/exit.c parsing/exit_utils.c \
+			parsing/parse_path.c parsing/parse_RGB.c \
+			parsing/parse_map.c parsing/parse_map_utils.c \
+
+SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,7 +46,7 @@ all: $(NAME)
 
 $(NAME) : $(OBJ)
 	@echo "Compiling libft ..."
-	@cd $(LIBDIR) && make
+	@cd $(LIBDIR) && make -j -s
 	@echo "DONE\n"
 
 	@echo "Configuring MiniLibX ..."
@@ -56,7 +62,7 @@ $(NAME) : $(OBJ)
 
 clean:
 	@echo "Deleting Libft objects files ..."
-	@cd $(LIBDIR) && make $@
+	@cd $(LIBDIR) && make -j -s $@
 	@echo "DONE\n"
 
 	@echo "Deleting cub3D objects files ..."
@@ -72,11 +78,12 @@ ifneq ("$(shell ls $(MLXDIR)Makefile.gen 2>/dev/null)","")
 endif
 
 	@echo "Deleting Libft's binary ..."
-	@cd $(LIBDIR) && make $@
+	@cd $(LIBDIR) && make -j -s $@
 	@echo "DONE\n"
 	
 	@echo "Deleting cub3D's binary ..."
 	@rm -f $(NAME)
 	@echo "DONE"
 
-re: fclean all
+re: fclean
+	@make all
