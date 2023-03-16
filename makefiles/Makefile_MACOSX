@@ -6,7 +6,7 @@
 #    By: dsy <marvin@42.fr>                         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 16:01:25 by dsy               #+#    #+#              #
-#    Updated: 2023/02/23 12:28:07 by dsy              ###   ########.fr        #
+#    Updated: 2023/03/16 10:00:00 by dsy              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,45 +22,25 @@ LIB_FT := lib/libft/libft.a
 MLX := mlx/libmlx.a
 LIBS := $(LIB_FT) $(MLX)
 
-LDFLAGS := -Llib/libft
-LFLAGS := -lft -L./mlx -lmlx -framework OpenGL -framework AppKit
+LDFLAGS := -Llib/libft -L./mlx
+LFLAGS := -lft -lmlx -framework OpenGL -framework AppKit
 
 CC := cc
 CFLAGS := -Wall -Wextra
 CPFLAGS := -g3
-PFLAGS := -Iinclude -Ilib/libft
-
-SRC = 	src/main.c src/get_next_line/get_next_line_utils.c \
-		src/get_next_line/get_next_line.c \
-		src/parsing/parsing.c src/parsing/exit.c src/parsing/exit_utils.c \
-		src/parsing/parse_path.c src/parsing/parse_RGB.c \
-		src/parsing/parse_map.c src/parsing/parse_map_utils.c
-
-OBJ = $(SRC:.c=.o)
-
-SRC_OTHER := main.c \
-			 \
-			 mlx_functions/init_game.c mlx_functions/control_functions.c \
-			 mlx_functions/mlx_utils.c \
-			 \
-			 parser/*.c \
-			 \
-			 raycasting/*.c \
-			 \
-			 utils/*.c
+PFLAGS := -Iinclude -Ilib/libft -Imlx
 
 SRC_PATH := src
-SRC_NAME := $(SRC_OTHER)
-
-OBJ_PATH := obj
-OBJ_NAME := $(SRC_NAME:.c=.o)
-
-INCDIR := include
 BUILD_PATH := build
+OBJ_PATH := obj
 
-SRC := $(addprefix $(SRC_PATH)/,$(SRC_NAME))
-OBJ := $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
-OBJ := $(addprefix $(BUILD_PATH)/,$(OBJ))
+SRC = 	main.c get_next_line/get_next_line_utils.c \
+		get_next_line/get_next_line.c \
+		parsing/parsing.c parsing/exit.c parsing/exit_utils.c \
+		parsing/parse_path.c parsing/parse_RGB.c \
+		parsing/parse_map.c parsing/parse_map_utils.c
+
+OBJ = $(addprefix $(BUILD_PATH)/$(OBJ_PATH)/, $(SRC:.c=.o))
 
 #---------------------------------VARIABLES------------------------------------#
 
@@ -71,45 +51,37 @@ $(NAME): $(OBJ) $(LIBS)
 	@$(CC) $(OBJ) $(LDFLAGS) $(LFLAGS) $(CFLAGS) $(CPFLAGS) -o $(NAME)
 
 $(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	@mkdir -p $(dir $@) 2>/dev/null || true
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(CPFLAGS) $(PFLAGS) -c $< -o $@
 
 $(LIB_FT):
 	@echo "${YLW_COLOR}Compiling ${NAME}...${END_COLOR}"
 	@make -C lib/libft
 
-libft_clean:
+lib_clean:
 	@make -C lib/libft clean
 
-libft_fclean:
+lib_fclean:
 	@make -C lib/libft fclean
 
-$(MLX): FORCE
-	make -C mlx/
+$(MLX):
+	@make -C mlx/
 
 mlx_clean:
-	make -C mlx/ clean
+	@make -C mlx/ clean
 
 mlx_fclean:
-	make -C mlx/ clean
-
-lib_clean: libft_clean 
-
-lib_fclean: libft_fclean 
+	@make -C mlx/ fclean
 
 re: fclean all
 
 clean: lib_clean
 	@rm -rf $(OBJ)
-	@rm -rf $(BUILD_PATH)/$(OBJ_PATH)
+	@rm -rf $(BUILD_PATH)
 	@echo "Clean : $(YLW_COLOR)/$(BUILD_PATH)${END_COLOR}"
 
 fclean : lib_fclean
-	@rm -rf $(NAME)
-	@rm -rf $(BUILD_PATH)
-	@echo "Clean : $(YLW_COLOR)/$(BUILD_PATH)${END_COLOR}"
+	@rm -f $(NAME)
 	@echo "Clean : $(YLW_COLOR)/$(NAME)${END_COLOR}"
 
-FORCE:
-
-.PHONY: all, clean, fclean, re
+.PHONY: all, clean, fclean, re, lib_clean, lib_fclean, mlx_clean, mlx_fclean
