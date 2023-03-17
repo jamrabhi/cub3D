@@ -16,6 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	ft_bzero(&data, sizeof(t_data));
 	init_game_struct(&data);
 	load_game_settings(&data, argc, argv);
 	if (!(init_game(&data)))

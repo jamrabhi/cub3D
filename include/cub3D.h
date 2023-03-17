@@ -82,8 +82,8 @@
 ** CONSTANTS
 */
 
-# define WIN_HEIGHT 800
-# define WIN_WIDTH 001
+# define WIN_HEIGHT 1920
+# define WIN_WIDTH 1080
 # define INVALID_FILE "Invalid file format"
 # define INVALID_CUB "Invalid or missing element in the .cub file"
 # define INVALID_RGB "Invalid RGB values"
@@ -187,6 +187,11 @@ typedef struct s_data
 	t_img		we;
 	t_img		sprite;
 	t_img		gun;
+	void		*wall_img;
+	void		*empty_img;
+	void		*player_img;
+
+
 
 	/*
 	** MINIMAP
@@ -201,6 +206,8 @@ typedef struct s_data
 	t_img		player;
 	int			pos_x;
 	int			pos_y;
+	float		player_pos_x;
+	float		player_pos_y;
 }				t_data;
 
 /*

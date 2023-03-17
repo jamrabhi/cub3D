@@ -62,10 +62,10 @@ static void	choose_texture(t_data *d, int i, int j)
 {
 	if (d->map_arr[i][j] == '1')
 		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->wall.img, \
-			j * d->resolution / d->resolution, i * d->resolution / d->resolution);
+			j * 15, i * 15);
 	if (d->map_arr[i][j] == '0')
 		mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->path.img, \
-			j * d->resolution / d->resolution, i * d->resolution / d->resolution);
+			j * 15, i * 15);
 }
 
 void	draw_map(t_data *data)
