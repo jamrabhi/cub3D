@@ -12,18 +12,6 @@
 
 #include "cub3D.h"
 
-void	init_game_struct(t_data *data)
-{
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
-	data->no_path = NULL;
-	data->so_path = NULL;
-	data->we_path = NULL;
-	data->ea_path = NULL;
-	data->map_arr = NULL;
-	data->player.img = NULL;
-}
-
 static void	show_array(char **array)
 {
 	int	i;
@@ -44,12 +32,32 @@ static void	file_report(t_data data)
 	printf("SO : '%s'\n", data.so_path);
 	printf("WE : '%s'\n", data.we_path);
 	printf("EA : '%s'\n", data.ea_path);
-	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.floor[0], data.floor[1], data.floor[2]);
-	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.ceiling[0], data.ceiling[1], data.ceiling[2]);
+	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", \
+		data.floor[0], data.floor[1], data.floor[2]);
+	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", \
+		data.ceiling[0], data.ceiling[1], data.ceiling[2]);
 	printf("SPAWNING ORIENTATION : '%c'\n", data.spawn_dir);
 	printf("MAP :\n");
 	show_array(data.map_arr);
 	printf("-------------------------\n_________________________\n");
+}
+
+void	init_game_struct(t_data *data)
+{
+	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
+	data->no_path = NULL;
+	data->so_path = NULL;
+	data->we_path = NULL;
+	data->ea_path = NULL;
+	data->map_arr = NULL;
+	data->wall.img = NULL;
+	data->path.img = NULL;
+	data->player.img = NULL;
+	data->minimap = 1;
+	data->resolution = check_resolution(WIN_WIDTH, WIN_HEIGHT);
+	data->pos_x = data->resolution / 2 - 10;
+	data->pos_y = data->resolution / 2 - 10;
 }
 
 void	load_game_settings(t_data *data, int argc, char **argv)
@@ -68,16 +76,16 @@ void	load_game_settings(t_data *data, int argc, char **argv)
 
 int	init_game(t_data *data)
 {
-	data->resolution = check_resolution(WIN_WIDTH, WIN_HEIGHT);
-	if (!(data->mlx_ptr = mlx_init()))
+	data->mlx_ptr = mlx_init();
+	data->win_ptr = mlx_new_window(data->mlx_ptr, \
+		data->resolution, data->resolution, "cub3D");
+	if (!data->mlx_ptr || !data->win_ptr)
 		return (0);
-	if (!(data->win_ptr = mlx_new_window(data->mlx_ptr, data->resolution, data->resolution, "cub3D")))
-		return (0);
-	data->pos_x = 30;
-	data->pos_y = 30;
+	draw_background(data, 0xF0F8FF, 0x808080);
+	draw_player(data, data->pos_x, data->pos_y);
+	draw_map(data);
 	mlx_hook(data->win_ptr, 2, (1L << 0), key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
-    // mlx_key_hook(data->win_ptr, key_stroke, data);
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

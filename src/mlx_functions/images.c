@@ -12,30 +12,9 @@
 
 #include "cub3D.h"
 
-void draw_player(t_data *data, int px, int py)
+int	check_resolution(int x, int y)
 {
-	if (data->player.img != NULL)
-		mlx_destroy_image(data->mlx_ptr, data->player.img);
-	data->player.img = mlx_new_image(data->mlx_ptr, 10, 10);
-	data->player.addr = (int *)mlx_get_data_addr(data->player.img, &data->player.bpp, &data->player.sl, &data->player.endian);
-	int x =0, y = 0;
-	y = 0;
-	while (y < 10) {
-		x = 0;
-		while (x < 10) {
-			*(data->player.addr + y * (data->player.sl / 4) + x) = 0x000000;
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.img, px, py);
-	data->pos_x = px;
-	data->pos_y = py;
-}
-
-int check_resolution(int x, int y)
-{
-	int res;
+	int	res;
 
 	if (x > y)
 		res = x;
@@ -48,40 +27,56 @@ int check_resolution(int x, int y)
 	return (res);
 }
 
-void draw_background(t_data *data, int top_color, int bottom_color) {
-	int     width;
-	int     height;
-	int     half_height;
-	int     x;
-	int     y;
-	t_img   bottom_img;
-	t_img   top_img;
+void	draw_player(t_data *data, int px, int py)
+{
+	int	x;
+	int	y;
 
-	width = data->resolution;
-	height = data->resolution;
-	half_height = height / 2;
-	top_img.img = mlx_new_image(data->mlx_ptr, width, half_height);
-	top_img.addr = (int *)mlx_get_data_addr(top_img.img, &top_img.bpp, &top_img.sl, &top_img.endian);
-	bottom_img.img = mlx_new_image(data->mlx_ptr, width, half_height);
-	bottom_img.addr = (int *)mlx_get_data_addr(bottom_img.img, &bottom_img.bpp, &bottom_img.sl, &bottom_img.endian);
+	x = 0;
 	y = 0;
-	while (y < half_height) {
+	if (data->player.img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->player.img);
+	data->player.img = mlx_new_image(data->mlx_ptr, 10, 10);
+	data->player.addr = (int *)mlx_get_data_addr(data->player.img, \
+		&data->player.bpp, &data->player.sl, &data->player.endian);
+	y = 0;
+	while (y < 10)
+	{
 		x = 0;
-		while (x < width) {
-			*(top_img.addr + y * (top_img.sl / 4) + x) = top_color;
+		while (x < 10)
+		{
+			*(data->player.addr + y * (data->player.sl / 4) + x) = 0x000000;
 			x++;
 		}
 		y++;
 	}
-	y = 0;
-	while (y < half_height) {
-		x = 0;
-		while (x < width) {
-			*(bottom_img.addr + y * (bottom_img.sl / 4) + x) = bottom_color;
-			x++;
+	mlx_put_image_to_window(data->mlx_ptr, \
+		data->win_ptr, data->player.img, px, py);
+	data->pos_x = px;
+	data->pos_y = py;
+}
+
+void	draw_background(t_data *data, int top_color, int bottom_color)
+{
+	t_img	img;
+	int		x;
+	int		y;
+
+	img.img = mlx_new_image(data->mlx_ptr, data->resolution, data->resolution);
+	img.addr = (int *)mlx_get_data_addr(img.img, &img.bpp, \
+		&img.sl, &img.endian);
+	y = -1;
+	while (++y < data->resolution)
+	{
+		x = -1;
+		while (++x < data->resolution)
+		{
+			if (y < data->resolution / 2)
+				*(img.addr + y * (img.sl / 4) + x) = top_color;
+			else
+				*(img.addr + y * (img.sl / 4) + x) = bottom_color;
 		}
-		y++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, top_img.img, 0, 0);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, bottom_img.img, 0, data->resolution / 2);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, img.img);
 }

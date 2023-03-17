@@ -18,9 +18,28 @@
 */
 
 # define KEY_ESC 53
+# define KEY_W 13
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_DOWN 125
+# define KEY_UP 126
+
+# define KEY_ESC_LINUX 65307
+# define KEY_W_LINUX 119
+# define KEY_A_LINUX 97
+# define KEY_S_LINUX 115
+# define KEY_D_LINUX 100
+# define KEY_LEFT_LINUX 65361
+# define KEY_RIGHT_LINUX 65363
+# define KEY_DOWN_LINUX 65364
+# define KEY_UP_LINUX 65362
+
+# define KEY_M 46
+# define KEY_M_LINUX 109
+
 # define KEY_F 3
 # define KEY_H 4
 # define KEY_G 5
@@ -30,7 +49,6 @@
 # define KEY_V 9
 # define KEY_B 11
 # define KEY_Q 12
-# define KEY_W 13
 # define KEY_E 14
 # define KEY_R 15
 # define KEY_Y 16
@@ -56,21 +74,16 @@
 # define KEY_K 40
 # define KEY_SEMI 41
 # define KEY_N 45
-# define KEY_M 46
 # define KEY_TAB 48
 # define KEY_PLUS 69
 # define KEY_MINUS 78
-# define KEY_LEFT 123
-# define KEY_RIGHT 124
-# define KEY_DOWN 125
-# define KEY_UP 126
 
 /*
 ** CONSTANTS
 */
 
-# define WIN_HEIGHT 455
-# define WIN_WIDTH 344
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 001
 # define INVALID_FILE "Invalid file format"
 # define INVALID_CUB "Invalid or missing element in the .cub file"
 # define INVALID_RGB "Invalid RGB values"
@@ -176,6 +189,13 @@ typedef struct s_data
 	t_img		gun;
 
 	/*
+	** MINIMAP
+	*/
+	t_img		wall;
+	t_img		path;
+	int			minimap;
+
+	/*
 	** PLAYER
 	*/
 	t_img		player;
@@ -214,6 +234,13 @@ int		key_stroke(int key, void *params);
 int 	check_resolution(int x, int y);
 void	draw_background(t_data *data, int top_color, int bottom_color);
 void	draw_player(t_data *data, int px, int py);
+
+/*
+** MINIMAP
+*/
+void	draw_map(t_data *data);
+void	create_image(t_img *img, t_data *d, int resolution[2], int casecolor);
+void	write_pixel_data(t_img *img, int pixel, int color);
 
 /*
 ** UTILS

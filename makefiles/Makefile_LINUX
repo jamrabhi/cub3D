@@ -27,7 +27,9 @@ SRC_FILES = main.c \
 			parsing/parse_map.c parsing/parse_map_utils.c \
 			\
 			mlx_functions/init_game.c mlx_functions/control_functions.c \
-			mlx_functions/images.c
+			mlx_functions/images.c \
+			\
+			minimap/minimap.c
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 
