@@ -12,20 +12,76 @@
 
 #include "cub3D.h"
 
-int	drawVerLine(double x, int start, int end, int color, t_game *d)
+void draw_player(t_data *data, int px, int py)
 {
-    t_game  *mlx = d;
-	
-	if (mlx->l.mlx_img == NULL)
-	{	
-    	mlx->l.mlx_img = mlx_new_image(mlx->mlx_ptr, mlx->height, mlx->width);
-    	mlx->l.img_addr = (int *)mlx_get_data_addr(mlx->l.mlx_img, &mlx->l.bpp, &mlx->l.sl,
-        &mlx->l.endian);
+	if (data->player.img != NULL)
+		mlx_destroy_image(data->mlx_ptr, data->player.img);
+	data->player.img = mlx_new_image(data->mlx_ptr, 10, 10);
+	data->player.addr = (int *)mlx_get_data_addr(data->player.img, &data->player.bpp, &data->player.sl, &data->player.endian);
+	int x =0, y = 0;
+	y = 0;
+	while (y < 10) {
+		x = 0;
+		while (x < 10) {
+			*(data->player.addr + y * (data->player.sl / 4) + x) = 0x000000;
+			x++;
+		}
+		y++;
 	}
-    while (++start < end)
-    {
-		mlx->l.img_addr[start * mlx->height + (int)x] = color;
-    }
-    mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->l.mlx_img, 0, 0);
-    return (0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->player.img, px, py);
+	data->pos_x = px;
+	data->pos_y = py;
+}
+
+int check_resolution(int x, int y)
+{
+	int res;
+
+	if (x > y)
+		res = x;
+	else
+		res = y;
+	if (res > 960)
+		return (960);
+	if (res < 320)
+		return (320);
+	return (res);
+}
+
+void draw_background(t_data *data, int top_color, int bottom_color) {
+	int     width;
+	int     height;
+	int     half_height;
+	int     x;
+	int     y;
+	t_img   bottom_img;
+	t_img   top_img;
+
+	half_height = height / 2;
+	width = data->resolution;
+	height = data->resolution;
+	top_img.img = mlx_new_image(data->mlx_ptr, width, half_height);
+	top_img.addr = (int *)mlx_get_data_addr(top_img.img, &top_img.bpp, &top_img.sl, &top_img.endian);
+	bottom_img.img = mlx_new_image(data->mlx_ptr, width, half_height);
+	bottom_img.addr = (int *)mlx_get_data_addr(bottom_img.img, &bottom_img.bpp, &bottom_img.sl, &bottom_img.endian);
+	y = 0;
+	while (y < half_height) {
+		x = 0;
+		while (x < width) {
+			*(top_img.addr + y * (top_img.sl / 4) + x) = top_color;
+			x++;
+		}
+		y++;
+	}
+	y = 0;
+	while (y < half_height) {
+		x = 0;
+		while (x < width) {
+			*(bottom_img.addr + y * (bottom_img.sl / 4) + x) = bottom_color;
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, top_img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, bottom_img.img, 0, data->resolution / 2);
 }

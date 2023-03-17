@@ -148,6 +148,7 @@ typedef struct s_data
 	char	*ea_path;
 	int		floor[3];
 	int		ceiling[3];
+	int		resolution;
 	char	spawn_dir;
 	char	**map_arr;
 
@@ -177,26 +178,46 @@ typedef struct s_data
 	/*
 	** PLAYER
 	*/
+	t_img		player;
 	int			pos_x;
 	int			pos_y;
 }				t_data;
 
+/*
+** PARSING
+*/
 void	parsing(char *file_cub, t_data *data);
-
 int		get_no(char *line, t_data *data);
 int		get_so(char *line, t_data *data);
 int		get_we(char *line, t_data *data);
 int		get_ea(char *line, t_data *data);
-
 int		get_f_c_rgb(char *line, char c, t_data *data);
-
 void	parse_map(char *line, t_data *data);
-
 int		check_valid_map(char *str, t_data *data);
 int		check_first_line(char **map);
 int		check_last_line(char **map);
 int		check_borders(char **map);
 
+/*
+** INIT
+*/
+int		init_game(t_data *data);
+void	init_game_struct(t_data *data);
+void	load_game_settings(t_data *data, int argc, char **argv);
+
+/*
+** MLX
+*/
+int		esc_window(int key, void *params);
+int		cross_window(int key, void *params);
+int		key_stroke(int key, void *params);
+int 	check_resolution(int x, int y);
+void	draw_background(t_data *data, int top_color, int bottom_color);
+void	draw_player(t_data *data, int px, int py);
+
+/*
+** UTILS
+*/
 int		exit_error(char *error, t_data *data);
 int		exit_error_n_free_line(char *error, char *line, t_data *data);
 int		exit_error_n_free_array_n_line(char *e, char **a, char *l, t_data *d);
@@ -204,7 +225,5 @@ void	free_map_file(t_data *data);
 void	free_line(char *line, t_data *data);
 void	free_split(char **str);
 int		free_array_and_return(char **array, int return_id);
-
-void	show_array(char **array);
 
 #endif

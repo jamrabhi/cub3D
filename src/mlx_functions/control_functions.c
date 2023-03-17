@@ -10,12 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3D.h"
 
 int	esc_window(int key, void *params)
 {
 	(void)key;
-	t_game *data = (t_game *)params;
+	t_data	*data;
+
+	data = (t_data *)params;
 	if(data->mlx_ptr != NULL && data->win_ptr != NULL)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	printf("Exit (esc).\n");
@@ -33,7 +35,10 @@ int	cross_window(int key, void *params)
 
 int	key_stroke(int key, void *params)
 {
-	t_game *data = (t_game *)params;
+	t_data	*data;
+
+	data = (t_data *)params;
+	draw_background(data, 0xF0F8FF, 0x808080); //convert colors to RGB
 	if (key == KEY_W)
 		printf("Pressed W.\n");
 	if (key == KEY_S)
@@ -43,22 +48,26 @@ int	key_stroke(int key, void *params)
 	if (key == KEY_D)
 		printf("Pressed D.\n");
 	if (key == KEY_LEFT)
-		printf("Pressed left.\n");
-	if (key == KEY_RIGHT)
-		printf("Pressed right.\n");
-	if (key == KEY_UP)
-		printf("Pressed up.\n");
-	if (key == KEY_DOWN)
-		printf("Pressed down.\n");
-	if (key == KEY_M)
 	{
-			// drawVerLine(i, 100, 300, 0xFFFFFF, data);
-//		write(1, "ok\n", 3);
-//		raycasting(data);
-//			drawVerline(key, data);
+		printf("Pressed left.\n");
+		draw_player(data, data->pos_x - 5, data->pos_y);
+	}
+	if (key == KEY_RIGHT)
+	{
+		printf("Pressed right.\n");
+		draw_player(data, data->pos_x + 5, data->pos_y);
+	}
+	if (key == KEY_UP)
+	{
+		printf("Pressed up.\n");
+		draw_player(data, data->pos_x, data->pos_y - 5);
+	}
+	if (key == KEY_DOWN)
+	{
+		printf("Pressed down.\n");
+		draw_player(data, data->pos_x, data->pos_y + 5);
 	}
 	if (key == KEY_ESC)
 		esc_window(key, data);
-	printf("key : %i\n", key);
 	return (0);
 }

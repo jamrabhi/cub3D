@@ -12,51 +12,71 @@
 
 #include "cub3D.h"
 
-int	init_data(t_game *data)
+void	init_game_struct(t_data *data)
 {
-	data->pos_x = 0;
-	data->pos_y = 0;
-	data->dirX = 0;
-	data->dirY = 0;
-	data->planeX = 0;
-	data->planeY = 0;
-	//data->map = 0;
-	data->so.mlx_img = 0;
-	data->no.mlx_img = 0;
-	data->ea.mlx_img = 0;
-	data->we.mlx_img = 0;
-	data->floor.set = 0;
-	data->ceiling.set = 0;
-	//data->sprite.ptr = 0;
-	//data->valid = 1;
-	//data->save = 0;
-	//data->weapon.ptr = 0;
-	//data->speed = 1;
-	//data->life = 1;
-	return (1);
+	data->mlx_ptr = NULL;
+	data->win_ptr = NULL;
+	data->no_path = NULL;
+	data->so_path = NULL;
+	data->we_path = NULL;
+	data->ea_path = NULL;
+	data->map_arr = NULL;
+	data->player.img = NULL;
 }
 
-int	init_game(t_game *data)
+static void	show_array(char **array)
 {
-	init_game_struct(data);
-	init_data(data);
-	data->width = ft_atoi(data->r_key[1]);
-	data->height = ft_atoi(data->r_key[2]);
-	data->floor.R = ft_atoi(data->f_key[0]);
-	data->floor.G = ft_atoi(data->f_key[1]);
-	data->floor.B = ft_atoi(data->f_key[2]);
-	data->ceiling.R = ft_atoi(data->r_key[0]);
-	data->ceiling.G = ft_atoi(data->r_key[1]);
-	data->ceiling.B = ft_atoi(data->r_key[2]);
-	// if (!(get_player_data(data)))
-	// 	return (0);
+	int	i;
+
+	i = 0;
+	while (array && array[i])
+	{
+		printf("Line[%2.d] = |%s|\n", i, array[i]);
+		i++;
+	}
+}
+
+static void	file_report(t_data data)
+{
+	printf("-------------------------\n_________________________\n");
+	printf("INFO DATA STRUCT. :\n");
+	printf("NO : '%s'\n", data.no_path);
+	printf("SO : '%s'\n", data.so_path);
+	printf("WE : '%s'\n", data.we_path);
+	printf("EA : '%s'\n", data.ea_path);
+	printf("FLOOR : R = '%d', G= '%d', B = '%d'\n", data.floor[0], data.floor[1], data.floor[2]);
+	printf("CEILING : R = '%d', G= '%d', B = '%d'\n", data.ceiling[0], data.ceiling[1], data.ceiling[2]);
+	printf("SPAWNING ORIENTATION : '%c'\n", data.spawn_dir);
+	printf("MAP :\n");
+	show_array(data.map_arr);
+	printf("-------------------------\n_________________________\n");
+}
+
+void	load_game_settings(t_data *data, int argc, char **argv)
+{
+	if (argc != 2)
+		exit_error("Usage: ./cub3D map.cub", data);
+	data->map_fd = open(argv[1], O_DIRECTORY);
+	if (data->map_fd != -1)
+		exit_error("Map is a directory", data);
+	data->map_fd = open(argv[1], O_RDONLY);
+	if (data->map_fd == -1)
+		exit_error("Map doesn't exist", data);
+	parsing(argv[1], data);
+	file_report(*data);
+}
+
+int	init_game(t_data *data)
+{
+	data->resolution = check_resolution(WIN_WIDTH, WIN_HEIGHT);
 	if (!(data->mlx_ptr = mlx_init()))
 		return (0);
-	if (!(data->win_ptr = mlx_new_window(data->mlx_ptr, data->width, data->height, "Cub3D")))
+	if (!(data->win_ptr = mlx_new_window(data->mlx_ptr, data->resolution, data->resolution, "cub3D")))
 		return (0);
+	data->pos_x = 30;
+	data->pos_y = 30;
 	mlx_hook(data->win_ptr, 2, 0, key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
-	//mlx_loop_hook(data->mlx_ptr, raycasting, data);
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

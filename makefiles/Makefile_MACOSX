@@ -38,8 +38,9 @@ SRC = 	main.c get_next_line/get_next_line_utils.c \
 		get_next_line/get_next_line.c \
 		parsing/parsing.c parsing/exit.c parsing/exit_utils.c \
 		parsing/parse_path.c parsing/parse_RGB.c \
-		parsing/parse_map.c parsing/parse_map_utils.c
-
+		parsing/parse_map.c parsing/parse_map_utils.c \
+		mlx_functions/init_game.c mlx_functions/control_functions.c \
+		mlx_functions/images.c
 OBJ = $(addprefix $(BUILD_PATH)/$(OBJ_PATH)/, $(SRC:.c=.o))
 
 #---------------------------------VARIABLES------------------------------------#
