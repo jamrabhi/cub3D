@@ -57,9 +57,9 @@ void draw_background(t_data *data, int top_color, int bottom_color) {
 	t_img   bottom_img;
 	t_img   top_img;
 
-	half_height = height / 2;
 	width = data->resolution;
 	height = data->resolution;
+	half_height = height / 2;
 	top_img.img = mlx_new_image(data->mlx_ptr, width, half_height);
 	top_img.addr = (int *)mlx_get_data_addr(top_img.img, &top_img.bpp, &top_img.sl, &top_img.endian);
 	bottom_img.img = mlx_new_image(data->mlx_ptr, width, half_height);

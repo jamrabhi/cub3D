@@ -26,7 +26,7 @@ LDFLAGS := -Llib/libft -L./mlx
 LFLAGS := -lft -lmlx -framework OpenGL -framework AppKit
 
 CC := cc
-CFLAGS := -Wall -Wextra
+CFLAGS := -Wall -Wextra -Werror
 CPFLAGS := -g3 -fsanitize=address -fno-omit-frame-pointer
 PFLAGS := -Iinclude -Ilib/libft -Imlx
 

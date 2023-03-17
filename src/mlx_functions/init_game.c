@@ -75,8 +75,9 @@ int	init_game(t_data *data)
 		return (0);
 	data->pos_x = 30;
 	data->pos_y = 30;
-	mlx_hook(data->win_ptr, 2, 0, key_stroke, data);
+	mlx_hook(data->win_ptr, 2, (1L << 0), key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
+    // mlx_key_hook(data->win_ptr, key_stroke, data);
 	mlx_loop(data->mlx_ptr);
 	return (0);
 }

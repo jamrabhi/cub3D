@@ -25,6 +25,9 @@ SRC_FILES = main.c \
 			parsing/parsing.c parsing/exit.c parsing/exit_utils.c \
 			parsing/parse_path.c parsing/parse_RGB.c \
 			parsing/parse_map.c parsing/parse_map_utils.c \
+			\
+			mlx_functions/init_game.c mlx_functions/control_functions.c \
+			mlx_functions/images.c
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 

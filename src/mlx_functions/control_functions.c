@@ -67,7 +67,30 @@ int	key_stroke(int key, void *params)
 		printf("Pressed down.\n");
 		draw_player(data, data->pos_x, data->pos_y + 5);
 	}
+
+	if (key == 65361)
+	{
+		printf("Pressed left.\n");
+		draw_player(data, data->pos_x - 5, data->pos_y);
+	}
+	if (key == 65363)
+	{
+		printf("Pressed right.\n");
+		draw_player(data, data->pos_x + 5, data->pos_y);
+	}
+	if (key == 65362)
+	{
+		printf("Pressed up.\n");
+		draw_player(data, data->pos_x, data->pos_y - 5);
+	}
+	if (key == 65364)
+	{
+		printf("Pressed down.\n");
+		draw_player(data, data->pos_x, data->pos_y + 5);
+	}
+
 	if (key == KEY_ESC)
 		esc_window(key, data);
+	printf("current key %i\n", key);
 	return (0);
 }
