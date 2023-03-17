@@ -27,7 +27,7 @@ LFLAGS := -lft -lmlx -framework OpenGL -framework AppKit
 
 CC := cc
 CFLAGS := -Wall -Wextra
-CPFLAGS := -g3
+CPFLAGS := -g3 -fsanitize=address -fno-omit-frame-pointer
 PFLAGS := -Iinclude -Ilib/libft -Imlx
 
 SRC_PATH := src
@@ -50,7 +50,7 @@ all: $(NAME)
 $(NAME): $(OBJ) $(LIBS)
 	@$(CC) $(OBJ) $(LDFLAGS) $(LFLAGS) $(CFLAGS) $(CPFLAGS) -o $(NAME)
 
-$(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+$(BUILD_PATH)/$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c include/cub3D.h
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(CPFLAGS) $(PFLAGS) -c $< -o $@
 

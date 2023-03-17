@@ -66,9 +66,11 @@
 # define KEY_UP 126
 
 /*
-** ERROR MESSAGES
+** CONSTANTS
 */
 
+# define WIN_HEIGHT 455
+# define WIN_WIDTH 344
 # define INVALID_FILE "Invalid file format"
 # define INVALID_CUB "Invalid or missing element in the .cub file"
 # define INVALID_RGB "Invalid RGB values"
@@ -104,22 +106,14 @@
 
 typedef struct	s_img
 {
-	void		*mlx_img;
-	int			*img_addr;
+	void		*img;
+	int			*addr;
 	int			endian;
 	int			height;
 	int			width;
 	int			bpp;
 	int			sl;
 }				t_img;
-
-typedef struct s_color
-{
-    int R;
-    int G;
-    int B;
-    int set;
-}               t_color;
 
 typedef struct  s_ray
 {
@@ -145,6 +139,9 @@ typedef struct  s_ray
 
 typedef struct s_data
 {
+    /*
+    ** PARSING
+    */
 	char	*no_path;
 	char	*so_path;
 	char	*we_path;
@@ -154,12 +151,34 @@ typedef struct s_data
 	char	spawn_dir;
 	char	**map_arr;
 
+    /*
+    ** FILE DESCRIPTORS
+    */
 	int		map_fd;
 	int		NO_fd;
 	int		SO_fd;
 	int		WE_fd;
 	int		EA_fd;
 
+    /*
+    ** MLX
+    */
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_img		l;
+	t_img		m;
+	t_img		so;
+	t_img		no;
+	t_img		ea;
+	t_img		we;
+	t_img		sprite;
+	t_img		gun;
+
+	/*
+	** PLAYER
+	*/
+	int			pos_x;
+	int			pos_y;
 }				t_data;
 
 void	parsing(char *file_cub, t_data *data);
