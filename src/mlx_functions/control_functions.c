@@ -70,5 +70,6 @@ int	key_stroke(int key, void *params)
 	if (data->minimap == 1)
 		draw_map(data);
 	draw_player(data, data->pos_x, data->pos_y);
+	
 	return (0);
 }

@@ -29,7 +29,9 @@ SRC_FILES = main.c \
 			mlx_functions/init_game.c mlx_functions/control_functions.c \
 			mlx_functions/images.c \
 			\
-			minimap/minimap.c
+			minimap/minimap.c \
+			\
+			raycasting/raycasting_utils.c
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 
@@ -43,7 +45,7 @@ LIB = lib/libft/libft.a
 
 MLXDIR = minilibx-linux/
 
-MLXFLAGS = -lmlx -lXext -lX11
+MLXFLAGS = -lmlx -lXext -lX11 -lm
 
 MAKEFLAGS += --no-print-directory
 

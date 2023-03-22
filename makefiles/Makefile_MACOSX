@@ -23,7 +23,7 @@ MLX := mlx/libmlx.a
 LIBS := $(LIB_FT) $(MLX)
 
 LDFLAGS := -Llib/libft -L./mlx
-LFLAGS := -lft -lmlx -framework OpenGL -framework AppKit
+LFLAGS := -lft -lmlx -framework OpenGL -framework AppKit -lm
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
@@ -44,7 +44,10 @@ SRC = 	main.c get_next_line/get_next_line_utils.c \
 		mlx_functions/init_game.c mlx_functions/control_functions.c \
 		mlx_functions/images.c
 		\
-		minimap/minimap.c
+		minimap/minimap.c \
+		\
+		raycasting/raycasting_utils.C
+
 OBJ = $(addprefix $(BUILD_PATH)/$(OBJ_PATH)/, $(SRC:.c=.o))
 
 #---------------------------------VARIABLES------------------------------------#
