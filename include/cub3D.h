@@ -17,6 +17,10 @@
 ** KEY MAPPINGS
 */
 
+# define PI 3.14159263
+# define P2 PI / 2
+# define P3 (3 * PI) / 2
+
 # define KEY_ESC 53
 # define KEY_W 13
 # define KEY_A 0
@@ -128,27 +132,21 @@ typedef struct	s_img
 	int			sl;
 }				t_img;
 
-typedef struct  s_ray
+typedef struct s_ray
 {
-    double      wall_dist;
-    double      d_dist_x;
-    double      d_dist_y;
-    double      camera_x;
-    double      rdir_y;
-    double      rdir_x;
-    double      dist_x;
-    double      dist_y;
-    int         step_x;
-    int         step_y;
-    int         map_x;
-    int         map_y;
-    int         side;
-    int         hit;
-    int         tex_x;;
-    int         lower_pix;
-    int         higher_pix;
-    int         wall_height;
-}               t_ray;
+	int			r;
+	int			mx;
+	int			my;
+	int			mp;
+	int			dof;
+	int			color;
+
+	float		rx;
+	float		ry;
+	float		ra;
+	float		xo;
+	float		yo;
+}				t_ray;
 
 typedef struct s_data
 {
@@ -162,6 +160,8 @@ typedef struct s_data
 	int		floor[3];
 	int		ceiling[3];
 	int		resolution;
+	int		map_width;
+	int		map_height;
 	char	spawn_dir;
 	char	**map_arr;
 
@@ -199,8 +199,12 @@ typedef struct s_data
 	** PLAYER
 	*/
 	t_img		player;
-	int			pos_x;
-	int			pos_y;
+	t_ray		ray;
+	float		pos_x;
+	float		pos_y;
+	float		pos_dx;
+	float		pos_dy;
+	float		pos_ang;
 }				t_data;
 
 /*
@@ -234,6 +238,12 @@ int		key_stroke(int key, void *params);
 int 	check_resolution(int x, int y);
 void	draw_background(t_data *data, int top_color, int bottom_color);
 void	draw_player(t_data *data, int px, int py);
+int		draw_line(int beginX, int beginY, int endX, int endY, t_data *data);
+
+/*
+** RAYCASTING
+*/
+void	draw_ray(t_data *data);
 
 /*
 ** MINIMAP

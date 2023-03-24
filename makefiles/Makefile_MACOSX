@@ -42,11 +42,11 @@ SRC = 	main.c get_next_line/get_next_line_utils.c \
 		parsing/parse_map.c parsing/parse_map_utils.c \
 		\
 		mlx_functions/init_game.c mlx_functions/control_functions.c \
-		mlx_functions/images.c
+		mlx_functions/images.c \
 		\
 		minimap/minimap.c \
 		\
-		raycasting/raycasting_utils.C
+		raycasting/raycasting_utils.c raycasting/raycasting.c
 
 OBJ = $(addprefix $(BUILD_PATH)/$(OBJ_PATH)/, $(SRC:.c=.o))
 

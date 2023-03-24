@@ -45,7 +45,7 @@ void	draw_player(t_data *data, int px, int py)
 		x = 0;
 		while (x < 10)
 		{
-			*(data->player.addr + y * (data->player.sl / 4) + x) = 0x000000;
+			*(data->player.addr + y * (data->player.sl / 4) + x) = 0xFFFF00;
 			x++;
 		}
 		y++;

@@ -12,7 +12,7 @@
 
 #include <cub3D.h>
 
-int draw_line(void *mlx, void *win, int beginX, int beginY, int endX, int endY, int color)
+int draw_line(int beginX, int beginY, int endX, int endY, t_data *data)
 {
 
 	double deltaX = endX - beginX; // 10
@@ -28,7 +28,7 @@ int draw_line(void *mlx, void *win, int beginX, int beginY, int endX, int endY, 
 	double pixelY = beginY;
 	while (pixels)
 	{
-		mlx_pixel_put(mlx, win, pixelX, pixelY, color);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pixelX, pixelY, data->ray.color);
 		pixelX += deltaX;
 		pixelY += deltaY;
 		--pixels;

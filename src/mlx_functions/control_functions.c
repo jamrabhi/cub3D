@@ -46,30 +46,86 @@ int	key_stroke(int key, void *params)
 	t_data	*data;
 
 	data = (t_data *)params;
-	draw_background(data, 0xF0F8FF, 0x808080);
+	draw_background(data, 0x0, 0x0);
 	if (key == KEY_W || key == KEY_W_LINUX)
-		data->pos_y -= 5;
+	{
+		data->pos_y -= 1;
+		data->pos_y += data->pos_dy;
+		data->pos_x += data->pos_dx;
+	}
 	if (key == KEY_S || key == KEY_S_LINUX)
-		data->pos_y += 5;
+	{
+		data->pos_y += 1;
+		data->pos_y -= data->pos_dy;
+		data->pos_x -= data->pos_dx;
+	}
 	if (key == KEY_A || key == KEY_A_LINUX)
-		data->pos_x -= 5;
+	{
+		data->pos_ang -= 0.1;
+		if (data->pos_ang < 0)
+			data->pos_ang += 2 * PI;
+		data->pos_dx = 5 * cos(data->pos_ang);
+		data->pos_dy = 5 * sin(data->pos_ang);
+	}
 	if (key == KEY_D || key == KEY_D_LINUX)
-		data->pos_x += 5;
-	if (key == KEY_LEFT || key == KEY_LEFT_LINUX)
-		data->pos_x -= 5;
-	if (key == KEY_RIGHT || key == KEY_RIGHT_LINUX)
-		data->pos_x += 5;
+	{
+		data->pos_ang += 0.1;
+		if (data->pos_ang > 2 * PI)
+			data->pos_ang -= 2 * PI;
+		data->pos_dx = 5 * cos(data->pos_ang);
+		data->pos_dy = 5 * sin(data->pos_ang);
+	}
 	if (key == KEY_UP || key == KEY_UP_LINUX)
-		data->pos_y -= 5;
+	{
+		if ((int)(data->pos_x / data->map_width) > 0 && (int)(data->pos_x / data->map_width) < data->map_width - 1)
+		{
+			if (data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] != '1')
+				data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] = '0';
+			data->pos_y -= 1;
+			data->pos_y += data->pos_dy;
+			data->pos_x += data->pos_dx;
+			if (data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] != '1')
+				data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] = data->spawn_dir;
+		}
+	}
 	if (key == KEY_DOWN || key == KEY_DOWN_LINUX)
-		data->pos_y += 5;
+	{
+		if ((int)(data->pos_x / data->map_width) > 0 && (int)(data->pos_x / data->map_width) < data->map_width - 1)
+		{
+			if (data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] != '1')
+				data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] = '0';
+			data->pos_y += 1;
+			data->pos_y -= data->pos_dy;
+			data->pos_x -= data->pos_dx;
+			if (data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] != '1')
+				data->map_arr[(int)(data->pos_x / data->map_width) - 1][(int)(data->pos_y / data->map_height) - 1] = data->spawn_dir;
+		}
+	}
+	if (key == KEY_LEFT || key == KEY_LEFT_LINUX)
+	{
+		data->pos_ang -= 0.1;
+		if (data->pos_ang < 0)
+			data->pos_ang += 2 * PI;
+		data->pos_dx = 5 * cos(data->pos_ang);
+		data->pos_dy = 5 * sin(data->pos_ang);
+	}
+	if (key == KEY_RIGHT || key == KEY_RIGHT_LINUX)
+	{
+		data->pos_ang += 0.1;
+		if (data->pos_ang > 2 * PI)
+			data->pos_ang -= 2 * PI;
+		data->pos_dx = 5 * cos(data->pos_ang);
+		data->pos_dy = 5 * sin(data->pos_ang);
+	}
 	if (key == KEY_ESC || key == KEY_ESC_LINUX)
 		esc_window(key, data);
 	if (key == KEY_M || key == KEY_M_LINUX)
 		toggle_minimap(data);
+	draw_player(data, data->pos_x, data->pos_y);
+	printf("position in map : [%i][%i]\nposition on screen [%f][%f]\n", (int)(data->pos_x / data->map_width), (int)(data->pos_y / data->map_height), data->pos_x, data->pos_y);
+	draw_line(data->pos_x + 5, data->pos_y + 5,data->pos_x + data->pos_dx * 5,data->pos_y + data->pos_dy * 5, data);
+	draw_ray(data);
 	if (data->minimap == 1)
 		draw_map(data);
-	draw_player(data, data->pos_x, data->pos_y);
-	
 	return (0);
 }
