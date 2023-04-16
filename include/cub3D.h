@@ -16,13 +16,16 @@
 /*
 ** KEY MAPPINGS
 */
-# define SCREENSIZE 400
+
+# define MOVE_SPEED 0.5
+# define ROT_SPEED 1
+
+# define SCREENSIZE 800
 
 # define PI 3.14159263
-# define P2 PI / 2
-# define P3 (3 * PI) / 2
-# define MOVE_SPEED 0.1
-# define FOV PI / 9
+# define P2 1.570796315
+# define P3 4.712388945
+# define FOV 0.34906584777
 
 # define KEY_ESC 53
 # define KEY_W 13
@@ -46,44 +49,6 @@
 
 # define KEY_M 46
 # define KEY_M_LINUX 109
-
-# define KEY_F 3
-# define KEY_H 4
-# define KEY_G 5
-# define KEY_Z 6
-# define KEY_X 7
-# define KEY_C 8
-# define KEY_V 9
-# define KEY_B 11
-# define KEY_Q 12
-# define KEY_E 14
-# define KEY_R 15
-# define KEY_Y 16
-# define KEY_T 17
-# define KEY_ONE 18
-# define KEY_TWO 19
-# define KEY_THREE 20
-# define KEY_FOUR 21
-# define KEY_SIX 22
-# define KEY_FIVE 23
-# define KEY_NINE 25
-# define KEY_SEVEN 26
-# define KEY_EIGHT 28
-# define KEY_ZERO 29
-# define KEY_BRACE_R 30
-# define KEY_O 31
-# define KEY_U 32
-# define KEY_BRACE_L 33
-# define KEY_I 34
-# define KEY_P 35
-# define KEY_L 37
-# define KEY_J 38
-# define KEY_K 40
-# define KEY_SEMI 41
-# define KEY_N 45
-# define KEY_TAB 48
-# define KEY_PLUS 69
-# define KEY_MINUS 78
 
 /*
 ** CONSTANTS
@@ -124,7 +89,7 @@
 ** STRUCTURES
 */
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void		*img;
 	int			*addr;
@@ -135,51 +100,27 @@ typedef struct	s_img
 	int			sl;
 }				t_img;
 
-typedef struct s_ray
-{
-	int			r;
-	int			mx;
-	int			my;
-	int			mp;
-	int			dof;
-	int			color;
-
-	float		rx;
-	float		ry;
-	float		ra;
-	float		xo;
-	float		yo;
-}				t_ray;
 
 typedef struct s_data
 {
-    /*
-    ** PARSING
-    */
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor[3];
-	int		ceiling[3];
-	int		resolution;
-	int		map_width;
-	int		map_height;
-	char	spawn_dir;
-	char	**map_arr;
+	char		*no_path;
+	char		*so_path;
+	char		*we_path;
+	char		*ea_path;
+	int			floor[3];
+	int			ceiling[3];
+	int			resolution;
+	int			map_width;
+	int			map_height;
+	char		spawn_dir;
+	char		**map_arr;
 
-    /*
-    ** FILE DESCRIPTORS
-    */
-	int		map_fd;
-	int		NO_fd;
-	int		SO_fd;
-	int		WE_fd;
-	int		EA_fd;
+	int			map_fd;
+	int			NO_fd;
+	int			SO_fd;
+	int			WE_fd;
+	int			EA_fd;
 
-    /*
-    ** MLX
-    */
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		l;
@@ -191,45 +132,25 @@ typedef struct s_data
 	t_img		sprite;
 	t_img		gun;
 
-	/*
-	** MINIMAP
-	*/
-	t_img		wall;
-	t_img		path;
 	int			minimap;
 
-	/*
-	** PLAYER
-	*/
-	t_img		player;
-	t_ray		ray;
-	float		pos_x;
-	float		pos_y;
-	float		pos_dx;
-	float		pos_dy;
-	float		pos_ang;
-
-	/*
-	** VECTOR PLAYER
-	*/
-	double playerX;
-	double playerY;
-	double playerDir;
-	double planeX;
-	double planeY;
-	int turn_left;
-	int turn_right;
-	int	move_up;
-	int	move_down;
-	int	dirX;
-	int	dirY;
-	double fov;
-	int ceiling_color;
-	int floor_color;
-	double rayAngle;
-  	t_img       *buffer[2];
-    int         current_buffer;
-	// t_img	wall;
+	double		playerX;
+	double		playerY;
+	double		playerDir;
+	double		planeX;
+	double		planeY;
+	double		fov;
+	double		rayAngle;
+	t_img		*buffer[2];
+	int			ceiling_color;
+	int			floor_color;
+	int			turn_left;
+	int			turn_right;
+	int			move_up;
+	int			move_down;
+	int			dirX;
+	int			dirY;
+	int			current_buffer;
 }				t_data;
 
 /*
@@ -260,10 +181,7 @@ void	load_game_settings(t_data *data, int argc, char **argv);
 int		esc_window(int key, void *params);
 int		cross_window(int key, void *params);
 int		key_stroke(int key, void *params);
-int 	check_resolution(int x, int y);
-void	draw_background(t_data *data, int top_color, int bottom_color);
-void	draw_player(t_data *data, int px, int py);
-int		draw_line(int beginX, int beginY, int endX, int endY, t_data *data);
+int		check_resolution(int x, int y);
 
 /*
 ** RAYCASTING
@@ -289,4 +207,3 @@ void	free_split(char **str);
 int		free_array_and_return(char **array, int return_id);
 
 #endif
-
