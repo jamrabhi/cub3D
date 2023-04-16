@@ -16,10 +16,13 @@
 /*
 ** KEY MAPPINGS
 */
+# define SCREENSIZE 400
 
 # define PI 3.14159263
 # define P2 PI / 2
 # define P3 (3 * PI) / 2
+# define MOVE_SPEED 0.1
+# define FOV PI / 9
 
 # define KEY_ESC 53
 # define KEY_W 13
@@ -86,8 +89,8 @@
 ** CONSTANTS
 */
 
-# define WIN_HEIGHT 800
-# define WIN_WIDTH 001
+# define WIN_HEIGHT SCREENSIZE
+# define WIN_WIDTH SCREENSIZE
 # define INVALID_FILE "Invalid file format"
 # define INVALID_CUB "Invalid or missing element in the .cub file"
 # define INVALID_RGB "Invalid RGB values"
@@ -205,6 +208,28 @@ typedef struct s_data
 	float		pos_dx;
 	float		pos_dy;
 	float		pos_ang;
+
+	/*
+	** VECTOR PLAYER
+	*/
+	double playerX;
+	double playerY;
+	double playerDir;
+	double planeX;
+	double planeY;
+	int turn_left;
+	int turn_right;
+	int	move_up;
+	int	move_down;
+	int	dirX;
+	int	dirY;
+	double fov;
+	int ceiling_color;
+	int floor_color;
+	double rayAngle;
+  	t_img       *buffer[2];
+    int         current_buffer;
+	// t_img	wall;
 }				t_data;
 
 /*
@@ -243,7 +268,7 @@ int		draw_line(int beginX, int beginY, int endX, int endY, t_data *data);
 /*
 ** RAYCASTING
 */
-void	draw_ray(t_data *data);
+void	draw_walls(t_data *data);
 
 /*
 ** MINIMAP
@@ -264,3 +289,4 @@ void	free_split(char **str);
 int		free_array_and_return(char **array, int return_id);
 
 #endif
+

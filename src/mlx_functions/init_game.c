@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3D.h"
+// #define FOV PI / 3
 
 static void	show_array(t_data *data)
 {
@@ -30,23 +31,6 @@ static void	show_array(t_data *data)
 	}
 	data->map_width = max;
 	data->map_height = i;
-	// i = 0;
-	// while (data->map_arr && data->map_arr[i])
-	// {
-	// 	j = 0;
-	// 	while (data->map_arr[i][j])
-	// 	{
-	// 		if (data->map_arr[i][j] != '1' && data->map_arr[i][j] != ' ' && data->map_arr[i][j] != '0')
-	// 		{
-	// 			printf("found player at %i %i\n", i, j);
-	// 			data->pos_x = (float)(i * (data->resolution / data->map_height));
-	// 			data->pos_y = (float)(j * (data->resolution / data->map_width));
-	// 			printf("placing playe at %i(%i / %i) %i(%i /%i)\n", (int)data->pos_x, data->resolution, data->map_width,(int)data->pos_y, data->resolution, data->map_height);
-	// 		}
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
 }
 
 static void	file_report(t_data *data)
@@ -65,6 +49,23 @@ static void	file_report(t_data *data)
 	printf("MAP :\n");
 	show_array(data);
 	printf("-------------------------\n_________________________\n");
+	int i = 0, j= 0;
+	while (data->map_arr[i])
+	{
+		while (data->map_arr[i][j])
+		{
+			if (data->map_arr[i][j] == 'N')
+			{
+				data->playerX = i;
+				data->playerY = j;
+				data->map_arr[i][j] = '0';
+				return ;
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
 }
 
 void	init_game_struct(t_data *data)
@@ -77,6 +78,7 @@ void	init_game_struct(t_data *data)
 	data->ea_path = NULL;
 	data->map_arr = NULL;
 	data->wall.img = NULL;
+	data->wall.addr = NULL;
 	data->path.img = NULL;
 	data->player.img = NULL;
 	data->resolution = check_resolution(WIN_WIDTH, WIN_HEIGHT);
@@ -86,7 +88,17 @@ void	init_game_struct(t_data *data)
 	data->pos_dy = 0;
 	data->pos_x = 200;
 	data->pos_y = 200;
-	data->minimap = 1;	
+	data->minimap = 1;
+	
+	// data->playerX = 2.5;
+	// data->playerY = 2.5;
+	data->playerDir = 0;
+	data->planeX = 0;
+	data->planeY = 0.66;
+	data->turn_left = 0;
+	data->turn_right = 0;
+	data->move_up = 0;
+	data->move_down = 0;
 }
 
 void	load_game_settings(t_data *data, int argc, char **argv)
@@ -111,8 +123,28 @@ int	init_game(t_data *data)
 	if (!data->mlx_ptr || !data->win_ptr)
 		return (0);
 	// draw_background(data, 0xF0F8FF, 0x808080);
-	draw_background(data, 0x0, 0x0);
-	draw_player(data, data->pos_x, data->pos_y);
+	data->wall.img = mlx_new_image(data->mlx_ptr, data->map_width, data->map_height);
+	data->wall.addr = (int *)mlx_get_data_addr(data->wall.img, &data->wall.bpp, &data->wall.sl, &data->wall.bpp);
+	// Initialize raycasting variables
+	// data->playerX = 10;
+	// data->playerY = 10;
+	data->planeX = 0;
+	data->planeY = 0.66;
+	data->dirX = -1;
+	data->dirY = 0;
+	data->fov = FOV;
+	data->ceiling_color = 0xF0F8FF;
+	data->floor_color = 0x808080;
+	data->rayAngle = 0;
+
+	data->buffer[0] = (t_img *)malloc(sizeof(t_img));
+    data->buffer[0]->img = mlx_new_image(data->mlx_ptr, SCREENSIZE, SCREENSIZE);
+    data->buffer[0]->addr = (int *)mlx_get_data_addr(data->buffer[0]->img, &data->buffer[0]->bpp, &data->buffer[0]->sl, &data->buffer[0]->endian);
+    data->buffer[1] = (t_img *)malloc(sizeof(t_img));
+    data->buffer[1]->img = mlx_new_image(data->mlx_ptr, SCREENSIZE, SCREENSIZE);
+    data->buffer[1]->addr = (int *)mlx_get_data_addr(data->buffer[1]->img, &data->buffer[1]->bpp, &data->buffer[1]->sl, &data->buffer[1]->endian);
+    data->current_buffer = 0;
+
 	draw_map(data);
 	mlx_hook(data->win_ptr, 2, (1L << 0), key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
