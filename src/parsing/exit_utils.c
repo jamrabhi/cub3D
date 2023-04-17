@@ -23,14 +23,14 @@ void	free_map_file(t_data *data)
 		free_split(data->map_arr);
 		if (data->map_fd > 0)
 			close(data->map_fd);
-		if (data->NO_fd > 0)
-			close(data->NO_fd);
-		if (data->SO_fd > 0)
-			close(data->SO_fd);
-		if (data->WE_fd > 0)
-			close(data->WE_fd);
-		if (data->EA_fd > 0)
-			close(data->EA_fd);
+		if (data->no_fd > 0)
+			close(data->no_fd);
+		if (data->so_fd > 0)
+			close(data->so_fd);
+		if (data->we_fd > 0)
+			close(data->we_fd);
+		if (data->ea_fd > 0)
+			close(data->ea_fd);
 	}
 }
 

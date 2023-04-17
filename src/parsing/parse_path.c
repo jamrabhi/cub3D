@@ -40,11 +40,11 @@ int	get_no(char *line, t_data *data)
 			if (!path[1] || path[2] || data->no_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_NO, path, line, data);
-			data->NO_fd = open(path[1], O_DIRECTORY);
-			if (data->NO_fd != -1)
+			data->no_fd = open(path[1], O_DIRECTORY);
+			if (data->no_fd != -1)
 				exit_error_n_free_array_n_line(NO_IS_DIR, path, line, data);
-			data->NO_fd = open(path[1], O_RDONLY);
-			if (data->NO_fd == -1)
+			data->no_fd = open(path[1], O_RDONLY);
+			if (data->no_fd == -1)
 				exit_error_n_free_array_n_line(NO_UNAV, path, line, data);
 			data->no_path = ft_strdup(path[1]);
 			free_split(path);
@@ -67,11 +67,11 @@ int	get_so(char *line, t_data *data)
 			if (!path[1] || path[2] || data->so_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_SO, path, line, data);
-			data->SO_fd = open(path[1], O_DIRECTORY);
-			if (data->SO_fd != -1)
+			data->so_fd = open(path[1], O_DIRECTORY);
+			if (data->so_fd != -1)
 				exit_error_n_free_array_n_line(SO_IS_DIR, path, line, data);
-			data->SO_fd = open(path[1], O_RDONLY);
-			if (data->SO_fd == -1)
+			data->so_fd = open(path[1], O_RDONLY);
+			if (data->so_fd == -1)
 				exit_error_n_free_array_n_line(SO_UNAV, path, line, data);
 			data->so_path = ft_strdup(path[1]);
 			free_split(path);
@@ -94,11 +94,11 @@ int	get_we(char *line, t_data *data)
 			if (!path[1] || path[2] || data->we_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_WE, path, line, data);
-			data->WE_fd = open(path[1], O_DIRECTORY);
-			if (data->WE_fd != -1)
+			data->we_fd = open(path[1], O_DIRECTORY);
+			if (data->we_fd != -1)
 				exit_error_n_free_array_n_line(WE_IS_DIR, path, line, data);
-			data->WE_fd = open(path[1], O_RDONLY);
-			if (data->WE_fd == -1)
+			data->we_fd = open(path[1], O_RDONLY);
+			if (data->we_fd == -1)
 				exit_error_n_free_array_n_line(WE_UNAV, path, line, data);
 			data->we_path = ft_strdup(path[1]);
 			free_split(path);
@@ -121,11 +121,11 @@ int	get_ea(char *line, t_data *data)
 			if (!path[1] || path[2] || data->ea_path
 				|| !check_xpm(path[1]))
 				exit_error_n_free_array_n_line(MISCONF_EA, path, line, data);
-			data->EA_fd = open(path[1], O_DIRECTORY);
-			if (data->EA_fd != -1)
+			data->ea_fd = open(path[1], O_DIRECTORY);
+			if (data->ea_fd != -1)
 				exit_error_n_free_array_n_line(EA_IS_DIR, path, line, data);
-			data->EA_fd = open(path[1], O_RDONLY);
-			if (data->EA_fd == -1)
+			data->ea_fd = open(path[1], O_RDONLY);
+			if (data->ea_fd == -1)
 				exit_error_n_free_array_n_line(EA_UNAV, path, line, data);
 			data->ea_path = ft_strdup(path[1]);
 			free_split(path);

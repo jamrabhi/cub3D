@@ -100,7 +100,6 @@ typedef struct s_img
 	int			sl;
 }				t_img;
 
-
 typedef struct s_data
 {
 	char		*no_path;
@@ -116,41 +115,55 @@ typedef struct s_data
 	char		**map_arr;
 
 	int			map_fd;
-	int			NO_fd;
-	int			SO_fd;
-	int			WE_fd;
-	int			EA_fd;
+	int			no_fd;
+	int			so_fd;
+	int			we_fd;
+	int			ea_fd;
 
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_img		l;
-	t_img		m;
-	t_img		so;
-	t_img		no;
-	t_img		ea;
-	t_img		we;
-	t_img		sprite;
-	t_img		gun;
 
 	int			minimap;
 
-	double		playerX;
-	double		playerY;
-	double		playerDir;
-	double		planeX;
-	double		planeY;
+	int			current_game_frame;
+	t_img		*game_frame[2];
+	double		player_dir;
+	double		player_x;
+	double		player_y;
+	double		player_vel_x;
+	double		player_vel_y;
+	double		plane_x;
+	double		plane_y;
+	int			dir_x;
+	int			dir_y;
 	double		fov;
-	double		rayAngle;
-	t_img		*buffer[2];
+	double		ray_angle;
 	int			ceiling_color;
 	int			floor_color;
-	int			turn_left;
 	int			turn_right;
+	int			turn_left;
 	int			move_up;
 	int			move_down;
-	int			dirX;
-	int			dirY;
-	int			current_buffer;
+
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	int			step_x;
+	int			step_y;
+	int			hit;
+
+	double		perpwall_dist;
+	double		dist_to_wall;
+	int			wall_height;
+	int			draw_start;
+	int			draw_end;
+	int			wall_color;
 }				t_data;
 
 /*
@@ -186,6 +199,7 @@ int		check_resolution(int x, int y);
 /*
 ** RAYCASTING
 */
+void	init_raycasting(t_data *data, int x);
 void	draw_walls(t_data *data);
 
 /*
@@ -198,6 +212,7 @@ void	write_pixel_data(t_img *img, int pixel, int color);
 /*
 ** UTILS
 */
+void	handle_keys(t_data *data);
 int		exit_error(char *error, t_data *data);
 int		exit_error_n_free_line(char *error, char *line, t_data *data);
 int		exit_error_n_free_array_n_line(char *e, char **a, char *l, t_data *d);

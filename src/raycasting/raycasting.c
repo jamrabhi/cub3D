@@ -1,140 +1,128 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   exit.c                                             :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2023/02/23 19:35:17 by jamrabhi          #+#    #+#             */
-	/*   Updated: 2023/02/23 19:35:20 by jamrabhi         ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jamrabhi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/23 19:35:17 by jamrabhi          #+#    #+#             */
+/*   Updated: 2023/02/23 19:35:20 by jamrabhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-	#include <cub3D.h>
-	#include "mlx.h"
+#include <cub3D.h>
+#include "mlx.h"
 
-	static void handle_keys(t_data *data)
+static int	dda_loop(t_data *data, int side)
+{
+	while (!data->hit)
 	{
-		// // Handle key presses
-		if (data->turn_left) {
-			data->playerDir -= 0.1 * ROT_SPEED;
-			data->turn_left = 0;
+		if (data->side_dist_x < data->side_dist_y)
+		{
+			data->side_dist_x += data->delta_dist_x;
+			data->map_x += data->step_x;
+			side = 0;
 		}
-		if (data->turn_right) {
-			data->playerDir += 0.1 * ROT_SPEED;
-			data->turn_right = 0;
+		else
+		{
+			data->side_dist_y += data->delta_dist_y;
+			data->map_y += data->step_y;
+			side = 1;
 		}
-		double playerVelX = cos(data->playerDir) * MOVE_SPEED;
-		double playerVelY = sin(data->playerDir) * MOVE_SPEED;
-		if (data->move_up) {
-			double nextPlayerX = data->playerX + playerVelX;
-			double nextPlayerY = data->playerY + playerVelY;
-			int nextMapX = (int)nextPlayerX;
-			int nextMapY = (int)nextPlayerY;
-			if (data->map_arr[nextMapX][nextMapY] == '0') {
-				data->playerX = nextPlayerX;
-				data->playerY = nextPlayerY;
-			}
-			data->move_up = 0;
-		}
-		if (data->move_down) {
-			double nextPlayerX = data->playerX - playerVelX;
-			double nextPlayerY = data->playerY - playerVelY;
-			int nextMapX = (int)nextPlayerX;
-			int nextMapY = (int)nextPlayerY;
-			if (data->map_arr[nextMapX][nextMapY] == '0') {
-				data->playerX = nextPlayerX;
-				data->playerY = nextPlayerY;
-			}
-			data->move_down = 0;
-		}
-		if (data->playerDir < 0) {
-			data->playerDir += 2 * M_PI;
-		} else if (data->playerDir >= 2 * M_PI) {
-			data->playerDir -= 2 * M_PI;
-		}
+		if (data->map_arr[data->map_x][data->map_y] == '1')
+			data->hit = 1;
 	}
+	return (side);
+}
 
-	void draw_walls(t_data *data)
+static int	raycasting(t_data *data, int x, int side)
+{
+	init_raycasting(data, x);
+	if (data->ray_dir_x < 0)
 	{
-		// Render loop
-		// while (1) {
-			
-		// Clear the buffer	
-		memset(data->buffer[data->current_buffer]->addr, 0, data->buffer[data->current_buffer]->sl * SCREENSIZE);
-		handle_keys(data);
-		// Render the walls
-		for (int x = 0; x < SCREENSIZE; x++) 
-		{	
-			for (int i = 0; i < 5; i++) {
-				double cameraX = 2 * x / (double)SCREENSIZE - 1; // center on screen and normalize
-				double rayDirX = cos(data->playerDir + data->fov * cameraX);
-				double rayDirY = sin(data->playerDir + data->fov * cameraX);
-				int mapX = (int)data->playerX;
-				int mapY = (int)data->playerY;
-				double sideDistX, sideDistY;
-				if (rayDirX == 0)
-					rayDirX = 1;
-				if (rayDirY == 0)
-					rayDirY = 1;
-				double deltaDistX = fabs(1 / rayDirX);
-				double deltaDistY = fabs(1 / rayDirY);
-				int stepX, stepY;
-				int hit = 0;
-				int side;
-
-				if (rayDirX < 0) {
-					stepX = -1;
-					sideDistX = (data->playerX - mapX) * deltaDistX;
-				} else {
-					stepX = 1;
-					sideDistX = (mapX + 1.0 - data->playerX) * deltaDistX;
-				}
-				if (rayDirY < 0) {
-					stepY = -1;
-					sideDistY = (data->playerY - mapY) * deltaDistY;
-				} else {
-					stepY = 1;
-					sideDistY = (mapY + 1.0 - data->playerY) * deltaDistY;
-				}
-				while (!hit) {
-					if (sideDistX < sideDistY) {
-						sideDistX += deltaDistX;
-						mapX += stepX;
-						side = 0;
-					} else {
-						sideDistY += deltaDistY;
-						mapY += stepY;
-						side = 1;
-					}
-					if (data->map_arr[mapX][mapY] == '1')
-						hit = 1;
-				}
-				double perpWallDist;
-				if (side == 0)
-					perpWallDist = fabs((mapX - data->playerX + (1 - stepX) / 2) / rayDirX);
-				else
-					perpWallDist = fabs((mapY - data->playerY + (1 - stepY) / 2) / rayDirY);
-	double distToWall = perpWallDist * cos((data->playerDir - (data->playerDir + cameraX * data->fov)) * M_PI / 180.0);
-				int wall_height = (int)(SCREENSIZE / (distToWall * cos(cameraX * data->fov)));
-				int draw_start = SCREENSIZE / 2 - wall_height / 2;
-				if (draw_start < 0)
-					draw_start = 0;
-				int draw_end = wall_height / 2 + SCREENSIZE / 2;
-				if (draw_end >= SCREENSIZE)
-					draw_end = SCREENSIZE - 1;
-				// Calculate the shaded color for the wall
-				int wallColor = 0xFF00FF;
-				for (int y = 0; y < SCREENSIZE; y++) {
-					if (y < draw_start)
-						data->buffer[data->current_buffer]->addr[y * SCREENSIZE + x] = data->ceiling_color;
-					else if (y > draw_end)
-						data->buffer[data->current_buffer]->addr[y * SCREENSIZE + x] = data->floor_color;
-					else
-						data->buffer[data->current_buffer]->addr[y * SCREENSIZE + x] = wallColor;
-				}
-			}
-			}
-			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->buffer[data->current_buffer]->img, 0, 0);
-			data->current_buffer = (data->current_buffer + 1) % 2;
+		data->step_x = -1;
+		data->side_dist_x = (data->player_x - data->map_x) * data->delta_dist_x;
 	}
+	else
+	{
+		data->step_x = 1;
+		data->side_dist_x = (data->map_x + 1.0 - data->player_x) \
+			* data->delta_dist_x;
+	}
+	if (data->ray_dir_y < 0)
+	{
+		data->step_y = -1;
+		data->side_dist_y = (data->player_y - data->map_y) * data->delta_dist_y;
+	}
+	else
+	{
+		data->step_y = 1;
+		data->side_dist_y = (data->map_y + 1.0 - data->player_y) \
+			* data->delta_dist_y;
+	}
+	side = dda_loop(data, side);
+	return (side);
+}
+
+static void	wall_calculation(t_data *data, int side)
+{
+	if (side == 0)
+		data->perpwall_dist = fabs((data->map_x - data->player_x + \
+			(1 - data->step_x) / 2) / data->ray_dir_x);
+	else
+		data->perpwall_dist = fabs((data->map_y - data->player_y + \
+			(1 - data->step_y) / 2) / data->ray_dir_y);
+	data->dist_to_wall = data->perpwall_dist * cos((data->player_dir - \
+		(data->player_dir + data->camera_x * data->fov)) * M_PI / 180.0);
+	data->wall_height = (int)(SCREENSIZE / (data->dist_to_wall * \
+		cos(data->camera_x * data->fov)));
+	data->draw_start = SCREENSIZE / 2 - data->wall_height / 2;
+	if (data->draw_start < 0)
+		data->draw_start = 0;
+	data->draw_end = data->wall_height / 2 + SCREENSIZE / 2;
+	if (data->draw_end >= SCREENSIZE)
+		data->draw_end = SCREENSIZE - 1;
+}
+
+static void	wall_rendering(t_data *data, int x)
+{
+	int	y;
+
+	y = 0;
+	data->wall_color = 0x13232;
+	while (y < SCREENSIZE)
+	{
+		if (y < data->draw_start)
+			data->game_frame[data->current_game_frame]->addr[y * \
+				SCREENSIZE + x] = data->ceiling_color;
+		else if (y > data->draw_end)
+			data->game_frame[data->current_game_frame]->addr[y * \
+				SCREENSIZE + x] = data->floor_color;
+		else
+			data->game_frame[data->current_game_frame]->addr[y * \
+				SCREENSIZE + x] = data->wall_color;
+		y++;
+	}
+}
+
+void	draw_walls(t_data *data)
+{
+	int		x;
+	int		side;
+
+	x = 0;
+	side = 0;
+	memset(data->game_frame[data->current_game_frame]->addr, 0, \
+		data->game_frame[data->current_game_frame]->sl * SCREENSIZE);
+	handle_keys(data);
+	while (x < SCREENSIZE)
+	{
+		side = raycasting(data, x, side);
+		wall_calculation(data, side);
+		wall_rendering(data, x);
+		x++;
+	}
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
+		data->game_frame[data->current_game_frame]->img, 0, 0);
+	data->current_game_frame = (data->current_game_frame + 1) % 2;
+}
