@@ -41,6 +41,28 @@ static void	handle_walk(t_data *data)
 	}
 }
 
+int	dda_loop(t_data *data, int side)
+{
+	while (!data->hit)
+	{
+		if (data->side_dist_x < data->side_dist_y)
+		{
+			data->side_dist_x += data->delta_dist_x;
+			data->map_x += data->step_x;
+			side = 0;
+		}
+		else
+		{
+			data->side_dist_y += data->delta_dist_y;
+			data->map_y += data->step_y;
+			side = 1;
+		}
+		if (data->map_arr[data->map_x][data->map_y] == '1')
+			data->hit = 1;
+	}
+	return (side);
+}
+
 void	handle_keys(t_data *data)
 {
 	if (data->turn_left)

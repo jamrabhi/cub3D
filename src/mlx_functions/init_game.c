@@ -101,6 +101,10 @@ int	init_game(t_data *data)
 		return (0);
 	init_player_values(data);
 	draw_walls(data);
+        data->tex1.img = mlx_xpm_file_to_image(data->mlx_ptr, data->no_path, &data->tex1.width, &data->tex1.height);
+        data->tex2.img = mlx_xpm_file_to_image(data->mlx_ptr, data->so_path, &data->tex2.width, &data->tex2.height);
+        data->tex3.img = mlx_xpm_file_to_image(data->mlx_ptr, data->ea_path, &data->tex3.width, &data->tex3.height);
+        data->tex4.img = mlx_xpm_file_to_image(data->mlx_ptr, data->we_path, &data->tex4.width, &data->tex4.height);
 	mlx_hook(data->win_ptr, 2, (1L << 0), key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
 	mlx_loop(data->mlx_ptr);

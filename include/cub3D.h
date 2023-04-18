@@ -89,6 +89,14 @@
 ** STRUCTURES
 */
 
+typedef struct s_tex
+{
+	void		*img;
+	int			*addr;
+	int			width;
+	int			height;
+}				t_tex;
+
 typedef struct s_img
 {
 	void		*img;
@@ -164,6 +172,11 @@ typedef struct s_data
 	int			draw_start;
 	int			draw_end;
 	int			wall_color;
+
+	t_tex		tex1;
+	t_tex		tex2;
+	t_tex		tex3;
+	t_tex		tex4;
 }				t_data;
 
 /*
@@ -201,6 +214,7 @@ int		check_resolution(int x, int y);
 */
 void	init_raycasting(t_data *data, int x);
 void	draw_walls(t_data *data);
+int		dda_loop(t_data *data, int side);
 
 /*
 ** MINIMAP

@@ -13,28 +13,6 @@
 #include <cub3D.h>
 #include "mlx.h"
 
-static int	dda_loop(t_data *data, int side)
-{
-	while (!data->hit)
-	{
-		if (data->side_dist_x < data->side_dist_y)
-		{
-			data->side_dist_x += data->delta_dist_x;
-			data->map_x += data->step_x;
-			side = 0;
-		}
-		else
-		{
-			data->side_dist_y += data->delta_dist_y;
-			data->map_y += data->step_y;
-			side = 1;
-		}
-		if (data->map_arr[data->map_x][data->map_y] == '1')
-			data->hit = 1;
-	}
-	return (side);
-}
-
 static int	raycasting(t_data *data, int x, int side)
 {
 	init_raycasting(data, x);
@@ -84,12 +62,58 @@ static void	wall_calculation(t_data *data, int side)
 		data->draw_end = SCREENSIZE - 1;
 }
 
-static void	wall_rendering(t_data *data, int x)
+int get_tex_color(t_data *d, int y, int side)
+{
+    t_img tex;
+    double tex_y;
+    double tex_x;
+    int lineheight;
+
+    lineheight = (int)(SCREENSIZE / d->perpwall_dist);
+    // if (side == 0)
+        tex.img = d->tex1.img;
+    // else if (side == 1)
+    //     tex.img = d->tex2.so_img;
+    // else if (side == 2)
+    //     tex.img = d->tex3.ea_img;
+    // else
+    //     tex.img = d->tex4.we_img;
+
+    char *tex_addr = mlx_get_data_addr(tex.img, &tex.bpp, &tex.sl, &tex.endian);
+    tex_y = (y * 2 - SCREENSIZE + lineheight) * (d->tex1.height / 2) / lineheight;
+    if (tex_y < 0)
+        tex_y = 0;
+    tex_x = (int)((d->player_y + d->perpwall_dist * d->ray_dir_y) * d->tex1.width) % d->tex1.width;
+    if ((side == 0 && d->ray_dir_x > 0) || (side == 1 && d->ray_dir_y < 0))
+        tex_x = d->tex1.width - tex_x - 1;
+    char *color = tex_addr + (int)tex_y * tex.sl + (int)tex_x * (tex.bpp / 8);
+    return (*(unsigned int *)color);
+}
+
+static void	place_wall_texture(t_data *data, int side)
+{
+	if (side == 0)
+	{
+		if (data->ray_dir_x < 0)
+			data->wall_color = 0xFF0000; // Red for west-facing walls
+		else
+			data->wall_color = 0x00FF00; // Green for east-facing walls
+	}
+	else
+	{
+		if (data->ray_dir_y < 0)
+			data->wall_color = 0x0000FF; // Blue for north-facing walls
+		else
+			data->wall_color = 0xFFFF00; // Yellow for south-facing walls
+	}	
+}
+
+static void	wall_rendering(t_data *data, int x, int side)
 {
 	int	y;
 
 	y = 0;
-	data->wall_color = 0x13232;
+	place_wall_texture(data, side);
 	while (y < SCREENSIZE)
 	{
 		if (y < data->draw_start)
@@ -99,8 +123,14 @@ static void	wall_rendering(t_data *data, int x)
 			data->game_frame[data->current_game_frame]->addr[y * \
 				SCREENSIZE + x] = data->floor_color;
 		else
-			data->game_frame[data->current_game_frame]->addr[y * \
-				SCREENSIZE + x] = data->wall_color;
+		{
+			if (side == 1)
+				data->game_frame[data->current_game_frame]->addr[y * \
+					SCREENSIZE + x] = data->wall_color;
+			else
+				data->game_frame[data->current_game_frame]->addr[y * \
+					SCREENSIZE + x] = get_tex_color(data, data->draw_start + ((data->draw_end - data->draw_start) / 2), side);
+		}
 		y++;
 	}
 }
@@ -119,7 +149,7 @@ void	draw_walls(t_data *data)
 	{
 		side = raycasting(data, x, side);
 		wall_calculation(data, side);
-		wall_rendering(data, x);
+		wall_rendering(data, x, side);
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
