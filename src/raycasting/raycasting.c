@@ -62,33 +62,33 @@ static void	wall_calculation(t_data *data, int side)
 		data->draw_end = SCREENSIZE - 1;
 }
 
-int get_tex_color(t_data *d, int y, int side)
-{
-    t_img tex;
-    double tex_y;
-    double tex_x;
-    int lineheight;
+// static int get_tex_color(t_data *d, int y, int side)
+// {
+//     t_img tex;
+//     double tex_y;
+//     double tex_x;
+//     int lineheight;
 
-    lineheight = (int)(SCREENSIZE / d->perpwall_dist);
-    // if (side == 0)
-        tex.img = d->tex1.img;
-    // else if (side == 1)
-    //     tex.img = d->tex2.so_img;
-    // else if (side == 2)
-    //     tex.img = d->tex3.ea_img;
-    // else
-    //     tex.img = d->tex4.we_img;
+//     lineheight = (int)(SCREENSIZE / d->perpwall_dist);
+//     // if (side == 0)
+//         tex.img = d->tex1.img;
+//     // else if (side == 1)
+//     //     tex.img = d->tex2.so_img;
+//     // else if (side == 2)
+//     //     tex.img = d->tex3.ea_img;
+//     // else
+//     //     tex.img = d->tex4.we_img;
 
-    char *tex_addr = mlx_get_data_addr(tex.img, &tex.bpp, &tex.sl, &tex.endian);
-    tex_y = (y * 2 - SCREENSIZE + lineheight) * (d->tex1.height / 2) / lineheight;
-    if (tex_y < 0)
-        tex_y = 0;
-    tex_x = (int)((d->player_y + d->perpwall_dist * d->ray_dir_y) * d->tex1.width) % d->tex1.width;
-    if ((side == 0 && d->ray_dir_x > 0) || (side == 1 && d->ray_dir_y < 0))
-        tex_x = d->tex1.width - tex_x - 1;
-    char *color = tex_addr + (int)tex_y * tex.sl + (int)tex_x * (tex.bpp / 8);
-    return (*(unsigned int *)color);
-}
+//     char *tex_addr = mlx_get_data_addr(tex.img, &tex.bpp, &tex.sl, &tex.endian);
+//     tex_y = (y * 2 - SCREENSIZE + lineheight) * (d->tex1.height / 2) / lineheight;
+//     if (tex_y < 0)
+//         tex_y = 0;
+//     tex_x = (int)((d->player_y + d->perpwall_dist * d->ray_dir_y) * d->tex1.width) % d->tex1.width;
+//     if ((side == 0 && d->ray_dir_x > 0) || (side == 1 && d->ray_dir_y < 0))
+//         tex_x = d->tex1.width - tex_x - 1;
+//     char *color = tex_addr + (int)tex_y * tex.sl + (int)tex_x * (tex.bpp / 8);
+//     return (*(unsigned int *)color);
+// }
 
 static void	place_wall_texture(t_data *data, int side)
 {
@@ -129,7 +129,8 @@ static void	wall_rendering(t_data *data, int x, int side)
 					SCREENSIZE + x] = data->wall_color;
 			else
 				data->game_frame[data->current_game_frame]->addr[y * \
-					SCREENSIZE + x] = get_tex_color(data, data->draw_start + ((data->draw_end - data->draw_start) / 2), side);
+					SCREENSIZE + x] = data->wall_color;
+				// data->game_frame[data->current_game_frame]->addr[y * SCREENSIZE + x] = get_tex_color(data, data->draw_start + ((data->draw_end - data->draw_start) / 2), side);
 		}
 		y++;
 	}
