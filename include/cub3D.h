@@ -92,9 +92,12 @@
 typedef struct s_tex
 {
 	void		*img;
-	int			*addr;
+	char		*addr;
 	int			width;
 	int			height;
+	int			bpp;
+	int			line_length;
+	int			endian;
 }				t_tex;
 
 typedef struct s_img

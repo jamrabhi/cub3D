@@ -90,22 +90,33 @@ static void	wall_calculation(t_data *data, int side)
 //     return (*(unsigned int *)color);
 // }
 
-static void	place_wall_texture(t_data *data, int side)
+// static void	place_wall_texture(t_data *data, int side)
+// {
+// 	if (side == 0)
+// 	{
+// 		if (data->ray_dir_x < 0)
+// 			data->wall_color = 0xFF0000; // Red for west-facing walls
+// 		else
+// 			data->wall_color = 0x00FF00; // Green for east-facing walls
+// 	}
+// 	else
+// 	{
+// 		if (data->ray_dir_y < 0)
+// 			data->wall_color = 0x0000FF; // Blue for north-facing walls
+// 		else
+// 			data->wall_color = 0xFFFF00; // Yellow for south-facing walls
+// 	}	
+// }
+
+int		get_texture_color(t_data *data, int x, int y)
 {
-	if (side == 0)
+	int rt = 0;
+	if ((x >= 0 && x < data->tex1.width) && (y >= 0 && y < data->tex1.height))
 	{
-		if (data->ray_dir_x < 0)
-			data->wall_color = 0xFF0000; // Red for west-facing walls
-		else
-			data->wall_color = 0x00FF00; // Green for east-facing walls
+		rt = (*(int*)(data->tex1.addr + (y * data->tex1.line_length + x * (data->tex1.bpp / 8))));
+		return (rt);
 	}
-	else
-	{
-		if (data->ray_dir_y < 0)
-			data->wall_color = 0x0000FF; // Blue for north-facing walls
-		else
-			data->wall_color = 0xFFFF00; // Yellow for south-facing walls
-	}	
+	return (0);
 }
 
 static void	wall_rendering(t_data *data, int x, int side)
@@ -113,7 +124,8 @@ static void	wall_rendering(t_data *data, int x, int side)
 	int	y;
 
 	y = 0;
-	place_wall_texture(data, side);
+	(void)side;
+	// place_wall_texture(data, side);
 	while (y < SCREENSIZE)
 	{
 		if (y < data->draw_start)
@@ -124,12 +136,12 @@ static void	wall_rendering(t_data *data, int x, int side)
 				SCREENSIZE + x] = data->floor_color;
 		else
 		{
-			if (side == 1)
+			// if (side == 1)
 				data->game_frame[data->current_game_frame]->addr[y * \
-					SCREENSIZE + x] = data->wall_color;
-			else
-				data->game_frame[data->current_game_frame]->addr[y * \
-					SCREENSIZE + x] = data->wall_color;
+					SCREENSIZE + x] = get_texture_color(data, x, y);
+			// else
+				// data->game_frame[data->current_game_frame]->addr[y * 
+				// 	SCREENSIZE + x] = data->wall_color;
 				// data->game_frame[data->current_game_frame]->addr[y * SCREENSIZE + x] = get_tex_color(data, data->draw_start + ((data->draw_end - data->draw_start) / 2), side);
 		}
 		y++;
