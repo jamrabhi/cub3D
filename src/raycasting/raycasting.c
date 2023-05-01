@@ -119,6 +119,9 @@ int		get_texture_color(t_data *data, int x, int y)
 	return (0);
 }
 
+//TODO LIST
+//Faire un tableau de texture
+//norminette
 int		get_tex_color(t_data *d, int side, int y)
 {
 	char	*color;
