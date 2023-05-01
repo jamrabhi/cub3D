@@ -119,6 +119,40 @@ int		get_texture_color(t_data *data, int x, int y)
 	return (0);
 }
 
+int		get_tex_color(t_data *d, int side, int y)
+{
+	char	*color;
+	double	tex_y;
+	double	tex_x;
+	double	wall_x;
+
+	tex_y = (y * 2 - SCREENSIZE + d->wall_height) *
+		(d->tex1.height / 2) / d->wall_height;
+	if (side == 0)
+		wall_x = d->player_y + d->perpwall_dist * d->ray_dir_y;
+	else
+		wall_x = d->player_x+ d->perpwall_dist * d->ray_dir_x;
+	wall_x -= (int)wall_x;
+	tex_x = (int)(wall_x * d->tex1.width);
+	if ((side == 0 && d->ray_dir_x > 0) || (side == 1 &&
+	d->ray_dir_y < 0))
+		tex_x = d->tex1.width - tex_x - 1;
+	
+	if (tex_x < 0)
+		tex_x = 0;
+	else if (tex_x >= d->tex1.width)
+		tex_x = d->tex1.width - 1;
+
+	if (tex_y < 0)
+		tex_y = 0;
+	else if (tex_y >= d->tex1.height)
+		tex_y = d->tex1.height - 1;
+
+	color = d->tex1.addr + (abs((int)tex_y) * d->tex1.line_length +
+	(int)tex_x * (d->tex1.bpp / 8));
+	return (*(unsigned int*)color);
+}
+
 static void	wall_rendering(t_data *data, int x, int side)
 {
 	int	y;
@@ -138,7 +172,7 @@ static void	wall_rendering(t_data *data, int x, int side)
 		{
 			// if (side == 1)
 				data->game_frame[data->current_game_frame]->addr[y * \
-					SCREENSIZE + x] = get_texture_color(data, x, y);
+					SCREENSIZE + x] = get_tex_color(data, side, y);
 			// else
 				// data->game_frame[data->current_game_frame]->addr[y * 
 				// 	SCREENSIZE + x] = data->wall_color;
