@@ -100,12 +100,9 @@ int	init_game(t_data *data)
 	if (!data->mlx_ptr || !data->win_ptr)
 		return (0);
 	init_player_values(data);
-        data->tex1.img = mlx_xpm_file_to_image(data->mlx_ptr, data->no_path, &data->tex1.width, &data->tex1.height);
-		data->tex1.addr = mlx_get_data_addr(data->tex1.img, &data->tex1.bpp, &data->tex1.line_length, &data->tex1.endian);
-        data->tex2.img = mlx_xpm_file_to_image(data->mlx_ptr, data->so_path, &data->tex2.width, &data->tex2.height);
-        data->tex3.img = mlx_xpm_file_to_image(data->mlx_ptr, data->ea_path, &data->tex3.width, &data->tex3.height);
-        data->tex4.img = mlx_xpm_file_to_image(data->mlx_ptr, data->we_path, &data->tex4.width, &data->tex4.height);
-	if (!data->tex1.img || !data->tex2.img || !data->tex3.img || !data->tex1.img)
+	load_textures(data);
+	if (!data->tex[0].img || !data->tex[1].img || \
+		!data->tex[2].img || !data->tex[3].img)
 		return (0);
 	draw_walls(data);
 	mlx_hook(data->win_ptr, 2, (1L << 0), key_stroke, data);

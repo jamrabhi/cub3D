@@ -176,10 +176,7 @@ typedef struct s_data
 	int			draw_end;
 	int			wall_color;
 
-	t_tex		tex1;
-	t_tex		tex2;
-	t_tex		tex3;
-	t_tex		tex4;
+	t_tex		tex[4];
 }				t_data;
 
 /*
@@ -203,6 +200,7 @@ int		check_borders(char **map);
 int		init_game(t_data *data);
 void	init_game_struct(t_data *data);
 void	load_game_settings(t_data *data, int argc, char **argv);
+void	load_textures(t_data *data);
 
 /*
 ** MLX
@@ -229,6 +227,8 @@ void	write_pixel_data(t_img *img, int pixel, int color);
 /*
 ** UTILS
 */
+double	get_wall_position(t_data *d, int side);
+int		get_tex_color(t_data *d, int side, int y, int i);
 void	handle_keys(t_data *data);
 int		exit_error(char *error, t_data *data);
 int		exit_error_n_free_line(char *error, char *line, t_data *data);

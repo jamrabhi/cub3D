@@ -46,7 +46,8 @@ SRC = 	main.c get_next_line/get_next_line_utils.c \
 		\
 		minimap/minimap.c \
 		\
-		raycasting/raycasting_utils.c raycasting/raycasting.c
+		raycasting/raycasting_utils.c raycasting/raycasting.c \
+		raycasting/raycasting_render.c
 
 OBJ = $(addprefix $(BUILD_PATH)/$(OBJ_PATH)/, $(SRC:.c=.o))
 

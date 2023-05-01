@@ -48,14 +48,6 @@ void	draw_gun(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, img.img);
 }
 
-// static void	toggle_minimap(t_data *data)
-// {
-// 	if (data->minimap == 0)
-// 		data->minimap = 1;
-// 	else
-// 		data->minimap = 0;
-// }
-
 int	key_stroke(int key, void *params)
 {
 	t_data	*data;
@@ -75,11 +67,6 @@ int	key_stroke(int key, void *params)
 		data->turn_right = 1;
 	if (key == KEY_ESC || key == KEY_ESC_LINUX)
 		esc_window(key, data);
-	// if (key == KEY_M || key == KEY_M_LINUX)
-	// 	toggle_minimap(data);
 	draw_walls(data);
-	// draw_gun(data);
-	// if (data->minimap == 1)
-	// 	draw_map(data);
 	return (0);
 }
