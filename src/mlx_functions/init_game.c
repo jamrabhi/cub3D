@@ -79,8 +79,10 @@ static void	init_player_values(t_data *d)
 	d->dir_x = -1;
 	d->dir_y = 0;
 	d->fov = FOV;
-	d->ceiling_color = 0xD65D42;
-	d->floor_color = 0x803333;
+	d->ceiling_color = ((d->ceiling[0] & 0xff) << 16) + ((d->ceiling[1] & 0xff)
+			<< 8) + (d->ceiling[2] & 0xff);
+	d->floor_color = ((d->floor[0] & 0xff) << 16) + ((d->floor[1] & 0xff)
+			<< 8) + (d->floor[2] & 0xff);
 	d->ray_angle = 0;
 	d->game_frame[0] = (t_img *)malloc(sizeof(t_img));
 	d->game_frame[0]->img = mlx_new_image(d->mlx_ptr, SCREENSIZE, SCREENSIZE);
