@@ -12,6 +12,33 @@
 
 #include "cub3D.h"
 
+void	free_mlx(t_data *data)
+{
+	if (data->game_frame[0] && data->game_frame[0]->img)
+		mlx_destroy_image(data->mlx_ptr, data->game_frame[0]->img);
+	if (data->game_frame[0])
+		free(data->game_frame[0]);
+	if (data->game_frame[1] && data->game_frame[1]->img)
+		mlx_destroy_image(data->mlx_ptr, data->game_frame[1]->img);
+	if (data->game_frame[1])
+		free(data->game_frame[1]);
+	if (data->tex[0].img)
+		mlx_destroy_image(data->mlx_ptr, data->tex[0].img);
+	if (data->tex[1].img)
+		mlx_destroy_image(data->mlx_ptr, data->tex[1].img);
+	if (data->tex[2].img)
+		mlx_destroy_image(data->mlx_ptr, data->tex[2].img);
+	if (data->tex[3].img)
+		mlx_destroy_image(data->mlx_ptr, data->tex[3].img);
+	if (data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->mlx_ptr)
+	{
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
+	}
+}
+
 void	free_map_file(t_data *data)
 {
 	if (data)
@@ -31,8 +58,6 @@ void	free_map_file(t_data *data)
 			close(data->we_fd);
 		if (data->ea_fd > 0)
 			close(data->ea_fd);
-		free(data->game_frame[0]);
-		free(data->game_frame[1]);
 	}
 }
 

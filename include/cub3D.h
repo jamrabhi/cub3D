@@ -197,16 +197,17 @@ int		check_borders(char **map);
 /*
 ** INIT
 */
-int		init_game(t_data *data);
+void	init_game(t_data *data);
 void	init_game_struct(t_data *data);
 void	load_game_settings(t_data *data, int argc, char **argv);
 void	load_textures(t_data *data);
+void	get_data_addr(t_data *data);
 
 /*
 ** MLX
 */
-int		esc_window(int key, void *params);
-int		cross_window(int key, void *params);
+int		esc_window(void *params);
+int		cross_window(void *params);
 int		key_stroke(int key, void *params);
 int		check_resolution(int x, int y);
 
@@ -237,5 +238,6 @@ void	free_map_file(t_data *data);
 void	free_line(char *line, t_data *data);
 void	free_split(char **str);
 int		free_array_and_return(char **array, int return_id);
+void	free_mlx(t_data *data);
 
 #endif

@@ -18,11 +18,6 @@ int	main(int argc, char **argv)
 
 	init_game_struct(&data);
 	load_game_settings(&data, argc, argv);
-	if (!(init_game(&data)))
-	{
-		write(1, "Error\n[MLX]Connection to MLX failed.\n", 37);
-		return (0);
-	}
-	free_map_file(&data);
+	init_game(&data);
 	return (0);
 }

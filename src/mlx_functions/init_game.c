@@ -39,6 +39,7 @@ static void	player_spawn(t_data *data)
 
 void	init_game_struct(t_data *data)
 {
+	ft_bzero(data, sizeof(t_data));
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
 	data->no_path = NULL;
@@ -83,30 +84,36 @@ static void	init_player_values(t_data *d)
 	d->ray_angle = 0;
 	d->game_frame[0] = (t_img *)malloc(sizeof(t_img));
 	d->game_frame[0]->img = mlx_new_image(d->mlx_ptr, SCREENSIZE, SCREENSIZE);
+	if (!d->game_frame[0]->img)
+		exit_error("MLX error", d);
 	d->game_frame[0]->addr = (int *)mlx_get_data_addr(d->game_frame[0]->img, \
 	&d->game_frame[0]->bpp, &d->game_frame[0]->sl, &d->game_frame[0]->endian);
 	d->game_frame[1] = (t_img *)malloc(sizeof(t_img));
 	d->game_frame[1]->img = mlx_new_image(d->mlx_ptr, SCREENSIZE, SCREENSIZE);
+	if (!d->game_frame[1]->img)
+		exit_error("MLX error", d);
 	d->game_frame[1]->addr = (int *)mlx_get_data_addr(d->game_frame[1]->img, \
 	&d->game_frame[1]->bpp, &d->game_frame[1]->sl, &d->game_frame[1]->endian);
 	d->current_game_frame = 0;
 }
 
-int	init_game(t_data *data)
+void	init_game(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		exit_error("Failed to init MLX", data);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, \
 			data->resolution, data->resolution, "cub3D");
-	if (!data->mlx_ptr || !data->win_ptr)
-		return (0);
+	if (!data->win_ptr)
+		exit_error("Failed to create window", data);
 	init_player_values(data);
 	load_textures(data);
 	if (!data->tex[0].img || !data->tex[1].img || \
 		!data->tex[2].img || !data->tex[3].img)
-		return (0);
+		exit_error("Failed to load textures", data);
+	get_data_addr(data);
 	draw_walls(data);
-	mlx_hook(data->win_ptr, 2, (1L << 0), key_stroke, data);
-	mlx_hook(data->win_ptr, 17, 0, cross_window, data);
+	mlx_hook(data->win_ptr, 2, 1L << 0, key_stroke, data);
+	mlx_hook(data->win_ptr, 17, 1L << 17, cross_window, data);
 	mlx_loop(data->mlx_ptr);
-	return (0);
 }

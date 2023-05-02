@@ -12,42 +12,26 @@
 
 #include "cub3D.h"
 
-int	esc_window(int key, void *params)
+int	esc_window(void *params)
 {
 	t_data	*data;
 
-	(void)key;
 	data = (t_data *)params;
-	if (data->mlx_ptr != NULL && data->win_ptr != NULL)
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	printf("Exit (esc).\n");
+	free_mlx(data);
 	free_map_file(data);
 	exit(EXIT_SUCCESS);
-	return (0);
 }
 
-int	cross_window(int key, void *params)
+int	cross_window(void *params)
 {
-	(void)key;
-	(void)params;
+	t_data	*data;
+
+	data = (t_data *)params;
 	printf("Exit (cross).\n");
+	free_mlx(data);
+	free_map_file(data);
 	exit(EXIT_SUCCESS);
-	return (0);
-}
-
-void	draw_gun(t_data *data)
-{
-	int		gun_size;
-	t_img	img;
-
-	gun_size = 1200;
-	img.img = mlx_xpm_file_to_image(data->mlx_ptr, \
-		"gun.xpm", &gun_size, &gun_size);
-	img.addr = (int *)mlx_get_data_addr(img.img, \
-		&img.bpp, &img.sl, &img.endian);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-		img.img, SCREENSIZE - gun_size - 300, SCREENSIZE - gun_size);
-	mlx_destroy_image(data->mlx_ptr, img.img);
 }
 
 int	key_stroke(int key, void *params)
@@ -68,7 +52,7 @@ int	key_stroke(int key, void *params)
 		key == KEY_D || key == KEY_D_LINUX)
 		data->turn_right = 1;
 	if (key == KEY_ESC || key == KEY_ESC_LINUX)
-		esc_window(key, data);
+		esc_window(data);
 	draw_walls(data);
 	return (0);
 }

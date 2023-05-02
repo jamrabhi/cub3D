@@ -15,6 +15,7 @@
 int	exit_error(char *error, t_data *data)
 {
 	printf("Error : %s\n", error);
+	free_mlx(data);
 	free_map_file(data);
 	exit (EXIT_FAILURE);
 }
