@@ -21,6 +21,7 @@ int	esc_window(int key, void *params)
 	if (data->mlx_ptr != NULL && data->win_ptr != NULL)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	printf("Exit (esc).\n");
+	free_map_file(data);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
@@ -31,6 +32,7 @@ int	cross_window(int key, void *params)
 	(void)params;
 	printf("Exit (cross).\n");
 	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 void	draw_gun(t_data *data)

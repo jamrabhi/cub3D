@@ -31,6 +31,8 @@ void	free_map_file(t_data *data)
 			close(data->we_fd);
 		if (data->ea_fd > 0)
 			close(data->ea_fd);
+		free(data->game_frame[0]);
+		free(data->game_frame[1]);
 	}
 }
 

@@ -95,3 +95,6 @@ endif
 
 re: fclean
 	@make all
+
+leaks: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=mlx_ignore_leaks.valgrind ./cub3D maps/map.cub
