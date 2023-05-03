@@ -51,7 +51,7 @@ static void	wall_calculation(t_data *data, int side)
 		data->perpwall_dist = fabs((data->map_y - data->player_y + \
 			(1 - data->step_y) / 2) / data->ray_dir_y);
 	data->dist_to_wall = data->perpwall_dist * cos((data->player_dir - \
-		(data->player_dir + data->camera_x * data->fov)) * M_PI / 180.0);
+		(data->player_dir + data->camera_x * data->fov)) * PI / 180.0);
 	data->wall_height = (int)(SCREENSIZE / (data->dist_to_wall * \
 		cos(data->camera_x * data->fov)));
 	data->draw_start = SCREENSIZE / 2 - data->wall_height / 2;
@@ -69,9 +69,9 @@ static int	choose_tex(t_data *data, int tex_num, int side)
 	else if (side == 0 && data->ray_dir_x < 0)
 		tex_num = 1;
 	else if (side == 1 && data->ray_dir_y > 0)
-		tex_num = 2;
-	else
 		tex_num = 3;
+	else
+		tex_num = 2;
 	return (tex_num);
 }
 

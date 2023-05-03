@@ -155,6 +155,7 @@ typedef struct s_data
 	int			turn_left;
 	int			move_up;
 	int			move_down;
+	char		player_orientation;
 
 	double		camera_x;
 	double		ray_dir_x;
@@ -239,5 +240,7 @@ void	free_line(char *line, t_data *data);
 void	free_split(char **str);
 int		free_array_and_return(char **array, int return_id);
 void	free_mlx(t_data *data);
+void	set_player_direction(t_data *d);
+void	player_spawn(t_data *data);
 
 #endif

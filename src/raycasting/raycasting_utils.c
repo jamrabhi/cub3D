@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
+#include "cub3D.h"
 
 static void	handle_walk(t_data *data)
 {
@@ -79,16 +79,16 @@ void	handle_keys(t_data *data)
 	data->player_vel_y = sin(data->player_dir) * MOVE_SPEED;
 	handle_walk(data);
 	if (data->player_dir < 0)
-		data->player_dir += 2 * M_PI;
-	else if (data->player_dir >= 2 * M_PI)
-		data->player_dir -= 2 * M_PI;
+		data->player_dir += 2 * PI;
+	else if (data->player_dir >= 2 * PI)
+		data->player_dir -= 2 * PI;
 }
 
 void	init_raycasting(t_data *data, int x)
 {
 	data->camera_x = 2 * x / (double)SCREENSIZE - 1;
-	data->ray_dir_x = cos(data->player_dir + data->fov * data->camera_x);
-	data->ray_dir_y = sin(data->player_dir + data->fov * data->camera_x);
+	data->ray_dir_x = cos(data->player_dir + data->fov * data->camera_x) + 0.001;
+	data->ray_dir_y = sin(data->player_dir + data->fov * data->camera_x) + 0.001;
 	data->map_x = (int)data->player_x;
 	data->map_y = (int)data->player_y;
 	if (data->ray_dir_x == 0)

@@ -12,31 +12,6 @@
 
 #include "cub3D.h"
 
-static void	player_spawn(t_data *data)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (data->map_arr[i])
-	{
-		j = 0;
-		while (data->map_arr[i][j])
-		{
-			if (data->map_arr[i][j] == 'N')
-			{
-				data->player_x = i;
-				data->player_y = j;
-				data->map_arr[i][j] = '0';
-				return ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
 void	init_game_struct(t_data *data)
 {
 	ft_bzero(data, sizeof(t_data));
@@ -47,6 +22,7 @@ void	init_game_struct(t_data *data)
 	data->we_path = NULL;
 	data->ea_path = NULL;
 	data->map_arr = NULL;
+	data->player_orientation = 0;
 	data->resolution = check_resolution(WIN_WIDTH, WIN_HEIGHT);
 	data->minimap = 1;
 	data->player_dir = 0;
@@ -74,10 +50,11 @@ void	load_game_settings(t_data *data, int argc, char **argv)
 
 static void	init_player_values(t_data *d)
 {
-	d->plane_x = 0;
-	d->plane_y = 0.66;
-	d->dir_x = -1;
-	d->dir_y = 0;
+	d->dir_x = 0;
+	d->dir_y = 1;
+	d->plane_x = 0.66;
+	d->plane_y = 0;
+	set_player_direction(d);
 	d->fov = FOV;
 	d->ceiling_color = ((d->ceiling[0] & 0xff) << 16) + ((d->ceiling[1] & 0xff)
 			<< 8) + (d->ceiling[2] & 0xff);
