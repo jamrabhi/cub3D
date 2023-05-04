@@ -15,13 +15,13 @@
 void	set_player_direction(t_data *d)
 {
 	if (d->player_orientation == 'S')
-		d->player_dir = 0;
-	else if (d->player_orientation == 'N')
-		d->player_dir = PI;
-	else if (d->player_orientation == 'W')
-		d->player_dir = -PI / 2;
-	else if (d->player_orientation == 'E')
 		d->player_dir = PI / 2;
+	else if (d->player_orientation == 'N')
+		d->player_dir = -PI / 2;
+	else if (d->player_orientation == 'W')
+		d->player_dir = PI;
+	else if (d->player_orientation == 'E')
+		d->player_dir = 0;
 	else
 		return ;
 }

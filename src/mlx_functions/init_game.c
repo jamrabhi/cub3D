@@ -54,7 +54,7 @@ static void	init_player_values(t_data *d)
 	d->dir_y = 1;
 	d->plane_x = 0.66;
 	d->plane_y = 0;
-	// set_player_direction(d);
+	set_player_direction(d);
 	d->fov = FOV;
 	d->ceiling_color = ((d->ceiling[0] & 0xff) << 16) + ((d->ceiling[1] & 0xff)
 			<< 8) + (d->ceiling[2] & 0xff);
