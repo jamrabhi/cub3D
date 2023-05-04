@@ -45,7 +45,7 @@ void	load_game_settings(t_data *data, int argc, char **argv)
 	if (data->map_fd == -1)
 		exit_error("Map doesn't exist", data);
 	parsing(argv[1], data);
-	player_spawn(data);
+	// player_spawn(data);
 }
 
 static void	init_player_values(t_data *d)
@@ -54,7 +54,7 @@ static void	init_player_values(t_data *d)
 	d->dir_y = 1;
 	d->plane_x = 0.66;
 	d->plane_y = 0;
-	set_player_direction(d);
+	// set_player_direction(d);
 	d->fov = FOV;
 	d->ceiling_color = ((d->ceiling[0] & 0xff) << 16) + ((d->ceiling[1] & 0xff)
 			<< 8) + (d->ceiling[2] & 0xff);
@@ -91,6 +91,7 @@ void	init_game(t_data *data)
 		!data->tex[2].img || !data->tex[3].img)
 		exit_error("Failed to load textures", data);
 	get_data_addr(data);
+	player_spawn(data);
 	draw_walls(data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key_stroke, data);
 	mlx_hook(data->win_ptr, 17, 1L << 17, cross_window, data);

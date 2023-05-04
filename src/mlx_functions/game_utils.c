@@ -44,6 +44,7 @@ void	player_spawn(t_data *data)
 				data->player_x = i + 0.5;
 				data->player_y = j + 0.5;
 				data->player_orientation = data->map_arr[i][j];
+				set_player_direction(data);
 				data->map_arr[i][j] = '0';
 				return ;
 			}
