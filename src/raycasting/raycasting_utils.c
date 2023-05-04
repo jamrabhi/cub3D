@@ -87,8 +87,10 @@ void	handle_keys(t_data *data)
 void	init_raycasting(t_data *data, int x)
 {
 	data->camera_x = 2 * x / (double)SCREENSIZE - 1;
-	data->ray_dir_x = sin(data->player_dir + data->fov * data->camera_x) + 0.001;
-	data->ray_dir_y = cos(data->player_dir + data->fov * data->camera_x) + 0.001;
+	data->ray_dir_x = sin(data->player_dir + data->fov \
+		* data->camera_x) + 0.001;
+	data->ray_dir_y = cos(data->player_dir + data->fov \
+		* data->camera_x) + 0.001;
 	data->map_x = (int)data->player_x;
 	data->map_y = (int)data->player_y;
 	if (data->ray_dir_x == 0)

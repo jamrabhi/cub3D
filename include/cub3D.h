@@ -143,10 +143,6 @@ typedef struct s_data
 	double		player_y;
 	double		player_vel_x;
 	double		player_vel_y;
-	double		plane_x;
-	double		plane_y;
-	int			dir_x;
-	int			dir_y;
 	double		fov;
 	double		ray_angle;
 	int			ceiling_color;

@@ -107,7 +107,7 @@ void	draw_walls(t_data *data)
 
 	x = 0;
 	side = 0;
-	memset(data->game_frame[data->current_game_frame]->addr, 0, \
+	ft_memset(data->game_frame[data->current_game_frame]->addr, 0, \
 		data->game_frame[data->current_game_frame]->sl * SCREENSIZE);
 	handle_keys(data);
 	while (x < SCREENSIZE)

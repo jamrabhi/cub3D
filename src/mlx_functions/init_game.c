@@ -26,8 +26,6 @@ void	init_game_struct(t_data *data)
 	data->resolution = check_resolution(WIN_WIDTH, WIN_HEIGHT);
 	data->minimap = 1;
 	data->player_dir = 0;
-	data->plane_x = 0;
-	data->plane_y = 0.66;
 	data->turn_left = 0;
 	data->turn_right = 0;
 	data->move_up = 0;
@@ -45,16 +43,10 @@ void	load_game_settings(t_data *data, int argc, char **argv)
 	if (data->map_fd == -1)
 		exit_error("Map doesn't exist", data);
 	parsing(argv[1], data);
-	// player_spawn(data);
 }
 
 static void	init_player_values(t_data *d)
 {
-	d->dir_x = 0;
-	d->dir_y = 1;
-	d->plane_x = 0.66;
-	d->plane_y = 0;
-	set_player_direction(d);
 	d->fov = FOV;
 	d->ceiling_color = ((d->ceiling[0] & 0xff) << 16) + ((d->ceiling[1] & 0xff)
 			<< 8) + (d->ceiling[2] & 0xff);
