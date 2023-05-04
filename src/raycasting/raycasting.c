@@ -65,9 +65,9 @@ static void	wall_calculation(t_data *data, int side)
 static int	choose_tex(t_data *data, int tex_num, int side)
 {
 	if (side == 0 && data->ray_dir_x > 0)
-		tex_num = 0;
-	else if (side == 0 && data->ray_dir_x < 0)
 		tex_num = 1;
+	else if (side == 0 && data->ray_dir_x < 0)
+		tex_num = 0;
 	else if (side == 1 && data->ray_dir_y > 0)
 		tex_num = 3;
 	else
