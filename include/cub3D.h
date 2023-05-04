@@ -242,5 +242,6 @@ int		free_array_and_return(char **array, int return_id);
 void	free_mlx(t_data *data);
 void	set_player_direction(t_data *d);
 void	player_spawn(t_data *data);
+void	get_data_addr(t_data *data);
 
 #endif
